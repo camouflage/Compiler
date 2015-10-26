@@ -13,7 +13,7 @@ DELIMIT  [;,{}\[\]]
 
 CHAR     --|->|=
 
-COMMENT   \/\/(.)*|\/\*(.|\n)*\*\/|#(.)*
+COMMENT   \/\/(.)*|#(.)*
 
 STRING   \"(.)*\"
 
@@ -22,6 +22,8 @@ NUM      (-)?([0-9])*(\.)?([0-9])*
 ID       [_a-zA-Z]([_a-zA-Z0-9])*
 
 WHITE    [\ \t\n]
+
+%x MultiLineComment
 
 %%
 
@@ -44,5 +46,11 @@ WHITE    [\ \t\n]
 }
 
 {WHITE} {}
+
+"/*"                          BEGIN(MultiLineComment);
+<MultiLineComment>([^*\n])*
+<MultiLineComment>\*([^/\n])*
+<MultiLineComment>\n             
+<MultiLineComment>"*/"        BEGIN(INITIAL);
 
 %%

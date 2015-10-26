@@ -10,7 +10,7 @@ DIgraph G {
 		a0 -> a1 -> a2 -> a3;
 		label = "process #1\" /*fffe*/ /??????./e #f "; //ee
 	}
-	/* fe
+	/* fe /* fa 
 	re
 
 
@@ -36,4 +36,15 @@ DIgraph G {
 	s=-3.
 	k=321321
 	re=00032
+	/* fafe
+	e
+	*/
+	faefea
+	faeae
+	/* fae
+	rar
+	# ea
+		***f
+	 fea
+	*/
 }
