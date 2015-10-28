@@ -15,15 +15,14 @@ CHAR     --|->|=
 
 COMMENT   \/\/(.)*|#(.)*
 
-STRING   \"(.)*\"
-
-NUM      (-)?([0-9])*(\.)?([0-9])*
+NUM      (-)?([0-9])+(\.)?([0-9])*|(-)?([0-9])*(\.)?([0-9])+
 
 ID       [_a-zA-Z]([_a-zA-Z0-9])*
 
 WHITE    [\ \t\n]
 
 %x MultiLineComment
+%x STRING
 
 %%
 
@@ -41,7 +40,7 @@ WHITE    [\ \t\n]
 
 {COMMENT} {}
 
-{STRING}|{NUM}|{ID} {
+{NUM}|{ID} {
     printf("%s\n", yytext);
 }
 
@@ -49,8 +48,22 @@ WHITE    [\ \t\n]
 
 "/*"                          BEGIN(MultiLineComment);
 <MultiLineComment>([^*\n])*
-<MultiLineComment>\*([^/\n])*
+<MultiLineComment>\*([^*/\n])*
 <MultiLineComment>\n             
 <MultiLineComment>"*/"        BEGIN(INITIAL);
-
+    
+\"                            {
+                                printf("\"");
+                                BEGIN(STRING);
+                              }
+<STRING>\\\"                  { 
+                                printf("%s", yytext);
+                              }
+<STRING>[^"\n]                {
+                                printf("%s", yytext);
+                              }
+<STRING>\"                    {  
+                                printf("%s\n", yytext);
+                                BEGIN(INITIAL);
+                              }
 %%

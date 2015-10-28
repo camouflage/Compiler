@@ -8,7 +8,7 @@ DIgraph G {
 		color=lightgrey;
 		node [style=filled;color=white];
 		a0 -> a1 -> a2 -> a3;
-		label = "process #1\" /*fffe*/ /??????./e #f "; //ee
+		label = "process #1\" fe/*fffe*/ /????\n??./e #f "; //ee
 	}
 	/* fe /* fa 
 	re
