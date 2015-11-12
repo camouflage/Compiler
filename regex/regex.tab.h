@@ -39,17 +39,26 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     CHAR = 258
+     CHAR = 258,
+     NUM = 259
    };
 #endif
 /* Tokens.  */
 #define CHAR 258
+#define NUM 259
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 9 "regex.y"
+{
+    char* ctype;
+}
+/* Line 1529 of yacc.c.  */
+#line 61 "regex.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

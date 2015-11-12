@@ -1,17 +1,41 @@
 %{
-    #include <stdio.h>
-    #define YYSTYPE char*
+    #include "stdio.h"
+    #include "stdlib.h"
+    void yyerror (char const *);
 %}
 
+%error-verbose
+
+%union {
+    char* ctype;
+}
+
 %token CHAR
-%destructor { free($$); } CHAR
+%token NUM
+
 
 %% 
-input  : '\n'
+input : /* empty */
+      | input line
+;
+
+line  : '\n' 
       | exp '\n'
 ;
 
-exp : '*'   { $$ = $1;          }
-    | CHAR   { printf("char= %s\n", $1);          }
+exp : CHAR   { $<ctype>$ = $<ctype>1; printf("%s\n", $<ctype>$); }
+    | '.'    { printf("Dot\n"); }
 
 %%
+
+
+int main() 
+{
+    return yyparse();
+}
+
+
+void yyerror (char const *s)
+{
+    fprintf (stderr, "%s\n", s);
+}

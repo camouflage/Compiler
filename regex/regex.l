@@ -1,14 +1,18 @@
 %{
     #include "stdio.h"
     #include "string.h"
+    #include "stdlib.h"
     #include "regex.tab.h"
 %}
 
 %%
 
-[a-zA-z]+ { yylval = strdup(yytext); return CHAR;} 
+[a-zA-z]+ { yylval.ctype = strdup(yytext); return CHAR; }
+
 "|"     return '|';
 "."     return '.';
-[ \t]+
+"\n"    return '\n';
+[ \t]+  ;
+.       ;
 
 %%
