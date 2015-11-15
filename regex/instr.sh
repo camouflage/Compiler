@@ -1,0 +1,1 @@
+bison -d regex.y && lex regex.l && gcc lex.yy.c regex.tab.c -ly -ll && ./a.out < test.input 

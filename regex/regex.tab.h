@@ -40,24 +40,33 @@
       know about them.  */
    enum yytokentype {
      CHAR = 258,
-     NUM = 259
+     SUB = 259,
+     NgQuest = 260,
+     NgPlus = 261,
+     NgStar = 262
    };
 #endif
 /* Tokens.  */
 #define CHAR 258
-#define NUM 259
+#define SUB 259
+#define NgQuest 260
+#define NgPlus 261
+#define NgStar 262
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 9 "regex.y"
+#line 18 "regex.y"
 {
-    char* ctype;
+    struct node* ntype;
+    char* cstype;
+    char  ctype;
+    int   itype;
 }
 /* Line 1529 of yacc.c.  */
-#line 61 "regex.tab.h"
+#line 70 "regex.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

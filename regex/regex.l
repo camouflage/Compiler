@@ -1,18 +1,24 @@
 %{
     #include "stdio.h"
     #include "string.h"
-    #include "stdlib.h"
     #include "regex.tab.h"
 %}
 
 %%
 
-[a-zA-z]+ { yylval.ctype = strdup(yytext); return CHAR; }
+"*?"    return NgStar;
+"+?"    return NgPlus;
+"??"    return NgQuest;
 
+"(?:"   return SUB;
 "|"     return '|';
 "."     return '.';
+"*"     return '*';
+"+"     return '+';
+"?"     return '?';
 "\n"    return '\n';
 [ \t]+  ;
-.       ;
+")"     return ')';
+.       { yylval.ctype = *yytext; return CHAR; }
 
 %%
