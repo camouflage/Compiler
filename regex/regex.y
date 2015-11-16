@@ -10,11 +10,13 @@
         struct node* right;
     };
 
+    typedef enum {CAT = 0, ALT, OTHER, STAR, PLUS, QUEST} kind;
+
     void print(struct node* t);
     void myFree(struct node* t);
-    struct node* makeChar(char c);
-    struct node* cat(struct node* l, struct node* r);
-    struct node* makeSingle(char* cs, struct node* child);
+    struct node* makeNode(char c, kind type);
+    struct node* makeDouble(struct node* l, struct node* r, kind type);
+    struct node* makeOne(struct node* current, struct node* child);
 
     int parenCount = 1;
 %}
@@ -29,7 +31,7 @@
 }
 
 %token CHAR SUB
-%right NgStar NgPlus NgQuest
+%right '*' '+' '?' NgStar NgPlus NgQuest
 %left '|'
 
 %% 
@@ -38,30 +40,52 @@ input : /* empty */
 ;
 
 line  : '\n'
-      | exp '\n'    { print($<ntype>1); printf("\n"); //myFree($<ntype>$);
+      | exp '\n'    { 
+                        print($<ntype>1); printf("\n");
+                        $<ntype>$ = NULL;
+                        //myFree($<ntype>$);
                     }
 ;
 
-exp : exp CHAR  {    
-                    struct node* t = makeChar($<ctype>2);
-                    if ( $<ntype>1 == NULL ) {
-                        $<ntype>$ = t;
-                    } else {
-                        $<ntype>$ = cat($<ntype>1, t);
+exp   : exp '|' cat {
+                        $<ntype>$ = makeDouble($<ntype>1, $<ntype>3, ALT);
                     }
-                }  
-
-    | exp '.'   {
-                    struct node* t = makeChar('.');
-                    if ( $<ntype>1 == NULL ) {
-                        $<ntype>$ = t;
-                    } else {
-                        $<ntype>$ = cat($<ntype>1, t);
+      | cat         {
+                        $<ntype>$ = $<ntype>1;
                     }
-                }
-
-    |          {   $<ntype>$ = NULL; }
 ;    
+
+cat   : cat term    {
+                        if ( $<ntype>1 == NULL ) {
+                            $<ntype>$ = $<ntype>2;
+                        } else {
+                            $<ntype>$ = makeDouble($<ntype>1, $<ntype>2, CAT);
+                        }
+                    }
+      | cat sign    {
+                        $<ntype>$ = $<ntype>1;
+                    }
+      |             {
+                        $<ntype>$ = NULL;
+                    }
+;
+
+sign  : sign '*'    {
+                        struct node* temp = makeNode(' ', STAR);
+                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                    }
+      |             {
+                        $<ntype>$ = NULL;
+                    }
+;
+
+term  : CHAR        {    
+                        $<ntype>$ = makeNode($<ctype>1, OTHER);
+                    } 
+      |  '.'        {
+                        $<ntype>$ = makeNode('.', OTHER);
+                    }
+;
 
 %%
 
@@ -82,8 +106,8 @@ void print(struct node* t) {
         if ( t->left != NULL ) {
             print(t->left);
         }
-        printf(", ");
         if ( t->right != NULL ) {
+            printf(", ");
             print(t->right);
         }
         printf(")");
@@ -102,34 +126,41 @@ void myFree(struct node* t) {
     t = NULL;
 }
 
-struct node* makeChar(char c) {
+struct node* makeNode(char c, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
-    if ( c == '.' ) {
-        temp->content = (char*) malloc(4);
-        temp->content = "Dot";
-    } else {
+    if ( type == OTHER ) {
+        if ( c == '.' ) {
+            temp->content = (char*) malloc(4);
+            temp->content = "Dot";
+        } else {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "Lit(%c)", c);
+        }
+    } else if ( type == STAR ) {
         temp->content = (char*) malloc(7);
-        sprintf(temp->content, "Lit(%c)", c);
+        temp->content = "Star";
     }
+
     temp->left = NULL;
     temp->right = NULL;
     return temp;
 }
 
-struct node* cat(struct node* l, struct node* r) {
+struct node* makeDouble(struct node* l, struct node* r, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
     temp->content = (char*) malloc(4);
-    temp->content = "Cat";
+    if ( type == CAT ) {
+        temp->content = "Cat";
+    } else if ( type == ALT ) {
+        temp->content = "Alt";
+    }
     temp->left = l;
     temp->right = r;
     return temp;
 }
 
-struct node* makeSingle(char* cs, struct node* child) {
-    struct node* temp = (struct node*) malloc(sizeof(struct node));
-    temp->content = (char*) malloc(strlen(cs) + 1);
-    strcpy(temp->content, cs);
-    temp->left = child;
-    temp->right = NULL;
-    return temp;
+struct node* makeOne(struct node* current, struct node* child) {
+    current->left = child;
+    current->right = NULL;
+    return current;
 }

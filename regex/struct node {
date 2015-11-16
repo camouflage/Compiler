@@ -1,3 +1,0 @@
-struct node {
-    int a;
-}

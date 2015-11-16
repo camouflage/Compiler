@@ -58,7 +58,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 24 "regex.y"
+#line 26 "regex.y"
 {
     struct node* ntype;
     char* cstype;

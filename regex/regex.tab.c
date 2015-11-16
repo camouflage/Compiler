@@ -97,11 +97,13 @@
         struct node* right;
     };
 
+    typedef enum {CAT = 0, ALT, OTHER, STAR, PLUS, QUEST} kind;
+
     void print(struct node* t);
     void myFree(struct node* t);
-    struct node* makeChar(char c);
-    struct node* cat(struct node* l, struct node* r);
-    struct node* makeSingle(char* cs, struct node* child);
+    struct node* makeNode(char c, kind type);
+    struct node* makeDouble(struct node* l, struct node* r, kind type);
+    struct node* makeOne(struct node* current, struct node* child);
 
     int parenCount = 1;
 
@@ -126,7 +128,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 24 "regex.y"
+#line 26 "regex.y"
 {
     struct node* ntype;
     char* cstype;
@@ -134,7 +136,7 @@ typedef union YYSTYPE
     int   itype;
 }
 /* Line 193 of yacc.c.  */
-#line 138 "regex.tab.c"
+#line 140 "regex.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -147,7 +149,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 151 "regex.tab.c"
+#line 153 "regex.tab.c"
 
 #ifdef short
 # undef short
@@ -362,16 +364,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   9
+#define YYLAST   12
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  4
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  14
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  9
+#define YYNSTATES  15
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -384,18 +386,18 @@ union yyalloc
 static const yytype_uint8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       9,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      12,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,    10,     2,     2,     2,
+       2,     2,     5,     6,     2,     2,    13,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     7,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     8,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,    11,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -409,7 +411,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       8,     9,    10
 };
 
 #if YYDEBUG
@@ -417,20 +419,24 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     4,     7,     9,    12,    15,    18
+       0,     0,     3,     4,     7,     9,    12,    16,    18,    21,
+      24,    25,    28,    29,    31
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      12,     0,    -1,    -1,    12,    13,    -1,     9,    -1,    14,
-       9,    -1,    14,     3,    -1,    14,    10,    -1,    -1
+      15,     0,    -1,    -1,    15,    16,    -1,    12,    -1,    17,
+      12,    -1,    17,    11,    18,    -1,    18,    -1,    18,    20,
+      -1,    18,    19,    -1,    -1,    19,     5,    -1,    -1,     3,
+      -1,    13,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    37,    40,    41,    45,    54,    63
+       0,    38,    38,    39,    42,    43,    50,    53,    58,    65,
+      68,    73,    77,    82,    85
 };
 #endif
 
@@ -439,8 +445,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "CHAR", "SUB", "NgQuest", "NgPlus",
-  "NgStar", "'|'", "'\\n'", "'.'", "$accept", "input", "line", "exp", 0
+  "$end", "error", "$undefined", "CHAR", "SUB", "'*'", "'+'", "'?'",
+  "NgQuest", "NgPlus", "NgStar", "'|'", "'\\n'", "'.'", "$accept", "input",
+  "line", "exp", "cat", "sign", "term", 0
 };
 #endif
 
@@ -449,21 +456,23 @@ static const char *const yytname[] =
    token YYLEX-NUM.  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   124,    10,
-      46
+       0,   256,   257,   258,   259,    42,    43,    63,   260,   261,
+     262,   124,    10,    46
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12,    13,    13,    14,    14,    14
+       0,    14,    15,    15,    16,    16,    17,    17,    18,    18,
+      18,    19,    19,    20,    20
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     1,     2,     2,     2,     0
+       0,     2,     0,     2,     1,     2,     3,     1,     2,     2,
+       0,     2,     0,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -471,49 +480,54 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     8,     1,     4,     3,     0,     6,     5,     7
+       2,    10,     1,     4,     3,     0,     7,    10,     5,    13,
+      14,     9,     8,     6,    11
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     4,     5
+      -1,     1,     4,     5,     6,    11,    12
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -3
+#define YYPACT_NINF -8
 static const yytype_int8 yypact[] =
 {
-      -3,     0,    -3,    -3,    -3,    -2,    -3,    -3,    -3
+      -8,     0,    -8,    -8,    -8,    -7,    -2,    -8,    -8,    -8,
+      -8,    -3,    -8,    -2,    -8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -3,    -3,    -3,    -3
+      -8,    -8,    -8,    -8,    -1,    -8,    -8
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule which
    number is the opposite.  If zero, do what YYDEFACT says.
    If YYTABLE_NINF, syntax error.  */
-#define YYTABLE_NINF -1
-static const yytype_uint8 yytable[] =
+#define YYTABLE_NINF -13
+static const yytype_int8 yytable[] =
 {
-       2,     6,     0,     0,     0,     0,     0,     7,     8,     3
+       2,     9,    14,   -12,     7,     8,    13,     0,     0,     0,
+       0,    10,     3
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,    -1,    -1,    -1,    -1,    -1,     9,    10,     9
+       0,     3,     5,     5,    11,    12,     7,    -1,    -1,    -1,
+      -1,    13,    12
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    12,     0,     9,    13,    14,     3,     9,    10
+       0,    15,     0,    12,    16,    17,    18,    11,    12,     3,
+      13,    19,    20,    18,     5
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1328,43 +1342,85 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 41 "regex.y"
-    { print((yyvsp[(1) - (2)].ntype)); printf("\n"); //myFree($<ntype>$);
+#line 43 "regex.y"
+    { 
+                        print((yyvsp[(1) - (2)].ntype)); printf("\n");
+                        (yyval.ntype) = NULL;
+                        //myFree($<ntype>$);
                     ;}
     break;
 
   case 6:
-#line 45 "regex.y"
-    {    
-                    struct node* t = makeChar((yyvsp[(2) - (2)].ctype));
-                    if ( (yyvsp[(1) - (2)].ntype) == NULL ) {
-                        (yyval.ntype) = t;
-                    } else {
-                        (yyval.ntype) = cat((yyvsp[(1) - (2)].ntype), t);
-                    }
-                ;}
+#line 50 "regex.y"
+    {
+                        (yyval.ntype) = makeDouble((yyvsp[(1) - (3)].ntype), (yyvsp[(3) - (3)].ntype), ALT);
+                    ;}
     break;
 
   case 7:
-#line 54 "regex.y"
+#line 53 "regex.y"
     {
-                    struct node* t = makeChar('.');
-                    if ( (yyvsp[(1) - (2)].ntype) == NULL ) {
-                        (yyval.ntype) = t;
-                    } else {
-                        (yyval.ntype) = cat((yyvsp[(1) - (2)].ntype), t);
-                    }
-                ;}
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                    ;}
     break;
 
   case 8:
-#line 63 "regex.y"
-    {   (yyval.ntype) = NULL; ;}
+#line 58 "regex.y"
+    {
+                        if ( (yyvsp[(1) - (2)].ntype) == NULL ) {
+                            (yyval.ntype) = (yyvsp[(2) - (2)].ntype);
+                        } else {
+                            (yyval.ntype) = makeDouble((yyvsp[(1) - (2)].ntype), (yyvsp[(2) - (2)].ntype), CAT);
+                        }
+                    ;}
+    break;
+
+  case 9:
+#line 65 "regex.y"
+    {
+                        (yyval.ntype) = (yyvsp[(1) - (2)].ntype);
+                    ;}
+    break;
+
+  case 10:
+#line 68 "regex.y"
+    {
+                        (yyval.ntype) = NULL;
+                    ;}
+    break;
+
+  case 11:
+#line 73 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', STAR);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                    ;}
+    break;
+
+  case 12:
+#line 77 "regex.y"
+    {
+                        (yyval.ntype) = NULL;
+                    ;}
+    break;
+
+  case 13:
+#line 82 "regex.y"
+    {    
+                        (yyval.ntype) = makeNode((yyvsp[(1) - (1)].ctype), OTHER);
+                    ;}
+    break;
+
+  case 14:
+#line 85 "regex.y"
+    {
+                        (yyval.ntype) = makeNode('.', OTHER);
+                    ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1368 "regex.tab.c"
+#line 1424 "regex.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1578,7 +1634,7 @@ yyreturn:
 }
 
 
-#line 66 "regex.y"
+#line 90 "regex.y"
 
 
 
@@ -1598,8 +1654,8 @@ void print(struct node* t) {
         if ( t->left != NULL ) {
             print(t->left);
         }
-        printf(", ");
         if ( t->right != NULL ) {
+            printf(", ");
             print(t->right);
         }
         printf(")");
@@ -1618,35 +1674,42 @@ void myFree(struct node* t) {
     t = NULL;
 }
 
-struct node* makeChar(char c) {
+struct node* makeNode(char c, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
-    if ( c == '.' ) {
-        temp->content = (char*) malloc(4);
-        temp->content = "Dot";
-    } else {
+    if ( type == OTHER ) {
+        if ( c == '.' ) {
+            temp->content = (char*) malloc(4);
+            temp->content = "Dot";
+        } else {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "Lit(%c)", c);
+        }
+    } else if ( type == STAR ) {
         temp->content = (char*) malloc(7);
-        sprintf(temp->content, "Lit(%c)", c);
+        temp->content = "Star";
     }
+
     temp->left = NULL;
     temp->right = NULL;
     return temp;
 }
 
-struct node* cat(struct node* l, struct node* r) {
+struct node* makeDouble(struct node* l, struct node* r, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
     temp->content = (char*) malloc(4);
-    temp->content = "Cat";
+    if ( type == CAT ) {
+        temp->content = "Cat";
+    } else if ( type == ALT ) {
+        temp->content = "Alt";
+    }
     temp->left = l;
     temp->right = r;
     return temp;
 }
 
-struct node* makeSingle(char* cs, struct node* child) {
-    struct node* temp = (struct node*) malloc(sizeof(struct node));
-    temp->content = (char*) malloc(strlen(cs) + 1);
-    strcpy(temp->content, cs);
-    temp->left = child;
-    temp->right = NULL;
-    return temp;
+struct node* makeOne(struct node* current, struct node* child) {
+    current->left = child;
+    current->right = NULL;
+    return current;
 }
 
