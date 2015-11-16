@@ -17,7 +17,6 @@
 "+"     return '+';
 "?"     return '?';
 "\n"    return '\n';
-[ \t]+  ;
 ")"     return ')';
 .       { yylval.ctype = *yytext; return CHAR; }
 

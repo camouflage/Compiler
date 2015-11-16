@@ -1,27 +1,128 @@
-Dot
-Lit(a)
-Paren(1, Lit(a))
-Lit(a)
-Star(Lit(a))
-Plus(Lit(a))
-Quest(Lit(a))
-NgStar(Lit(a))
-NgPlus(Lit(a))
-NgQuest(Lit(a))
-Cat(Lit(h), Lit(i))
-Alt(Lit(a), Lit(b))
-Alt(Alt(Lit(-), Cat(Lit(-), Lit(-)))2, Cat(Cat(Lit(-), Lit(-)), Lit(-)))
-Alt(Alt(Star(Dot), Plus(Dot)), Quest(Dot))
-Cat(Cat(Cat(Cat(Cat(Cat(Cat(Cat(Cat(Cat(Cat(Lit(h), Lit(e)), Lit(l)), Lit(l)), Lit(o)), Lit( )), Lit( )), Lit(w)), Lit(o)), Lit(r)), Lit(l)), Lit(d))
-Cat(Cat(Cat(Lit(\), Lit(r)), Lit(\)), Lit(n))
-Cat(Cat(Cat(Cat(Lit(\), Lit(t)), Lit( )), Lit(\)), Lit(\))
-Cat(Lit("), Lit("))
-Cat(Lit('), Lit('))
-Cat(Cat(Lit(A), Dot), NgStar(Paren(1, Alt(Lit(B), Lit(C)))))
-Alt(Quest(Paren(1, Star(Lit(a)))), Star(Paren(2, Plus(Lit(a)))))
-NgQuest(Paren(1, Plus(Paren(2, Star(Lit(a))))))
-Paren(1, Alt(Cat(Dot, Lit(a)), Cat(Cat(Cat(Cat(Cat(Lit(b), Lit(c)), NgStar(Lit(d))), Lit(e)), Paren(2, Cat(Lit(f), Lit(g)))), Cat(Lit(h), Lit(i)))))
-Cat(Paren(1, Lit(a)), Paren(2, Lit(b)))
-Paren(1, Paren(2, Alt(Cat(Cat(Lit(a), Lit(n)), Lit(d)), Cat(Lit(o), Lit(r)))))
-Paren(1, Alt(Cat(Cat(Lit(a), Lit(n)), Lit(d)), Cat(Lit(o), Lit(r))))
-Paren(1, Alt(Cat(Cat(Lit(a), Lit(n)), Lit(d)), Cat(Lit(o), Lit(r))))
+Terminals which are not used
+
+   SUB
+   NgQuest
+   NgPlus
+   NgStar
+   '|'
+
+
+State 1 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: /* empty */
+    2      | input line
+
+    3 line: '\n'
+    4     | exp '\n'
+
+    5 exp: exp CHAR
+    6    | exp '.'
+    7    | /* empty */
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 3 4
+'.' (46) 6
+'|' (124)
+error (256)
+CHAR (258) 5
+SUB (259)
+NgQuest (260)
+NgPlus (261)
+NgStar (262)
+
+
+Nonterminals, with rules where they appear
+
+$accept (11)
+    on left: 0
+input (12)
+    on left: 1 2, on right: 0 2
+line (13)
+    on left: 3 4, on right: 2
+exp (14)
+    on left: 5 6 7, on right: 4 5 6
+
+
+state 0
+
+    0 $accept: . input $end
+
+    $default  reduce using rule 1 (input)
+
+    input  go to state 1
+
+
+state 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end  shift, and go to state 2
+    '\n'  shift, and go to state 3
+
+    '\n'      [reduce using rule 7 (exp)]
+    $default  reduce using rule 7 (exp)
+
+    line  go to state 4
+    exp   go to state 5
+
+
+state 2
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+state 3
+
+    3 line: '\n' .
+
+    $default  reduce using rule 3 (line)
+
+
+state 4
+
+    2 input: input line .
+
+    $default  reduce using rule 2 (input)
+
+
+state 5
+
+    4 line: exp . '\n'
+    5 exp: exp . CHAR
+    6    | exp . '.'
+
+    CHAR  shift, and go to state 6
+    '\n'  shift, and go to state 7
+    '.'   shift, and go to state 8
+
+
+state 6
+
+    5 exp: exp CHAR .
+
+    $default  reduce using rule 5 (exp)
+
+
+state 7
+
+    4 line: exp '\n' .
+
+    $default  reduce using rule 4 (line)
+
+
+state 8
+
+    6 exp: exp '.' .
+
+    $default  reduce using rule 6 (exp)
