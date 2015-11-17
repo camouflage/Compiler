@@ -11,6 +11,7 @@
 "??"    return NgQuest;
 
 "(?:"   return SUB;
+"("     return '(';
 "|"     return '|';
 "."     return '.';
 "*"     return '*';

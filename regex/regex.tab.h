@@ -58,15 +58,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 26 "regex.y"
+#line 27 "regex.y"
 {
     struct node* ntype;
-    char* cstype;
     char  ctype;
-    int   itype;
 }
 /* Line 1529 of yacc.c.  */
-#line 70 "regex.tab.h"
+#line 68 "regex.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -92,12 +92,13 @@
     void yyerror (char const *);
     
     struct node {
+        int paren;
         char* content;
         struct node* left;
         struct node* right;
     };
 
-    typedef enum {CAT = 0, ALT, OTHER, STAR, PLUS, QUEST} kind;
+    typedef enum {CAT = 0, ALT, OTHER, STAR, PLUS, QUEST, NGSTAR, NGPLUS, NGQUEST, PAREN} kind;
 
     void print(struct node* t);
     void myFree(struct node* t);
@@ -128,15 +129,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 26 "regex.y"
+#line 27 "regex.y"
 {
     struct node* ntype;
-    char* cstype;
     char  ctype;
-    int   itype;
 }
 /* Line 193 of yacc.c.  */
-#line 140 "regex.tab.c"
+#line 139 "regex.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -149,7 +148,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 153 "regex.tab.c"
+#line 152 "regex.tab.c"
 
 #ifdef short
 # undef short
@@ -364,16 +363,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   12
+#define YYLAST   36
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  14
+#define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  22
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  15
+#define YYNSTATES  26
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -389,7 +388,7 @@ static const yytype_uint8 yytranslate[] =
       12,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     5,     6,     2,     2,    13,     2,     2,     2,
+      13,    14,     5,     6,     2,     2,    15,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     7,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -419,24 +418,28 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     4,     7,     9,    12,    16,    18,    21,
-      24,    25,    28,    29,    31
+       0,     0,     3,     4,     7,     9,    12,    16,    18,    20,
+      23,    25,    26,    29,    32,    35,    38,    41,    44,    46,
+      48,    52,    54
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      15,     0,    -1,    -1,    15,    16,    -1,    12,    -1,    17,
-      12,    -1,    17,    11,    18,    -1,    18,    -1,    18,    20,
-      -1,    18,    19,    -1,    -1,    19,     5,    -1,    -1,     3,
-      -1,    13,    -1
+      17,     0,    -1,    -1,    17,    18,    -1,    12,    -1,    19,
+      12,    -1,    19,    11,    20,    -1,    21,    -1,    20,    -1,
+      20,    21,    -1,    21,    -1,    -1,    21,     5,    -1,    21,
+       6,    -1,    21,     7,    -1,    21,    10,    -1,    21,     9,
+      -1,    21,     8,    -1,    22,    -1,    23,    -1,    13,    19,
+      14,    -1,     3,    -1,    15,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    38,    38,    39,    42,    43,    50,    53,    58,    65,
-      68,    73,    77,    82,    85
+       0,    37,    37,    38,    41,    42,    50,    53,    56,    61,
+      68,    71,    76,    80,    84,    88,    92,    96,   100,   103,
+     108,   114,   117
 };
 #endif
 
@@ -446,8 +449,8 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "CHAR", "SUB", "'*'", "'+'", "'?'",
-  "NgQuest", "NgPlus", "NgStar", "'|'", "'\\n'", "'.'", "$accept", "input",
-  "line", "exp", "cat", "sign", "term", 0
+  "NgQuest", "NgPlus", "NgStar", "'|'", "'\\n'", "'('", "')'", "'.'",
+  "$accept", "input", "line", "exp", "cat", "sign", "paren", "term", 0
 };
 #endif
 
@@ -457,22 +460,24 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,    42,    43,    63,   260,   261,
-     262,   124,    10,    46
+     262,   124,    10,    40,    41,    46
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    14,    15,    15,    16,    16,    17,    17,    18,    18,
-      18,    19,    19,    20,    20
+       0,    16,    17,    17,    18,    18,    19,    19,    19,    20,
+      20,    20,    21,    21,    21,    21,    21,    21,    21,    21,
+      22,    23,    23
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     1,     2,     3,     1,     2,     2,
-       0,     2,     0,     1,     1
+       0,     2,     0,     2,     1,     2,     3,     1,     1,     2,
+       1,     0,     2,     2,     2,     2,     2,     2,     1,     1,
+       3,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -480,54 +485,61 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,    10,     1,     4,     3,     0,     7,    10,     5,    13,
-      14,     9,     8,     6,    11
+       2,    11,     1,    21,     4,    11,    22,     3,     0,     8,
+       7,    18,    19,     0,    11,     5,     9,    12,    13,    14,
+      17,    16,    15,    20,     6,    10
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     4,     5,     6,    11,    12
+      -1,     1,     7,     8,     9,    10,    11,    12
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -8
+#define YYPACT_NINF -10
 static const yytype_int8 yypact[] =
 {
-      -8,     0,    -8,    -8,    -8,    -7,    -2,    -8,    -8,    -8,
-      -8,    -3,    -8,    -2,    -8
+     -10,     0,   -10,   -10,   -10,    15,   -10,   -10,    -4,    15,
+      14,   -10,   -10,    -9,    15,   -10,    26,   -10,   -10,   -10,
+     -10,   -10,   -10,   -10,    15,    26
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -8,    -8,    -8,    -8,    -1,    -8,    -8
+     -10,   -10,   -10,    -1,    -5,    -8,   -10,   -10
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule which
    number is the opposite.  If zero, do what YYDEFACT says.
    If YYTABLE_NINF, syntax error.  */
-#define YYTABLE_NINF -13
+#define YYTABLE_NINF -11
 static const yytype_int8 yytable[] =
 {
-       2,     9,    14,   -12,     7,     8,    13,     0,     0,     0,
-       0,    10,     3
+       2,    16,    14,     3,    13,    23,    25,    14,    15,    24,
+       0,     0,     4,     5,     0,     6,    16,   -10,     3,    17,
+      18,    19,    20,    21,    22,     0,     0,   -10,     5,   -10,
+       6,    17,    18,    19,    20,    21,    22
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,     5,     5,    11,    12,     7,    -1,    -1,    -1,
-      -1,    13,    12
+       0,     9,    11,     3,     5,    14,    14,    11,    12,    14,
+      -1,    -1,    12,    13,    -1,    15,    24,     3,     3,     5,
+       6,     7,     8,     9,    10,    -1,    -1,    13,    13,    15,
+      15,     5,     6,     7,     8,     9,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    15,     0,    12,    16,    17,    18,    11,    12,     3,
-      13,    19,    20,    18,     5
+       0,    17,     0,     3,    12,    13,    15,    18,    19,    20,
+      21,    22,    23,    19,    11,    12,    21,     5,     6,     7,
+       8,     9,    10,    14,    20,    21
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1342,10 +1354,11 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 43 "regex.y"
+#line 42 "regex.y"
     { 
                         print((yyvsp[(1) - (2)].ntype)); printf("\n");
                         (yyval.ntype) = NULL;
+                        parenCount = 1;
                         //myFree($<ntype>$);
                     ;}
     break;
@@ -1365,7 +1378,14 @@ yyreduce:
     break;
 
   case 8:
-#line 58 "regex.y"
+#line 56 "regex.y"
+    {
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                    ;}
+    break;
+
+  case 9:
+#line 61 "regex.y"
     {
                         if ( (yyvsp[(1) - (2)].ntype) == NULL ) {
                             (yyval.ntype) = (yyvsp[(2) - (2)].ntype);
@@ -1375,44 +1395,99 @@ yyreduce:
                     ;}
     break;
 
-  case 9:
-#line 65 "regex.y"
+  case 10:
+#line 68 "regex.y"
     {
-                        (yyval.ntype) = (yyvsp[(1) - (2)].ntype);
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
                     ;}
     break;
 
-  case 10:
-#line 68 "regex.y"
+  case 11:
+#line 71 "regex.y"
     {
                         (yyval.ntype) = NULL;
                     ;}
     break;
 
-  case 11:
-#line 73 "regex.y"
+  case 12:
+#line 76 "regex.y"
     {
                         struct node* temp = makeNode(' ', STAR);
                         (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
                     ;}
     break;
 
-  case 12:
-#line 77 "regex.y"
+  case 13:
+#line 80 "regex.y"
     {
-                        (yyval.ntype) = NULL;
+                        struct node* temp = makeNode(' ', PLUS);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
                     ;}
     break;
 
-  case 13:
-#line 82 "regex.y"
+  case 14:
+#line 84 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', QUEST);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                    ;}
+    break;
+
+  case 15:
+#line 88 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', NGSTAR);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                    ;}
+    break;
+
+  case 16:
+#line 92 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', NGPLUS);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                    ;}
+    break;
+
+  case 17:
+#line 96 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', NGQUEST);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                    ;}
+    break;
+
+  case 18:
+#line 100 "regex.y"
+    {
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                    ;}
+    break;
+
+  case 19:
+#line 103 "regex.y"
+    {
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                    ;}
+    break;
+
+  case 20:
+#line 108 "regex.y"
+    {
+                        struct node* temp = makeNode(' ', PAREN);
+                        (yyval.ntype) = makeOne(temp, (yyvsp[(2) - (3)].ntype));
+                    ;}
+    break;
+
+  case 21:
+#line 114 "regex.y"
     {    
                         (yyval.ntype) = makeNode((yyvsp[(1) - (1)].ctype), OTHER);
                     ;}
     break;
 
-  case 14:
-#line 85 "regex.y"
+  case 22:
+#line 117 "regex.y"
     {
                         (yyval.ntype) = makeNode('.', OTHER);
                     ;}
@@ -1420,7 +1495,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1424 "regex.tab.c"
+#line 1499 "regex.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1634,7 +1709,7 @@ yyreturn:
 }
 
 
-#line 90 "regex.y"
+#line 122 "regex.y"
 
 
 
@@ -1649,15 +1724,21 @@ void yyerror (char const *s) {
 
 void print(struct node* t) {
     printf("%s", t->content);
-    if ( t->left != NULL | t->right != NULL ) {
-        printf("(");
-        if ( t->left != NULL ) {
-            print(t->left);
+    if ( t->paren == 0 ) {
+        if ( t->left != NULL | t->right != NULL ) {
+            printf("(");
+            if ( t->left != NULL ) {
+                print(t->left);
+            }
+            if ( t->right != NULL ) {
+                printf(", ");
+                print(t->right);
+            }
+            printf(")");
         }
-        if ( t->right != NULL ) {
-            printf(", ");
-            print(t->right);
-        }
+    } else {
+        printf("(%d, ", t->paren);
+        print(t->left);
         printf(")");
     }
 }
@@ -1676,6 +1757,7 @@ void myFree(struct node* t) {
 
 struct node* makeNode(char c, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
+    temp->paren = 0;
     if ( type == OTHER ) {
         if ( c == '.' ) {
             temp->content = (char*) malloc(4);
@@ -1685,8 +1767,28 @@ struct node* makeNode(char c, kind type) {
             sprintf(temp->content, "Lit(%c)", c);
         }
     } else if ( type == STAR ) {
-        temp->content = (char*) malloc(7);
+        temp->content = (char*) malloc(5);
         temp->content = "Star";
+    } else if ( type == PLUS ) {
+        temp->content = (char*) malloc(5);
+        temp->content = "Plus";
+    } else if ( type == QUEST ) {
+        temp->content = (char*) malloc(6);
+        temp->content = "Quest";
+    } else if ( type == NGSTAR ) {
+        temp->content = (char*) malloc(7);
+        temp->content = "NgStar";
+    } else if ( type == NGPLUS ) {
+        temp->content = (char*) malloc(7);
+        temp->content = "NgPlus";
+    } else if ( type == NGQUEST ) {
+        temp->content = (char*) malloc(7);
+        temp->content = "NgQuest";
+    } else if ( type == PAREN ) {
+        char* num;
+        temp->content = (char*) malloc(6);
+        temp->content = "Paren";
+        temp->paren = parenCount++;
     }
 
     temp->left = NULL;
