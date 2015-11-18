@@ -65,9 +65,6 @@ cat   : cat sign   {
       | sign        {
                         $<ntype>$ = $<ntype>1;
                     }
-      |             {
-                        $<ntype>$ = NULL;
-                    }
 ;
 
 sign  : sign '*'    {
@@ -129,7 +126,6 @@ int main() {
 void yyerror (char const *s) {
     fprintf (stderr, "%s\n", s);
 }
-
 
 void print(struct node* t) {
     printf("%s", t->content);

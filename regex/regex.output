@@ -1,16 +1,3 @@
-Terminals which are not used
-
-   SUB
-   '+'
-   '?'
-   NgQuest
-   NgPlus
-   NgStar
-
-
-State 1 conflicts: 1 shift/reduce
-
-
 Grammar
 
     0 $accept: input $end
@@ -24,49 +11,62 @@ Grammar
     5 exp: exp '|' cat
     6    | cat
 
-    7 cat: cat term
-    8    | cat sign
-    9    | /* empty */
+    7 cat: cat sign
+    8    | sign
 
-   10 term: CHAR
-   11     | '.'
+    9 sign: sign '*'
+   10     | sign '+'
+   11     | sign '?'
+   12     | sign NgStar
+   13     | sign NgPlus
+   14     | sign NgQuest
+   15     | paren
+   16     | term
 
-   12 sign: '*'
+   17 paren: '(' exp ')'
+   18      | SUB exp ')'
+
+   19 term: CHAR
+   20     | '.'
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 '\n' (10) 3 4
-'*' (42) 12
-'+' (43)
-'.' (46) 11
-'?' (63)
+'(' (40) 17
+')' (41) 17 18
+'*' (42) 9
+'+' (43) 10
+'.' (46) 20
+'?' (63) 11
 '|' (124) 5
 error (256)
-CHAR (258) 10
-SUB (259)
-NgQuest (260)
-NgPlus (261)
-NgStar (262)
+CHAR (258) 19
+SUB (259) 18
+NgQuest (260) 14
+NgPlus (261) 13
+NgStar (262) 12
 
 
 Nonterminals, with rules where they appear
 
-$accept (14)
+$accept (16)
     on left: 0
-input (15)
+input (17)
     on left: 1 2, on right: 0 2
-line (16)
+line (18)
     on left: 3 4, on right: 2
-exp (17)
-    on left: 5 6, on right: 4 5
-cat (18)
-    on left: 7 8 9, on right: 5 6 7 8
-term (19)
-    on left: 10 11, on right: 7
-sign (20)
-    on left: 12, on right: 8
+exp (19)
+    on left: 5 6, on right: 4 5 17 18
+cat (20)
+    on left: 7 8, on right: 5 6 7
+sign (21)
+    on left: 9 10 11 12 13 14 15 16, on right: 7 8 9 10 11 12 13 14
+paren (22)
+    on left: 17 18, on right: 15
+term (23)
+    on left: 19 20, on right: 16
 
 
 state 0
@@ -84,14 +84,18 @@ state 1
     2 input: input . line
 
     $end  shift, and go to state 2
-    '\n'  shift, and go to state 3
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '\n'  shift, and go to state 5
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
 
-    '\n'      [reduce using rule 9 (cat)]
-    $default  reduce using rule 9 (cat)
-
-    line  go to state 4
-    exp   go to state 5
-    cat   go to state 6
+    line   go to state 8
+    exp    go to state 9
+    cat    go to state 10
+    sign   go to state 11
+    paren  go to state 12
+    term   go to state 13
 
 
 state 2
@@ -103,105 +107,252 @@ state 2
 
 state 3
 
+   19 term: CHAR .
+
+    $default  reduce using rule 19 (term)
+
+
+state 4
+
+   18 paren: SUB . exp ')'
+
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
+
+    exp    go to state 14
+    cat    go to state 10
+    sign   go to state 11
+    paren  go to state 12
+    term   go to state 13
+
+
+state 5
+
     3 line: '\n' .
 
     $default  reduce using rule 3 (line)
 
 
-state 4
+state 6
+
+   17 paren: '(' . exp ')'
+
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
+
+    exp    go to state 15
+    cat    go to state 10
+    sign   go to state 11
+    paren  go to state 12
+    term   go to state 13
+
+
+state 7
+
+   20 term: '.' .
+
+    $default  reduce using rule 20 (term)
+
+
+state 8
 
     2 input: input line .
 
     $default  reduce using rule 2 (input)
 
 
-state 5
+state 9
 
     4 line: exp . '\n'
     5 exp: exp . '|' cat
 
-    '|'   shift, and go to state 7
-    '\n'  shift, and go to state 8
+    '|'   shift, and go to state 16
+    '\n'  shift, and go to state 17
 
 
-state 6
+state 10
 
     6 exp: cat .
-    7 cat: cat . term
-    8    | cat . sign
+    7 cat: cat . sign
 
-    CHAR  shift, and go to state 9
-    '*'   shift, and go to state 10
-    '.'   shift, and go to state 11
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
 
     $default  reduce using rule 6 (exp)
 
-    term  go to state 12
-    sign  go to state 13
+    sign   go to state 18
+    paren  go to state 12
+    term   go to state 13
 
 
-state 7
+state 11
+
+    8 cat: sign .
+    9 sign: sign . '*'
+   10     | sign . '+'
+   11     | sign . '?'
+   12     | sign . NgStar
+   13     | sign . NgPlus
+   14     | sign . NgQuest
+
+    '*'      shift, and go to state 19
+    '+'      shift, and go to state 20
+    '?'      shift, and go to state 21
+    NgQuest  shift, and go to state 22
+    NgPlus   shift, and go to state 23
+    NgStar   shift, and go to state 24
+
+    $default  reduce using rule 8 (cat)
+
+
+state 12
+
+   15 sign: paren .
+
+    $default  reduce using rule 15 (sign)
+
+
+state 13
+
+   16 sign: term .
+
+    $default  reduce using rule 16 (sign)
+
+
+state 14
+
+    5 exp: exp . '|' cat
+   18 paren: SUB exp . ')'
+
+    '|'  shift, and go to state 16
+    ')'  shift, and go to state 25
+
+
+state 15
+
+    5 exp: exp . '|' cat
+   17 paren: '(' exp . ')'
+
+    '|'  shift, and go to state 16
+    ')'  shift, and go to state 26
+
+
+state 16
 
     5 exp: exp '|' . cat
 
-    $default  reduce using rule 9 (cat)
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
 
-    cat  go to state 14
+    cat    go to state 27
+    sign   go to state 11
+    paren  go to state 12
+    term   go to state 13
 
 
-state 8
+state 17
 
     4 line: exp '\n' .
 
     $default  reduce using rule 4 (line)
 
 
-state 9
+state 18
 
-   10 term: CHAR .
+    7 cat: cat sign .
+    9 sign: sign . '*'
+   10     | sign . '+'
+   11     | sign . '?'
+   12     | sign . NgStar
+   13     | sign . NgPlus
+   14     | sign . NgQuest
 
-    $default  reduce using rule 10 (term)
-
-
-state 10
-
-   12 sign: '*' .
-
-    $default  reduce using rule 12 (sign)
-
-
-state 11
-
-   11 term: '.' .
-
-    $default  reduce using rule 11 (term)
-
-
-state 12
-
-    7 cat: cat term .
+    '*'      shift, and go to state 19
+    '+'      shift, and go to state 20
+    '?'      shift, and go to state 21
+    NgQuest  shift, and go to state 22
+    NgPlus   shift, and go to state 23
+    NgStar   shift, and go to state 24
 
     $default  reduce using rule 7 (cat)
 
 
-state 13
+state 19
 
-    8 cat: cat sign .
+    9 sign: sign '*' .
 
-    $default  reduce using rule 8 (cat)
+    $default  reduce using rule 9 (sign)
 
 
-state 14
+state 20
+
+   10 sign: sign '+' .
+
+    $default  reduce using rule 10 (sign)
+
+
+state 21
+
+   11 sign: sign '?' .
+
+    $default  reduce using rule 11 (sign)
+
+
+state 22
+
+   14 sign: sign NgQuest .
+
+    $default  reduce using rule 14 (sign)
+
+
+state 23
+
+   13 sign: sign NgPlus .
+
+    $default  reduce using rule 13 (sign)
+
+
+state 24
+
+   12 sign: sign NgStar .
+
+    $default  reduce using rule 12 (sign)
+
+
+state 25
+
+   18 paren: SUB exp ')' .
+
+    $default  reduce using rule 18 (paren)
+
+
+state 26
+
+   17 paren: '(' exp ')' .
+
+    $default  reduce using rule 17 (paren)
+
+
+state 27
 
     5 exp: exp '|' cat .
-    7 cat: cat . term
-    8    | cat . sign
+    7 cat: cat . sign
 
-    CHAR  shift, and go to state 9
-    '*'   shift, and go to state 10
-    '.'   shift, and go to state 11
+    CHAR  shift, and go to state 3
+    SUB   shift, and go to state 4
+    '('   shift, and go to state 6
+    '.'   shift, and go to state 7
 
     $default  reduce using rule 5 (exp)
 
-    term  go to state 12
-    sign  go to state 13
+    sign   go to state 18
+    paren  go to state 12
+    term   go to state 13

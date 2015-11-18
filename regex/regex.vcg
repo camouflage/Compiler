@@ -1,0 +1,618 @@
+graph: {
+	display_edge_labels:	yes
+	priority_phase:	yes
+	port_sharing:	no
+	crossing_weight:	median
+	splines:	yes
+	node: {
+		title:	"0"
+		label:	"state  0\n $accept -> . input $end"
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"1"
+		label:	"input"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"1"
+		label:	"state  1\n $accept -> input . $end\n input -> input . line"
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"2"
+		label:	"$end"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"5"
+		label:	"'\\n'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"8"
+		label:	"line"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"9"
+		label:	"exp"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"10"
+		label:	"cat"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"11"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"2"
+		label:	"state  2\n $accept -> input $end ."
+	}
+	node: {
+		title:	"3"
+		label:	"state  3\n term -> CHAR ."
+	}
+	node: {
+		title:	"4"
+		label:	"state  4\n paren -> SUB . exp ')'"
+	}
+	backedge: {
+		sourcename:	"4"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"14"
+		label:	"exp"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"10"
+		label:	"cat"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"11"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"5"
+		label:	"state  5\n line -> '\\n' ."
+	}
+	node: {
+		title:	"6"
+		label:	"state  6\n paren -> '(' . exp ')'"
+	}
+	backedge: {
+		sourcename:	"6"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"6"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"15"
+		label:	"exp"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"10"
+		label:	"cat"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"11"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"7"
+		label:	"state  7\n term -> '.' ."
+	}
+	node: {
+		title:	"8"
+		label:	"state  8\n input -> input line ."
+	}
+	node: {
+		title:	"9"
+		label:	"state  9\n line -> exp . '\\n'\n exp -> exp . '|' cat"
+	}
+	edge: {
+		sourcename:	"9"
+		targetname:	"16"
+		label:	"'|'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"9"
+		targetname:	"17"
+		label:	"'\\n'"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"10"
+		label:	"state 10\n exp -> cat .\n cat -> cat . sign"
+	}
+	backedge: {
+		sourcename:	"10"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"10"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"10"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"10"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"10"
+		targetname:	"18"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"10"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"10"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"11"
+		label:	"state 11\n cat -> sign .\n sign -> sign . '*'\n sign -> sign . '+'\n sign -> sign . '?'\n sign -> sign . NgStar\n sign -> sign . NgPlus\n sign -> sign . NgQuest"
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"19"
+		label:	"'*'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"20"
+		label:	"'+'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"21"
+		label:	"'?'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"22"
+		label:	"NgQuest"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"23"
+		label:	"NgPlus"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"24"
+		label:	"NgStar"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"12"
+		label:	"state 12\n sign -> paren ."
+	}
+	node: {
+		title:	"13"
+		label:	"state 13\n sign -> term ."
+	}
+	node: {
+		title:	"14"
+		label:	"state 14\n exp -> exp . '|' cat\n paren -> SUB exp . ')'"
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"16"
+		label:	"'|'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"25"
+		label:	"')'"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"15"
+		label:	"state 15\n exp -> exp . '|' cat\n paren -> '(' exp . ')'"
+	}
+	edge: {
+		sourcename:	"15"
+		targetname:	"16"
+		label:	"'|'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"15"
+		targetname:	"26"
+		label:	"')'"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"16"
+		label:	"state 16\n exp -> exp '|' . cat"
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"16"
+		targetname:	"27"
+		label:	"cat"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"11"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"16"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"17"
+		label:	"state 17\n line -> exp '\\n' ."
+	}
+	node: {
+		title:	"18"
+		label:	"state 18\n cat -> cat sign .\n sign -> sign . '*'\n sign -> sign . '+'\n sign -> sign . '?'\n sign -> sign . NgStar\n sign -> sign . NgPlus\n sign -> sign . NgQuest"
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"19"
+		label:	"'*'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"20"
+		label:	"'+'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"21"
+		label:	"'?'"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"22"
+		label:	"NgQuest"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"23"
+		label:	"NgPlus"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"18"
+		targetname:	"24"
+		label:	"NgStar"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"19"
+		label:	"state 19\n sign -> sign '*' ."
+	}
+	node: {
+		title:	"20"
+		label:	"state 20\n sign -> sign '+' ."
+	}
+	node: {
+		title:	"21"
+		label:	"state 21\n sign -> sign '?' ."
+	}
+	node: {
+		title:	"22"
+		label:	"state 22\n sign -> sign NgQuest ."
+	}
+	node: {
+		title:	"23"
+		label:	"state 23\n sign -> sign NgPlus ."
+	}
+	node: {
+		title:	"24"
+		label:	"state 24\n sign -> sign NgStar ."
+	}
+	node: {
+		title:	"25"
+		label:	"state 25\n paren -> SUB exp ')' ."
+	}
+	node: {
+		title:	"26"
+		label:	"state 26\n paren -> '(' exp ')' ."
+	}
+	node: {
+		title:	"27"
+		label:	"state 27\n exp -> exp '|' cat .\n cat -> cat . sign"
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"3"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"4"
+		label:	"SUB"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"6"
+		label:	"'('"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"7"
+		label:	"'.'"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"18"
+		label:	"sign"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"12"
+		label:	"paren"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"13"
+		label:	"term"
+		color:	green
+		textcolor:	black
+	}
+
+
+}
