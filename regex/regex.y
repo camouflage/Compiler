@@ -5,7 +5,7 @@
     void yyerror (char const *);
     
     struct node {
-        int paren;
+        int isParen;
         char* content;
         struct node* left;
         struct node* right;
@@ -43,7 +43,7 @@ line  : '\n'
                         print($<ntype>1); printf("\n");
                         $<ntype>$ = NULL;
                         parenCount = 1;
-                        //myFree($<ntype>$);
+                        myFree($<ntype>1);
                     }
 ;
 
@@ -106,6 +106,9 @@ paren : '(' exp ')' {
                         struct node* temp = makeNode(' ', PAREN);
                         $<ntype>$ = makeOne(temp, $<ntype>2);
                     }
+      | SUB exp ')' {
+                        $<ntype>$ = $<ntype>2;
+                    }
 ;
 
 term  : CHAR        {    
@@ -130,7 +133,7 @@ void yyerror (char const *s) {
 
 void print(struct node* t) {
     printf("%s", t->content);
-    if ( t->paren == 0 ) {
+    if ( !t->isParen ) {
         if ( t->left != NULL | t->right != NULL ) {
             printf("(");
             if ( t->left != NULL ) {
@@ -143,7 +146,7 @@ void print(struct node* t) {
             printf(")");
         }
     } else {
-        printf("(%d, ", t->paren);
+        printf("(%d, ", parenCount++);
         print(t->left);
         printf(")");
     }
@@ -152,49 +155,58 @@ void print(struct node* t) {
 void myFree(struct node* t) {
     if ( t->left != NULL ) {
         myFree(t->left);
+        t->left = NULL;
     }
     if ( t->right != NULL ) {
         myFree(t->right);
+        t->right = NULL;
     }
-    free(t->content);
-    free(t);
-    t = NULL;
+    
+    if ( t->content != NULL ) {
+        free(t->content);
+        t->content = NULL;
+    }
+    
+    if ( t != NULL ) {
+        free(t);
+        t = NULL;
+    }
 }
 
 struct node* makeNode(char c, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
-    temp->paren = 0;
+    temp->isParen = 0;
     if ( type == OTHER ) {
         if ( c == '.' ) {
             temp->content = (char*) malloc(4);
-            temp->content = "Dot";
+            sprintf(temp->content, "Dot");
         } else {
             temp->content = (char*) malloc(7);
             sprintf(temp->content, "Lit(%c)", c);
         }
     } else if ( type == STAR ) {
         temp->content = (char*) malloc(5);
-        temp->content = "Star";
+        sprintf(temp->content, "Star");
     } else if ( type == PLUS ) {
         temp->content = (char*) malloc(5);
-        temp->content = "Plus";
+        sprintf(temp->content, "Plus");
     } else if ( type == QUEST ) {
         temp->content = (char*) malloc(6);
-        temp->content = "Quest";
+        sprintf(temp->content, "Quest");
     } else if ( type == NGSTAR ) {
         temp->content = (char*) malloc(7);
-        temp->content = "NgStar";
+        sprintf(temp->content, "NgStar");
     } else if ( type == NGPLUS ) {
         temp->content = (char*) malloc(7);
-        temp->content = "NgPlus";
+        sprintf(temp->content, "NgPlus");
     } else if ( type == NGQUEST ) {
-        temp->content = (char*) malloc(7);
-        temp->content = "NgQuest";
+        temp->content = (char*) malloc(8);
+        sprintf(temp->content, "NgQuest");
     } else if ( type == PAREN ) {
         char* num;
         temp->content = (char*) malloc(6);
-        temp->content = "Paren";
-        temp->paren = parenCount++;
+        sprintf(temp->content, "Paren");
+        temp->isParen = 1;
     }
 
     temp->left = NULL;
@@ -205,10 +217,11 @@ struct node* makeNode(char c, kind type) {
 struct node* makeDouble(struct node* l, struct node* r, kind type) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
     temp->content = (char*) malloc(4);
+    temp->isParen = 0;
     if ( type == CAT ) {
-        temp->content = "Cat";
+        sprintf(temp->content, "Cat");
     } else if ( type == ALT ) {
-        temp->content = "Alt";
+        sprintf(temp->content, "Alt");
     }
     temp->left = l;
     temp->right = r;

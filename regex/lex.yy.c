@@ -371,8 +371,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[19] =
     {   0,
-        0,    0,   15,   13,   11,    5,   12,    8,    9,    7,
-       10,    6,    0,    1,    2,    3,    4,    0
+        0,    0,   15,   13,   11,    2,   12,    3,    4,   10,
+        5,    9,    0,    6,    7,    8,    1,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -728,72 +728,72 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 9 "regex.l"
-return NgStar;
+return SUB;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 10 "regex.l"
-return NgPlus;
+return '(';
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "regex.l"
-return NgQuest;
+#line 12 "regex.l"
+return '*';
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 13 "regex.l"
-return SUB;
+return '+';
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 14 "regex.l"
-return '(';
+return '?';
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 15 "regex.l"
-return '|';
+return NgStar;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 16 "regex.l"
-return '.';
+return NgPlus;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 17 "regex.l"
-return '*';
+return NgQuest;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "regex.l"
-return '+';
+#line 19 "regex.l"
+return '|';
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "regex.l"
-return '?';
+#line 20 "regex.l"
+return '.';
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 20 "regex.l"
+#line 21 "regex.l"
 return '\n';
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "regex.l"
+#line 22 "regex.l"
 return ')';
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 22 "regex.l"
+#line 23 "regex.l"
 { yylval.ctype = *yytext; return CHAR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 24 "regex.l"
+#line 25 "regex.l"
 ECHO;
 	YY_BREAK
 #line 800 "lex.yy.c"
@@ -1793,7 +1793,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 24 "regex.l"
+#line 25 "regex.l"
 
 
 
