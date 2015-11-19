@@ -21,10 +21,10 @@ Grammar
    13     | sign NgPlus
    14     | sign NgQuest
    15     | paren
-   16     | term
 
-   17 paren: '(' exp ')'
-   18      | SUB exp ')'
+   16 paren: '(' exp ')'
+   17      | SUB exp ')'
+   18      | term
 
    19 term: CHAR
    20     | '.'
@@ -34,8 +34,8 @@ Terminals, with rules where they appear
 
 $end (0) 0
 '\n' (10) 3 4
-'(' (40) 17
-')' (41) 17 18
+'(' (40) 16
+')' (41) 16 17
 '*' (42) 9
 '+' (43) 10
 '.' (46) 20
@@ -43,7 +43,7 @@ $end (0) 0
 '|' (124) 5
 error (256)
 CHAR (258) 19
-SUB (259) 18
+SUB (259) 17
 NgQuest (260) 14
 NgPlus (261) 13
 NgStar (262) 12
@@ -58,15 +58,15 @@ input (17)
 line (18)
     on left: 3 4, on right: 2
 exp (19)
-    on left: 5 6, on right: 4 5 17 18
+    on left: 5 6, on right: 4 5 16 17
 cat (20)
     on left: 7 8, on right: 5 6 7
 sign (21)
-    on left: 9 10 11 12 13 14 15 16, on right: 7 8 9 10 11 12 13 14
+    on left: 9 10 11 12 13 14 15, on right: 7 8 9 10 11 12 13 14
 paren (22)
-    on left: 17 18, on right: 15
+    on left: 16 17 18, on right: 15
 term (23)
-    on left: 19 20, on right: 16
+    on left: 19 20, on right: 18
 
 
 state 0
@@ -114,7 +114,7 @@ state 3
 
 state 4
 
-   18 paren: SUB . exp ')'
+   17 paren: SUB . exp ')'
 
     CHAR  shift, and go to state 3
     SUB   shift, and go to state 4
@@ -137,7 +137,7 @@ state 5
 
 state 6
 
-   17 paren: '(' . exp ')'
+   16 paren: '(' . exp ')'
 
     CHAR  shift, and go to state 3
     SUB   shift, and go to state 4
@@ -220,15 +220,15 @@ state 12
 
 state 13
 
-   16 sign: term .
+   18 paren: term .
 
-    $default  reduce using rule 16 (sign)
+    $default  reduce using rule 18 (paren)
 
 
 state 14
 
     5 exp: exp . '|' cat
-   18 paren: SUB exp . ')'
+   17 paren: SUB exp . ')'
 
     '|'  shift, and go to state 16
     ')'  shift, and go to state 25
@@ -237,7 +237,7 @@ state 14
 state 15
 
     5 exp: exp . '|' cat
-   17 paren: '(' exp . ')'
+   16 paren: '(' exp . ')'
 
     '|'  shift, and go to state 16
     ')'  shift, and go to state 26
@@ -329,16 +329,16 @@ state 24
 
 state 25
 
-   18 paren: SUB exp ')' .
+   17 paren: SUB exp ')' .
 
-    $default  reduce using rule 18 (paren)
+    $default  reduce using rule 17 (paren)
 
 
 state 26
 
-   17 paren: '(' exp ')' .
+   16 paren: '(' exp ')' .
 
-    $default  reduce using rule 17 (paren)
+    $default  reduce using rule 16 (paren)
 
 
 state 27

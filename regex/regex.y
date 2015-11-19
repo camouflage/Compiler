@@ -15,12 +15,11 @@
 
     void print(struct node* t);
     void myFree(struct node* t);
-    struct node* makeNode(char c, kind type);
-    struct node* makeDouble(struct node* l, struct node* r, kind type);
-    struct node* makeOne(struct node* current, struct node* child);
+    struct node* makeNode(char c, kind type, struct node* l, struct node* right);
 
     int parenCount = 1;
 %}
+
 
 %error-verbose
 
@@ -32,6 +31,7 @@
 %token CHAR SUB
 %right '*' '+' '?' NgStar NgPlus NgQuest
 %left '|'
+
 
 %% 
 input : /* empty */
@@ -48,7 +48,7 @@ line  : '\n'
 ;
 
 exp   : exp '|' cat {
-                        $<ntype>$ = makeDouble($<ntype>1, $<ntype>3, ALT);
+                        $<ntype>$ = makeNode(' ', ALT, $<ntype>1, $<ntype>3);
                     }
       | cat         {
                         $<ntype>$ = $<ntype>1;
@@ -56,11 +56,7 @@ exp   : exp '|' cat {
 ;    
 
 cat   : cat sign   {
-                        if ( $<ntype>1 == NULL ) {
-                            $<ntype>$ = $<ntype>2;
-                        } else {
-                            $<ntype>$ = makeDouble($<ntype>1, $<ntype>2, CAT);
-                        }
+                        $<ntype>$ = makeNode(' ', CAT, $<ntype>1, $<ntype>2);
                     }
       | sign        {
                         $<ntype>$ = $<ntype>1;
@@ -68,51 +64,44 @@ cat   : cat sign   {
 ;
 
 sign  : sign '*'    {
-                        struct node* temp = makeNode(' ', STAR);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', STAR, $<ntype>1, NULL);
                     }
       | sign '+'    {
-                        struct node* temp = makeNode(' ', PLUS);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', PLUS, $<ntype>1, NULL);
                     }
       | sign '?'    {
-                        struct node* temp = makeNode(' ', QUEST);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', QUEST, $<ntype>1, NULL);
                     }
       | sign NgStar {
-                        struct node* temp = makeNode(' ', NGSTAR);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', NGSTAR, $<ntype>1, NULL);
                     }
       | sign NgPlus {
-                        struct node* temp = makeNode(' ', NGPLUS);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', NGPLUS, $<ntype>1, NULL);
                     }
       | sign NgQuest{
-                        struct node* temp = makeNode(' ', NGQUEST);
-                        $<ntype>$ = makeOne(temp, $<ntype>1);
+                        $<ntype>$ = makeNode(' ', NGQUEST, $<ntype>1, NULL);
                     }
       | paren       {
                         $<ntype>$ = $<ntype>1;
+                    }
+;
+
+paren : '(' exp ')' {
+                        $<ntype>$ = makeNode(' ', PAREN, $<ntype>2, NULL);
+                    }
+      | SUB exp ')' {
+                        $<ntype>$ = $<ntype>2;
                     }
       | term        {
                         $<ntype>$ = $<ntype>1;
                     }
 ;
 
-paren : '(' exp ')' {
-                        struct node* temp = makeNode(' ', PAREN);
-                        $<ntype>$ = makeOne(temp, $<ntype>2);
-                    }
-      | SUB exp ')' {
-                        $<ntype>$ = $<ntype>2;
-                    }
-;
-
 term  : CHAR        {    
-                        $<ntype>$ = makeNode($<ctype>1, OTHER);
+                        $<ntype>$ = makeNode($<ctype>1, OTHER, NULL, NULL);
                     } 
       |  '.'        {
-                        $<ntype>$ = makeNode('.', OTHER);
+                        $<ntype>$ = makeNode('.', OTHER, NULL, NULL);
                     }
 ;
 
@@ -169,9 +158,12 @@ void myFree(struct node* t) {
     }
 }
 
-struct node* makeNode(char c, kind type) {
+struct node* makeNode(char c, kind type, struct node* l, struct node* r) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
     temp->isParen = 0;
+    temp->left = NULL;
+    temp->right = NULL;
+
     if ( type == OTHER ) {
         if ( c == '.' ) {
             temp->content = (char*) malloc(4);
@@ -180,52 +172,40 @@ struct node* makeNode(char c, kind type) {
             temp->content = (char*) malloc(7);
             sprintf(temp->content, "Lit(%c)", c);
         }
-    } else if ( type == STAR ) {
-        temp->content = (char*) malloc(5);
-        sprintf(temp->content, "Star");
-    } else if ( type == PLUS ) {
-        temp->content = (char*) malloc(5);
-        sprintf(temp->content, "Plus");
-    } else if ( type == QUEST ) {
-        temp->content = (char*) malloc(6);
-        sprintf(temp->content, "Quest");
-    } else if ( type == NGSTAR ) {
-        temp->content = (char*) malloc(7);
-        sprintf(temp->content, "NgStar");
-    } else if ( type == NGPLUS ) {
-        temp->content = (char*) malloc(7);
-        sprintf(temp->content, "NgPlus");
-    } else if ( type == NGQUEST ) {
-        temp->content = (char*) malloc(8);
-        sprintf(temp->content, "NgQuest");
-    } else if ( type == PAREN ) {
-        char* num;
-        temp->content = (char*) malloc(6);
-        sprintf(temp->content, "Paren");
-        temp->isParen = 1;
+    } else {
+        temp->left = l;
+        if ( type == CAT ) {
+            temp->content = (char*) malloc(4);
+            sprintf(temp->content, "Cat");
+            temp->right = r;
+        } else if ( type == ALT ) {
+            temp->content = (char*) malloc(4);
+            sprintf(temp->content, "Alt");
+            temp->right = r;
+        } else if ( type == STAR ) {
+            temp->content = (char*) malloc(5);
+            sprintf(temp->content, "Star");
+        } else if ( type == PLUS ) {
+            temp->content = (char*) malloc(5);
+            sprintf(temp->content, "Plus");
+        } else if ( type == QUEST ) {
+            temp->content = (char*) malloc(6);
+            sprintf(temp->content, "Quest");
+        } else if ( type == NGSTAR ) {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "NgStar");
+        } else if ( type == NGPLUS ) {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "NgPlus");
+        } else if ( type == NGQUEST ) {
+            temp->content = (char*) malloc(8);
+            sprintf(temp->content, "NgQuest");
+        } else if ( type == PAREN ) {
+            temp->content = (char*) malloc(6);
+            sprintf(temp->content, "Paren");
+            temp->isParen = 1;
+        }
     }
 
-    temp->left = NULL;
-    temp->right = NULL;
     return temp;
-}
-
-struct node* makeDouble(struct node* l, struct node* r, kind type) {
-    struct node* temp = (struct node*) malloc(sizeof(struct node));
-    temp->content = (char*) malloc(4);
-    temp->isParen = 0;
-    if ( type == CAT ) {
-        sprintf(temp->content, "Cat");
-    } else if ( type == ALT ) {
-        sprintf(temp->content, "Alt");
-    }
-    temp->left = l;
-    temp->right = r;
-    return temp;
-}
-
-struct node* makeOne(struct node* current, struct node* child) {
-    current->left = child;
-    current->right = NULL;
-    return current;
 }

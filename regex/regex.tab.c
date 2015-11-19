@@ -102,9 +102,7 @@
 
     void print(struct node* t);
     void myFree(struct node* t);
-    struct node* makeNode(char c, kind type);
-    struct node* makeDouble(struct node* l, struct node* r, kind type);
-    struct node* makeOne(struct node* current, struct node* child);
+    struct node* makeNode(char c, kind type, struct node* l, struct node* right);
 
     int parenCount = 1;
 
@@ -129,13 +127,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 27 "regex.y"
+#line 26 "regex.y"
 {
     struct node* ntype;
     char  ctype;
 }
 /* Line 193 of yacc.c.  */
-#line 139 "regex.tab.c"
+#line 137 "regex.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -148,7 +146,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 152 "regex.tab.c"
+#line 150 "regex.tab.c"
 
 #ifdef short
 # undef short
@@ -419,7 +417,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     4,     7,     9,    12,    16,    18,    21,
-      23,    26,    29,    32,    35,    38,    41,    43,    45,    49,
+      23,    26,    29,    32,    35,    38,    41,    43,    47,    51,
       53,    55
 };
 
@@ -430,16 +428,16 @@ static const yytype_int8 yyrhs[] =
       12,    -1,    19,    11,    20,    -1,    20,    -1,    20,    21,
       -1,    21,    -1,    21,     5,    -1,    21,     6,    -1,    21,
        7,    -1,    21,    10,    -1,    21,     9,    -1,    21,     8,
-      -1,    22,    -1,    23,    -1,    13,    19,    14,    -1,     4,
-      19,    14,    -1,     3,    -1,    15,    -1
+      -1,    22,    -1,    13,    19,    14,    -1,     4,    19,    14,
+      -1,    23,    -1,     3,    -1,    15,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    38,    41,    42,    50,    53,    58,    65,
-      70,    74,    78,    82,    86,    90,    94,    97,   102,   106,
-     111,   114
+       0,    37,    37,    38,    41,    42,    50,    53,    58,    61,
+      66,    69,    72,    75,    78,    81,    84,    89,    92,    95,
+     100,   103
 };
 #endif
 
@@ -468,7 +466,7 @@ static const yytype_uint16 yytoknum[] =
 static const yytype_uint8 yyr1[] =
 {
        0,    16,    17,    17,    18,    18,    19,    19,    20,    20,
-      21,    21,    21,    21,    21,    21,    21,    21,    22,    22,
+      21,    21,    21,    21,    21,    21,    21,    22,    22,    22,
       23,    23
 };
 
@@ -476,7 +474,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     1,     2,     3,     1,     2,     1,
-       2,     2,     2,     2,     2,     2,     1,     1,     3,     3,
+       2,     2,     2,     2,     2,     2,     1,     3,     3,     1,
        1,     1
 };
 
@@ -486,8 +484,8 @@ static const yytype_uint8 yyr2[] =
 static const yytype_uint8 yydefact[] =
 {
        2,     0,     1,    20,     0,     4,     0,    21,     3,     0,
-       7,     9,    16,    17,     0,     0,     0,     5,     8,    10,
-      11,    12,    15,    14,    13,    19,    18,     6
+       7,     9,    16,    19,     0,     0,     0,     5,     8,    10,
+      11,    12,    15,    14,    13,    18,    17,     6
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1364,7 +1362,7 @@ yyreduce:
   case 6:
 #line 50 "regex.y"
     {
-                        (yyval.ntype) = makeDouble((yyvsp[(1) - (3)].ntype), (yyvsp[(3) - (3)].ntype), ALT);
+                        (yyval.ntype) = makeNode(' ', ALT, (yyvsp[(1) - (3)].ntype), (yyvsp[(3) - (3)].ntype));
                     ;}
     break;
 
@@ -1378,115 +1376,104 @@ yyreduce:
   case 8:
 #line 58 "regex.y"
     {
-                        if ( (yyvsp[(1) - (2)].ntype) == NULL ) {
-                            (yyval.ntype) = (yyvsp[(2) - (2)].ntype);
-                        } else {
-                            (yyval.ntype) = makeDouble((yyvsp[(1) - (2)].ntype), (yyvsp[(2) - (2)].ntype), CAT);
-                        }
+                        (yyval.ntype) = makeNode(' ', CAT, (yyvsp[(1) - (2)].ntype), (yyvsp[(2) - (2)].ntype));
                     ;}
     break;
 
   case 9:
-#line 65 "regex.y"
+#line 61 "regex.y"
     {
                         (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
                     ;}
     break;
 
   case 10:
-#line 70 "regex.y"
+#line 66 "regex.y"
     {
-                        struct node* temp = makeNode(' ', STAR);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', STAR, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 11:
-#line 74 "regex.y"
+#line 69 "regex.y"
     {
-                        struct node* temp = makeNode(' ', PLUS);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', PLUS, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 12:
-#line 78 "regex.y"
+#line 72 "regex.y"
     {
-                        struct node* temp = makeNode(' ', QUEST);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', QUEST, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 13:
-#line 82 "regex.y"
+#line 75 "regex.y"
     {
-                        struct node* temp = makeNode(' ', NGSTAR);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', NGSTAR, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 14:
-#line 86 "regex.y"
+#line 78 "regex.y"
     {
-                        struct node* temp = makeNode(' ', NGPLUS);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', NGPLUS, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 15:
-#line 90 "regex.y"
+#line 81 "regex.y"
     {
-                        struct node* temp = makeNode(' ', NGQUEST);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(1) - (2)].ntype));
+                        (yyval.ntype) = makeNode(' ', NGQUEST, (yyvsp[(1) - (2)].ntype), NULL);
                     ;}
     break;
 
   case 16:
-#line 94 "regex.y"
+#line 84 "regex.y"
     {
                         (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
                     ;}
     break;
 
   case 17:
-#line 97 "regex.y"
+#line 89 "regex.y"
     {
-                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                        (yyval.ntype) = makeNode(' ', PAREN, (yyvsp[(2) - (3)].ntype), NULL);
                     ;}
     break;
 
   case 18:
-#line 102 "regex.y"
-    {
-                        struct node* temp = makeNode(' ', PAREN);
-                        (yyval.ntype) = makeOne(temp, (yyvsp[(2) - (3)].ntype));
-                    ;}
-    break;
-
-  case 19:
-#line 106 "regex.y"
+#line 92 "regex.y"
     {
                         (yyval.ntype) = (yyvsp[(2) - (3)].ntype);
                     ;}
     break;
 
+  case 19:
+#line 95 "regex.y"
+    {
+                        (yyval.ntype) = (yyvsp[(1) - (1)].ntype);
+                    ;}
+    break;
+
   case 20:
-#line 111 "regex.y"
+#line 100 "regex.y"
     {    
-                        (yyval.ntype) = makeNode((yyvsp[(1) - (1)].ctype), OTHER);
+                        (yyval.ntype) = makeNode((yyvsp[(1) - (1)].ctype), OTHER, NULL, NULL);
                     ;}
     break;
 
   case 21:
-#line 114 "regex.y"
+#line 103 "regex.y"
     {
-                        (yyval.ntype) = makeNode('.', OTHER);
+                        (yyval.ntype) = makeNode('.', OTHER, NULL, NULL);
                     ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1490 "regex.tab.c"
+#line 1477 "regex.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1700,7 +1687,7 @@ yyreturn:
 }
 
 
-#line 119 "regex.y"
+#line 108 "regex.y"
 
 
 
@@ -1754,9 +1741,12 @@ void myFree(struct node* t) {
     }
 }
 
-struct node* makeNode(char c, kind type) {
+struct node* makeNode(char c, kind type, struct node* l, struct node* r) {
     struct node* temp = (struct node*) malloc(sizeof(struct node));
     temp->isParen = 0;
+    temp->left = NULL;
+    temp->right = NULL;
+
     if ( type == OTHER ) {
         if ( c == '.' ) {
             temp->content = (char*) malloc(4);
@@ -1765,53 +1755,41 @@ struct node* makeNode(char c, kind type) {
             temp->content = (char*) malloc(7);
             sprintf(temp->content, "Lit(%c)", c);
         }
-    } else if ( type == STAR ) {
-        temp->content = (char*) malloc(5);
-        sprintf(temp->content, "Star");
-    } else if ( type == PLUS ) {
-        temp->content = (char*) malloc(5);
-        sprintf(temp->content, "Plus");
-    } else if ( type == QUEST ) {
-        temp->content = (char*) malloc(6);
-        sprintf(temp->content, "Quest");
-    } else if ( type == NGSTAR ) {
-        temp->content = (char*) malloc(7);
-        sprintf(temp->content, "NgStar");
-    } else if ( type == NGPLUS ) {
-        temp->content = (char*) malloc(7);
-        sprintf(temp->content, "NgPlus");
-    } else if ( type == NGQUEST ) {
-        temp->content = (char*) malloc(8);
-        sprintf(temp->content, "NgQuest");
-    } else if ( type == PAREN ) {
-        char* num;
-        temp->content = (char*) malloc(6);
-        sprintf(temp->content, "Paren");
-        temp->isParen = 1;
+    } else {
+        temp->left = l;
+        if ( type == CAT ) {
+            temp->content = (char*) malloc(4);
+            sprintf(temp->content, "Cat");
+            temp->right = r;
+        } else if ( type == ALT ) {
+            temp->content = (char*) malloc(4);
+            sprintf(temp->content, "Alt");
+            temp->right = r;
+        } else if ( type == STAR ) {
+            temp->content = (char*) malloc(5);
+            sprintf(temp->content, "Star");
+        } else if ( type == PLUS ) {
+            temp->content = (char*) malloc(5);
+            sprintf(temp->content, "Plus");
+        } else if ( type == QUEST ) {
+            temp->content = (char*) malloc(6);
+            sprintf(temp->content, "Quest");
+        } else if ( type == NGSTAR ) {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "NgStar");
+        } else if ( type == NGPLUS ) {
+            temp->content = (char*) malloc(7);
+            sprintf(temp->content, "NgPlus");
+        } else if ( type == NGQUEST ) {
+            temp->content = (char*) malloc(8);
+            sprintf(temp->content, "NgQuest");
+        } else if ( type == PAREN ) {
+            temp->content = (char*) malloc(6);
+            sprintf(temp->content, "Paren");
+            temp->isParen = 1;
+        }
     }
 
-    temp->left = NULL;
-    temp->right = NULL;
     return temp;
-}
-
-struct node* makeDouble(struct node* l, struct node* r, kind type) {
-    struct node* temp = (struct node*) malloc(sizeof(struct node));
-    temp->content = (char*) malloc(4);
-    temp->isParen = 0;
-    if ( type == CAT ) {
-        sprintf(temp->content, "Cat");
-    } else if ( type == ALT ) {
-        sprintf(temp->content, "Alt");
-    }
-    temp->left = l;
-    temp->right = r;
-    return temp;
-}
-
-struct node* makeOne(struct node* current, struct node* child) {
-    current->left = child;
-    current->right = NULL;
-    return current;
 }
 
