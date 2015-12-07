@@ -1,0 +1,19 @@
+/* keyword */
+#define CREATE      256
+#define VIEW        257
+#define AS          258
+#define OUTPUT      259
+#define SELECT      260
+#define FROM        261
+#define EXTRACT     262
+#define REGEX       263
+#define ON          264
+#define RETRUN      265
+#define GROUP       266
+#define AND         267
+#define TOKEN       268
+#define PATTERN     269
+
+#define NUM         270
+#define ID          271
+#define REG         272
