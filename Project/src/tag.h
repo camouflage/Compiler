@@ -1,4 +1,4 @@
-/* keyword */
+// keyword
 #define CREATE      256
 #define VIEW        257
 #define AS          258
@@ -14,6 +14,17 @@
 #define TOKEN       268
 #define PATTERN     269
 
-#define NUM         270
-#define ID          271
-#define REG         272
+// Reserved
+#define DOT         270
+#define SEMICOLON   271
+#define LEFTPAREN   272
+#define RIGHTPAREN  273
+#define LEFTANGLE   274
+#define RIGHTANGLE  275
+#define LEFTCURLY   276
+#define RIGHTCURLY  277
+#define COMMA       278
+
+#define NUM         279
+#define ID          280
+#define REG         281

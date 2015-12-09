@@ -5,7 +5,36 @@
 #include<string>
 using namespace std;
 
+#define SPACE 0;
+#define DIGIT 1;
+
 map<string, Token> symbol;
+int line = 1;
+int col = 1;
+
+int getType(char c) {
+    if ( c == '\t' ) {
+        col += 3;
+        return SPACE;
+    } else if ( c == '\r' ) {
+        col = 1;
+        return SPACE;
+    } else if ( c == '\n' ) {
+        ++line;
+        return SPACE;
+    } else if ( c == ' ' ) {
+        ++col;
+        return SPACE;
+    } else if ( c >= '0' && c <= '9' ) {
+        ++col;
+        return DIGIT;
+    } else if ( )
+
+
+     || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) return 1;
+    // other letters , exp: , . ( )
+    else return 2;
+}
 
 void reserve() {
     Token create(CREATE);
@@ -41,6 +70,12 @@ void reserve() {
 vector<Token> lex(ifstream& ifs) {
     // Reserve keywords
     reserve();
+
+    char current;
+    while ( (current = ifs.get()) != EOF ) {
+        cout << current;
+    }
+
     // cout << symbol.find("pattern")->second.tag << endl;
 
     vector<Token> v;
