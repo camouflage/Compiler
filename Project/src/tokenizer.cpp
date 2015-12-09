@@ -2,6 +2,7 @@
 #include<fstream>
 #include<vector>
 #include"Word.h"
+#include"regex.cpp"
 using namespace std;
 
 int getType(char c) {
@@ -13,45 +14,29 @@ int getType(char c) {
 	else return 2;
 }
 
-vector<Word> tokenizer(ifstream& ip) {
+vector<Word> tokenizer(ifstream& ip, const char* regex) {
 	vector<Word> all_word;
-	int lookahead = 0;
-	string cont = "";
-	int start = 0, end = 0;
-	char cur;
-	while ((cur = ip.get()) != EOF) {
-		end++;
-		int cur_type = getType(cur);
-		if (cur_type == 0) {
-			if (lookahead == 1) {
-				Word nword(cont, start, end - 1);
-				all_word.push_back(nword);
-			}
-			lookahead = 0;
-			start = end;
-			// clear the string
-			cont = "";
+	// read all the contents of a text one time
+	int length;
+	ip.seekg(0, ios::end);
+	length = ip.tellg();
+	ip.seekg(0, ios::beg);
+	char* cont = new char[length];
+	ip.read(cont, length);
+
+	//get the cursor back to the begin.
+	ip.seekg(0, ios::beg);
+
+	vector<vector<int>> coordinates = findall(regex, cont);
+	vector<vector<int>>::iterator it = coordinates.begin();
+	for (; it != coordinates.end(); it++) {
+		vector<int>::iterator it2 = (*it).begin();
+		for (; it2 != (*it).end(); it2++) {
+			cout << *it2 << " ";
 		}
-		else if (cur_type == 1) {
-			cont += cur;
-			lookahead = 1;
-		}
-		else {
-			if (lookahead == 1) {
-				// save word
-				Word nword(cont, start, end - 1);
-				all_word.push_back(nword);
-				// save single letter
-				cont = "";
-				cont += cur;
-				Word nword2(cont, end - 1, end);
-				all_word.push_back(nword2);
-			}
-			lookahead = 2;
-			start = end;
-			cont = "";
-		}
+		cout << endl;
 	}
+
 	return all_word;
 }
 
@@ -60,10 +45,11 @@ int main() {
 	vector<Word> v;
 	ifstream file("complier.txt");
 	ofstream file2("complier_out.txt");
-	v = tokenizer(file);
-	vector<Word>::iterator it = v.begin();
+	char regex[] = "[A-Z][a-z]*";
+	v = tokenizer(file, regex);
+	/*vector<Word>::iterator it = v.begin();
 	for (; it != v.end(); it++) {
 		file2 << it->getContent() << "(" << it->getStart() << "," << it->getEnd() << ")" << endl;
-	}
+	}*/
 	return 0;
 }
