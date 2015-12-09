@@ -1,7 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<vector>
-#include"Word.h"
+#include"word.h"
 #include"regex.cpp"
 using namespace std;
 
@@ -18,23 +18,29 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 	vector<Word> all_word;
 	// read all the contents of a text one time
 	int length;
+
 	ip.seekg(0, ios::end);
 	length = ip.tellg();
 	ip.seekg(0, ios::beg);
+
 	char* cont = new char[length];
+
 	ip.read(cont, length);
 
 	//get the cursor back to the begin.
 	ip.seekg(0, ios::beg);
 
-	vector<vector<int>> coordinates = findall(regex, cont);
-	vector<vector<int>>::iterator it = coordinates.begin();
+	vector<vector<int> > coordinates = findall(regex, cont);
+	vector<vector<int> >::iterator it = coordinates.begin();
 	for (; it != coordinates.end(); it++) {
-		vector<int>::iterator it2 = (*it).begin();
-		for (; it2 != (*it).end(); it2++) {
-			cout << *it2 << " ";
+		int begin = (*it)[0];
+		int end = (*it)[1];
+		string content = "";
+		for (int i = begin; i < end; i++) {
+			content += cont[i];
 		}
-		cout << endl;
+		Word new_word(content, begin, end);
+		all_word.push_back(new_word);
 	}
 
 	return all_word;
@@ -43,13 +49,13 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 
 int main() {
 	vector<Word> v;
-	ifstream file("complier.txt");
-	ofstream file2("complier_out.txt");
+	ifstream file("compiler.txt");
+	ofstream file2("compiler_out.txt");
 	char regex[] = "[A-Z][a-z]*";
 	v = tokenizer(file, regex);
-	/*vector<Word>::iterator it = v.begin();
+	vector<Word>::iterator it = v.begin();
 	for (; it != v.end(); it++) {
 		file2 << it->getContent() << "(" << it->getStart() << "," << it->getEnd() << ")" << endl;
-	}*/
+	}
 	return 0;
 }
