@@ -1,11 +1,13 @@
-#include"tag.h"
-#include"token.cpp"
 #include"lexer.cpp"
 #include<iostream>
 #include<fstream>
-#include<cstring>
+#include<map>
+#include<string>
 using namespace std;
 
 void AQL(ifstream& aqlIfs, ifstream& documentIfs) {
-    
+    // lexer
+    lex(aqlIfs);
 }
+
+

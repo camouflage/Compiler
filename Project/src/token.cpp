@@ -7,7 +7,7 @@ class Token {
         int tag;
         int num;
         string idReg;
-        Token(int tag, int num, string idReg = "") :tag(tag), num(num), idReg(idReg)  {
+        Token(int tag, int num = 0, string idReg = "") :tag(tag), num(num), idReg(idReg)  {
         }
 };
 

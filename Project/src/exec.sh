@@ -1,1 +1,2 @@
-g++ main.cpp -o main && ./main PerLoc.aql PerLoc.input
+g++ main.cpp -o main
+./main PerLoc.aql perloc

@@ -8,7 +8,7 @@
 #define EXTRACT     262
 #define REGEX       263
 #define ON          264
-#define RETRUN      265
+#define RETURN      265
 #define GROUP       266
 #define AND         267
 #define TOKEN       268
