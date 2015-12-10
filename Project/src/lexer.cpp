@@ -3,24 +3,28 @@
 #include<fstream>
 #include<vector>
 #include<string>
+#include<sstream>
 using namespace std;
 
-#define SPACE 0;
-#define DIGIT 1;
+// #define does not work here.
+const int SPACE = 0;
+const int DIGIT = 1;
+const int DELIMIT = 2;
+const int LETTER = 3;
+const int REGEXSTART = 4;
+const int INVALID = 5;
 
 map<string, Token> symbol;
 int line = 1;
-int col = 1;
+int col = 0;
 
 int getType(char c) {
     if ( c == '\t' ) {
         col += 3;
         return SPACE;
-    } else if ( c == '\r' ) {
-        col = 1;
-        return SPACE;
     } else if ( c == '\n' ) {
         ++line;
+        col = 0;
         return SPACE;
     } else if ( c == ' ' ) {
         ++col;
@@ -28,15 +32,34 @@ int getType(char c) {
     } else if ( c >= '0' && c <= '9' ) {
         ++col;
         return DIGIT;
-    } else if ( )
+    } else if ( c == '(' || c == ')' || c == '<' || c == '>' || c == '{' || c == '}' ||
+        c == ',' || c == ';' || c == '.' ) {
+        ++col;
+        return DELIMIT;
+    } else if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' ) {
+        ++col;
+        return LETTER;
+    } else if ( c == '/' ) {
+        ++col;
+        return REGEXSTART;
+    } else {
+        return INVALID;
+    }
+}
 
-
-     || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) return 1;
-    // other letters , exp: , . ( )
-    else return 2;
+// If the char is wrong, revert the col and row.
+void revert(char c) {
+    if ( c == '\t' ) {
+        col -= 3;
+    } else if ( c == '\n' ) {
+        --line;
+    } else {
+        --col;
+    }
 }
 
 void reserve() {
+    // Reserve keywords
     Token create(CREATE);
     symbol.insert(pair<string, Token>("create", create));
     Token view(VIEW);
@@ -68,17 +91,67 @@ void reserve() {
 }
 
 vector<Token> lex(ifstream& ifs) {
-    // Reserve keywords
     reserve();
 
+    vector<Token> tokenStream;
     char current;
     while ( (current = ifs.get()) != EOF ) {
-        cout << current;
+        // NUM
+        int type = getType(current);
+        if ( type == SPACE ) {
+            // Ignore
+        } else if ( type == DIGIT ) {
+            int v = 0;
+            do {
+                v = 10 * v + current - '0';
+                current = ifs.get();
+            } while ( getType(current) == DIGIT );
+            ifs.putback(current);
+            revert(current);
+
+            Token num(NUM, line, col, v);
+            tokenStream.push_back(num);
+        } else if ( type == LETTER ) {
+            string buffer;
+            int subType;
+            int startCol = col;
+            do {
+                buffer += current;
+                current = ifs.get();
+                subType = getType(current);
+            } while ( subType == LETTER || subType == DIGIT );
+            ifs.putback(current);
+            revert(current);
+
+            // If reserved
+            int tag = symbol.find(buffer)->second.tag;
+            if ( tag <= 269 ) {
+                Token keyword(tag, line, startCol, -1, buffer);
+                tokenStream.push_back(keyword);
+            } else {
+                Token keyword(ID, line, startCol, -1, buffer);
+                tokenStream.push_back(keyword);
+                // Insert into symbol table
+                symbol.insert(pair<string, Token>(buffer, keyword));
+            }
+        } else if ( type == DELIMIT ) {
+            // Convert char to string
+            stringstream ss;
+            ss << current;
+            string cur;
+            ss >> cur;
+
+            Token delimit(current, line, col, -1, cur);
+            tokenStream.push_back(delimit);
+        }
     }
 
-    // cout << symbol.find("pattern")->second.tag << endl;
-
-    vector<Token> v;
-    return v;
+    vector<Token>::iterator it = tokenStream.begin();
+    for ( ; it != tokenStream.end(); ++it ) {
+        cout << it->tag << " " << it->num << " " << it->idReg << " "
+             << it->line << " " << it->col << endl;
+    }
+    
+    return tokenStream;
 }
 

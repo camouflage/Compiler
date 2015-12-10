@@ -5,11 +5,11 @@ using namespace std;
 class Token {
     public:
         int tag;
-        int num;
         int line;
         int col;
+        int num;
         string idReg;
-        Token(int tag, int num = 0, string idReg = "", int line = 0, int col = 0)
+        Token(int tag, int line = -1, int col = -1, int num = -1, string idReg = "")
             :tag(tag), num(num), idReg(idReg), line(line), col(col)   {
         }
 };
