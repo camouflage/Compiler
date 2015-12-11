@@ -157,11 +157,22 @@ vector< vector<Token> > lex(ifstream& ifs) {
             string buffer;
             // Ignore '/'
             int startCol = col + 1;
+            int subType;
             // Assume that there is no '/' in regex.
             current = ifs.get();
-            while ( getType(current) != REGEXSTART ) {
+            subType = getType(current);
+            while ( subType != REGEXSTART ) {
+                // Enforce escape
+                if ( subType == SPACE ) {
+                    cerr << "Error: invalid regex in AQL"
+                         << " at line " << line << " col " << startCol
+                         << ": \\t, \\n and space are not allowed, please escape them." << endl;
+                    exit(1);
+                }
+
                 buffer += current;
                 current = ifs.get();
+                subType = getType(current);
             }
 
             Token regex(REG, line, startCol, -1, buffer);
@@ -177,7 +188,7 @@ vector< vector<Token> > lex(ifstream& ifs) {
             // Deal with invalid char
             cerr << "Error: invalid AQL input symbol " << current 
                  << " at line " << line << " col " << col << endl;
-            exit(0);
+            exit(1);
         }
     }
 
