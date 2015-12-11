@@ -12,12 +12,14 @@ const int DIGIT = 1;
 const int DELIMIT = 2;
 const int LETTER = 3;
 const int REGEXSTART = 4;
-const int INVALID = 5;
+const int STMTEND = 5;
+const int INVALID = 6;
 
 map<string, Token> symbol;
 int line = 1;
 int col = 0;
 
+// Return the type of the char then advance line and col.
 int getType(char c) {
     if ( c == '\t' ) {
         col += 3;
@@ -33,7 +35,7 @@ int getType(char c) {
         ++col;
         return DIGIT;
     } else if ( c == '(' || c == ')' || c == '<' || c == '>' || c == '{' || c == '}' ||
-        c == ',' || c == ';' || c == '.' ) {
+        c == ',' || c == '.' ) {
         ++col;
         return DELIMIT;
     } else if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' ) {
@@ -42,12 +44,17 @@ int getType(char c) {
     } else if ( c == '/' ) {
         ++col;
         return REGEXSTART;
+    } else if ( c == ';' ) {
+        ++col;
+        return STMTEND;
     } else {
         return INVALID;
     }
 }
 
-// If the char is wrong, revert the col and row.
+/* If the lookahead does not belong to the previous token,
+ * revert the col and row.
+ */
 void revert(char c) {
     if ( c == '\t' ) {
         col -= 3;
@@ -90,18 +97,21 @@ void reserve() {
     symbol.insert(pair<string, Token>("pattern", pattern));
 }
 
-vector<Token> lex(ifstream& ifs) {
+vector< vector<Token> > lex(ifstream& ifs) {
+    // Reserve
     reserve();
 
-    vector<Token> tokenStream;
+    vector< vector<Token> > tokenStream;
+    vector<Token> oneStmtToken;
     char current;
     while ( (current = ifs.get()) != EOF ) {
-        // NUM
         int type = getType(current);
         if ( type == SPACE ) {
             // Ignore
         } else if ( type == DIGIT ) {
+            // Get the actual number
             int v = 0;
+            int startCol = col;
             do {
                 v = 10 * v + current - '0';
                 current = ifs.get();
@@ -109,8 +119,8 @@ vector<Token> lex(ifstream& ifs) {
             ifs.putback(current);
             revert(current);
 
-            Token num(NUM, line, col, v);
-            tokenStream.push_back(num);
+            Token num(NUM, line, startCol, v);
+            oneStmtToken.push_back(num);
         } else if ( type == LETTER ) {
             string buffer;
             int subType;
@@ -123,14 +133,14 @@ vector<Token> lex(ifstream& ifs) {
             ifs.putback(current);
             revert(current);
 
-            // If reserved
+            // If it is keyword
             int tag = symbol.find(buffer)->second.tag;
             if ( tag <= 269 ) {
                 Token keyword(tag, line, startCol, -1, buffer);
-                tokenStream.push_back(keyword);
+                oneStmtToken.push_back(keyword);
             } else {
                 Token keyword(ID, line, startCol, -1, buffer);
-                tokenStream.push_back(keyword);
+                oneStmtToken.push_back(keyword);
                 // Insert into symbol table
                 symbol.insert(pair<string, Token>(buffer, keyword));
             }
@@ -142,16 +152,44 @@ vector<Token> lex(ifstream& ifs) {
             ss >> cur;
 
             Token delimit(current, line, col, -1, cur);
-            tokenStream.push_back(delimit);
+            oneStmtToken.push_back(delimit);
+        } else if ( type == REGEXSTART ) {
+            string buffer;
+            // Ignore '/'
+            int startCol = col + 1;
+            // Assume that there is no '/' in regex.
+            current = ifs.get();
+            while ( getType(current) != REGEXSTART ) {
+                buffer += current;
+                current = ifs.get();
+            }
+
+            Token regex(REG, line, startCol, -1, buffer);
+            oneStmtToken.push_back(regex);
+        } else if ( type == STMTEND ) {
+            Token delimit(';', line, col, -1, ";");
+            oneStmtToken.push_back(delimit);
+
+            // Push oneStmtToken to the tokenStream and clear oneStmtToken
+            tokenStream.push_back(oneStmtToken);
+            oneStmtToken.clear();
+        } else {
+            // Deal with invalid char
+            cerr << "Error: invalid AQL input symbol " << current 
+                 << " at line " << line << " col " << col << endl;
+            exit(0);
         }
     }
 
-    vector<Token>::iterator it = tokenStream.begin();
-    for ( ; it != tokenStream.end(); ++it ) {
-        cout << it->tag << " " << it->num << " " << it->idReg << " "
-             << it->line << " " << it->col << endl;
+    // Output only for TEST
+    for ( int i = 0; i < tokenStream.size(); ++i ) {
+        vector<Token>::iterator it = tokenStream[i].begin();
+        for ( ; it != tokenStream[i].end(); ++it ) {
+            cout << it->tag << " " << it->num << " " << it->idReg << " "
+                 << it->line << " " << it->col << endl;
+        }
+        cout << endl;
     }
     
     return tokenStream;
 }
-
