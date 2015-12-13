@@ -1,0 +1,30 @@
+aql_stmt -> create_stmt ; | output_stmt ;
+create_stmt -> create view ID as view_stmt
+view_stmt -> select_stmt | extract_stmt
+output_stmt -> output view ID alias
+alias -> as ID | EPSILON
+
+select_stmt -> select select_list from from_list
+select_list -> select_item subSelect_item
+subSelect_item -> EPILON | , select_list
+select_item -> ID . ID alias
+from_list -> from_item subFrom_item
+subFrom_item -> EPILON | , from_list
+from_item -> ID ID
+
+extract_stmt -> extract extract_spec from from_list
+extract_spec -> regex_spec | pattern_spec
+regex_spec -> regex REG on column name_spec
+column -> ID . ID
+name_spec -> as ID | return group_spec
+group_spec -> single_group subSingle_group
+subSingle_group -> EPSILON | and group_spec
+single_group -> group NUM as ID
+
+pattern_spec -> pattern pattern_expr name_spec 
+pattern_expr -> pattern_pkg subPattern_pkg
+subPattern_pkg -> EPSILON | pattern_expr  
+pattern_pkg -> atom range | parttern_group
+range -> EPSILON | { NUM , NUM }
+atom -> < column > | < Token > | REG
+pattern_group -> ( pattern_expr )
