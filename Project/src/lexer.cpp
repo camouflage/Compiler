@@ -16,6 +16,7 @@ const int STMTEND = 5;
 const int INVALID = 6;
 
 map<string, Token> symbol;
+vector<vector<Token> > tokenStream;
 int line = 1;
 int col = 0;
 
@@ -97,7 +98,7 @@ void reserve() {
     symbol.insert(pair<string, Token>("pattern", pattern));
 }
 
-vector< vector<Token> > lex(ifstream& ifs) {
+void lex(ifstream& ifs) {
     // Reserve
     reserve();
 
@@ -192,6 +193,7 @@ vector< vector<Token> > lex(ifstream& ifs) {
         }
     }
 
+    /*
     // Output only for TEST
     for ( int i = 0; i < tokenStream.size(); ++i ) {
         vector<Token>::iterator it = tokenStream[i].begin();
@@ -201,6 +203,7 @@ vector< vector<Token> > lex(ifstream& ifs) {
         }
         cout << endl;
     }
+    */
     
-    return tokenStream;
+    // return tokenStream;
 }

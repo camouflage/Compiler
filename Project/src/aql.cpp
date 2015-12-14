@@ -1,13 +1,16 @@
 #include"lexer.cpp"
+#include"parser.cpp"
 #include<iostream>
 #include<fstream>
 #include<map>
 #include<string>
+#include<vector>
 using namespace std;
 
 void AQL(ifstream& aqlIfs, ifstream& documentIfs) {
     // lexer
     lex(aqlIfs);
+    parse();
 }
 
 
