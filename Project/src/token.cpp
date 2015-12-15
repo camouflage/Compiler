@@ -13,14 +13,3 @@ class Token {
             :tag(tag), num(num), idReg(idReg), line(line), col(col)   {
         }
 };
-
-/*
-// Test
-#include<iostream>
-
-int main() {
-    Token t(NUM, 3);
-    cout << t.tag << " " << t.num << " " << t.idReg << endl;
-    
-}
-*/

@@ -15,8 +15,6 @@ const int REGEXSTART = 4;
 const int STMTEND = 5;
 const int INVALID = 6;
 
-map<string, Token> symbol;
-vector<vector<Token> > tokenStream;
 int line = 1;
 int col = 0;
 
@@ -102,7 +100,6 @@ void lex(ifstream& ifs) {
     // Reserve
     reserve();
 
-    vector< vector<Token> > tokenStream;
     vector<Token> oneStmtToken;
     char current;
     while ( (current = ifs.get()) != EOF ) {
@@ -136,7 +133,7 @@ void lex(ifstream& ifs) {
 
             // If it is keyword
             int tag = symbol.find(buffer)->second.tag;
-            if ( tag <= 269 ) {
+            if ( tag >= 256 && tag <= 269 ) {
                 Token keyword(tag, line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
             } else {
@@ -205,5 +202,4 @@ void lex(ifstream& ifs) {
     }
     */
     
-    // return tokenStream;
 }
