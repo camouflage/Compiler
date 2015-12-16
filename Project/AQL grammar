@@ -6,10 +6,10 @@ alias -> as ID | EPSILON
 
 select_stmt -> select select_list from from_list
 select_list -> select_item subSelect_item
-subSelect_item -> EPILON | , select_list
+subSelect_item -> EPSILON | , select_list
 select_item -> ID . ID alias
 from_list -> from_item subFrom_item
-subFrom_item -> EPILON | , from_list
+subFrom_item -> EPSILON | , from_list
 from_item -> ID ID
 
 extract_stmt -> extract extract_spec from from_list
