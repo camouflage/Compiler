@@ -1,32 +1,14 @@
 #include"global.h"
+#include"auxiliary.cpp"
 #include<iostream>
 #include<vector>
 #include<string>
 using namespace std;
 
-
 void aql_stmt();
 void create_stmt();
 void output_stmt();
 void optalias();
-
-vector<Token> oneStream;
-vector<Token>::iterator current;
-int currentType;
-
-void error() {
-    cerr << "Syntax error!" << endl;
-}
-
-void match(int first) {
-    if ( currentType == first ) {
-        // move forward
-        ++current;
-        currentType = current->tag;
-    } else {
-        error();
-    }
-}
 
 void aql_stmt() {
     switch ( currentType ) {
@@ -37,6 +19,8 @@ void aql_stmt() {
         case OUTPUT:
             output_stmt();
             match(';');
+            // Print
+            output();
             break;
         default:
             error();
@@ -45,7 +29,13 @@ void aql_stmt() {
 }
 
 void create_stmt() {
-
+    switch ( currentType ) {
+        case CREATE:
+            match(CREATE);
+            match(VIEW);
+        default:
+            error();
+    }
 }
 
 void output_stmt() {
@@ -53,7 +43,7 @@ void output_stmt() {
         case OUTPUT:
             match(OUTPUT);
             match(VIEW);
-            match(ID);
+            matchInsertAlias(ID);
             optalias();
             break;
         default:
@@ -66,7 +56,7 @@ void optalias() {
     switch ( currentType ) {
         case AS:
             match(AS);
-            match(ID);
+            matchInsertAlias(ID);
             break;
         default:
             break;

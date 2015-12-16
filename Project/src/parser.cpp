@@ -9,6 +9,9 @@ void parse() {
         oneStream = tokenStream[stmtNum];
         current = oneStream.begin();
         currentType = current->tag;
+        // Clear the alias map
+        aliasMap.clear();
+        lastId = "!";
 
         aql_stmt();
 
