@@ -2,6 +2,7 @@
 #define GLOBAL
 
 #include"tag.h"
+#include"word.h"
 #include"token.cpp"
 #include<map>
 #include<vector>
