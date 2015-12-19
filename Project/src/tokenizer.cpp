@@ -4,15 +4,6 @@
 #include"regex.cpp"
 using namespace std;
 
-/*
-	@describe
-			实现语法分析的要求，返回的每个word中包含一个vector, 存储着此word由哪些pre_token构成（此pre_token指作业文档中 ”划分规则“ 划分出的token。)
-			，vector中存储的是这些token的位置。	
-	@param  all_token
-			指对整篇文本按照划分规则划分出来的token的集合。
-*/
-
-
 vector<Pre_token> all_token;
 
 int getType(char c) {
@@ -23,8 +14,7 @@ int getType(char c) {
 	// other letters , exp: , . ( )
 	else return 2;
 }
-
-vector<int> getTokenPosition(int start, int end) {
+vector<int> getAllTokenPosition(int start, int end) {
 	vector<int> po;
 	vector<Pre_token>::iterator it;
 	int flag = 0;
@@ -34,7 +24,7 @@ vector<int> getTokenPosition(int start, int end) {
 			po.push_back(it->position);
 			if(end == it->end) break;
 		} else {
-			if (start == it->start) {
+			if (start <= it->start && it->start < end) {
 				po.push_back(it->position);
 				flag = 1;
 				if(end == it->end) break;
@@ -68,7 +58,7 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 		vector<int> v;
 		int begin = (*it)[0];
 		int end = (*it)[1];
-		v = getTokenPosition(begin, end);
+		v = getAllTokenPosition(begin, end);
 		string content = "";
 		for (int i = begin; i < end; i++) {
 			content += cont[i];
@@ -90,9 +80,6 @@ void pre_tokenizer(ifstream& ip) {
 	while ((cur = ip.get()) != EOF) {
 		end++;
 		int cur_type = getType(cur);
-		if (cur == '$'){ 
-			cout << end << " " << cur_type << endl;
-		}
 		if (cur_type == 0) {
 			if (lookahead == 1) {
 				Pre_token ntoken(cont, start, end - 1, position);
