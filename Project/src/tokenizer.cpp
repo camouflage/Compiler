@@ -1,9 +1,19 @@
 #include<iostream>
 #include<fstream>
-#include<vector>
 #include"word.h"
 #include"regex.cpp"
 using namespace std;
+
+/*
+	@describe
+			实现语法分析的要求，返回的每个word中包含一个vector, 存储着此word由哪些pre_token构成（此pre_token指作业文档中 ”划分规则“ 划分出的token。)
+			，vector中存储的是这些token的位置。	
+	@param  all_token
+			指对整篇文本按照划分规则划分出来的token的集合。
+*/
+
+
+vector<Pre_token> all_token;
 
 int getType(char c) {
 	// invalid char, return 0
@@ -13,6 +23,27 @@ int getType(char c) {
 	// other letters , exp: , . ( )
 	else return 2;
 }
+
+vector<int> getTokenPosition(int start, int end) {
+	vector<int> po;
+	vector<Pre_token>::iterator it;
+	int flag = 0;
+	for (it = all_token.begin(); it != all_token.end(); it++) {
+		if (flag == 1) {
+			if (it->start >= end) break;
+			po.push_back(it->position);
+			if(end == it->end) break;
+		} else {
+			if (start == it->start) {
+				po.push_back(it->position);
+				flag = 1;
+				if(end == it->end) break;
+			}
+		}
+	}
+	return po;
+}
+
 
 vector<Word> tokenizer(ifstream& ip, const char* regex) {
 	vector<Word> all_word;
@@ -32,14 +63,17 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 
 	vector<vector<int> > coordinates = findall(regex, cont);
 	vector<vector<int> >::iterator it = coordinates.begin();
+	
 	for (; it != coordinates.end(); it++) {
+		vector<int> v;
 		int begin = (*it)[0];
 		int end = (*it)[1];
+		v = getTokenPosition(begin, end);
 		string content = "";
 		for (int i = begin; i < end; i++) {
 			content += cont[i];
 		}
-		Word new_word(content, begin, end);
+		Word new_word(content, begin, end, v);
 		all_word.push_back(new_word);
 	}
 
@@ -47,15 +81,79 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 }
 
 
+void pre_tokenizer(ifstream& ip) {
+	int position = 0;
+	int lookahead = 0;
+	string cont = "";
+	char cur;
+	int start = 0, end = 0;
+	while ((cur = ip.get()) != EOF) {
+		end++;
+		int cur_type = getType(cur);
+		if (cur == '$'){ 
+			cout << end << " " << cur_type << endl;
+		}
+		if (cur_type == 0) {
+			if (lookahead == 1) {
+				Pre_token ntoken(cont, start, end - 1, position);
+				position++;
+				all_token.push_back(ntoken);
+			}
+			lookahead = 0;
+			start = end;
+			// clear the string
+			cont = "";
+		}
+		else if (cur_type == 1) {
+			cont += cur;
+			lookahead = 1;
+		}
+		else {
+			if (lookahead == 1) {
+				// save word
+				Pre_token ntoken(cont, start, end - 1, position);
+				position++;
+				all_token.push_back(ntoken);
+				// save single letter
+			}
+
+			cont = "";
+			cont += cur;
+			Pre_token ntoken2(cont, end - 1, end, position);
+			position++;
+			all_token.push_back(ntoken2);
+			
+			lookahead = 2;
+			start = end;
+			cont = "";
+		}
+	}
+}
+
+
 int main() {
 	vector<Word> v;
-	ifstream file("compiler.txt");
+	ifstream file("Revenue.input");
+	ifstream file4("Revenue.input");
 	ofstream file2("compiler_out.txt");
-	char regex[] = "[A-Z][a-z]*";
-	v = tokenizer(file, regex);
+	ofstream file3("compiler_out2.txt");
+	char regex[] = ".[0-9]+(\\.[0-9])+";
+	pre_tokenizer(file);
+	v = tokenizer(file4, regex);
 	vector<Word>::iterator it = v.begin();
 	for (; it != v.end(); it++) {
-		file2 << it->getContent() << "(" << it->getStart() << "," << it->getEnd() << ")" << endl;
+		file2 << it->content << "(" << it->start << "," << it->end << ")" << " ";
+		
+		vector<int>::iterator itt = (it->include).begin();
+		for(; itt != (it->include).end(); itt++) {
+			file2 << *itt << " ";
+		}
+		file2 << endl;
 	}
+	
+	vector<Pre_token>::iterator it2;
+	for (it2 = all_token.begin(); it2 != all_token.end(); it2++) {
+		file3 << it2->content << "(" << it2->start << "," << it2->end << ")"<< " " << it2->position << endl;
+	}	
 	return 0;
 }
