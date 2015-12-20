@@ -125,6 +125,10 @@ void select_stmt() {
                 aliasMap: A -> D
              */
 
+            /* Still has a problem in error report.
+             * e.g. When the view is not correct,
+             * we can only report that the col specified is in that view.
+             */
             map<string, struct selectInfo>::iterator selectMapIt = selectMap.begin();
             for ( ; selectMapIt != selectMap.end(); ++selectMapIt ) {
                 // A

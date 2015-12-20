@@ -139,8 +139,6 @@ void lex(ifstream& ifs) {
             } else {
                 Token keyword(ID, line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
-                // Insert into symbol table
-                symbol.insert(pair<string, Token>(buffer, keyword));
             }
         } else if ( type == DELIMIT ) {
             // Convert char to string

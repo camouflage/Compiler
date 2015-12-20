@@ -32,20 +32,7 @@ vector<Token> oneStream;
 vector<Token>::iterator current;
 int currentType;
 
-void init() {
-    current = oneStream.begin();
-    currentType = current->tag;
-
-    // Clear the alias map
-    aliasMap.clear();
-    lastId = "!";
-
-    // Clear view
-    view.clear();
-
-    // Clear the select map
-    selectMap.clear();
-
+void test() {
     // View Loc for test
     vector<Word> vw;
     Word w1;
@@ -68,6 +55,18 @@ void init() {
     msv["Loc"] = vw;
 
     view["Loc"] = msv;
+}
+
+void init() {
+    current = oneStream.begin();
+    currentType = current->tag;
+
+    // Clear the alias map
+    aliasMap.clear();
+    lastId = "!";
+
+    // Clear the select map
+    selectMap.clear();
 }
 
 void error() {
