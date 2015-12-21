@@ -1,3 +1,9 @@
 create view PerLocOnly as
   select L.Cap as C
   from Loc L;
+
+create view Stt as
+  extract regex /Washington|Georgia|Virginia/
+    on D.text
+    return group 0 as Stt
+  from Document D;

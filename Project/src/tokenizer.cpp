@@ -14,6 +14,7 @@ int getType(char c) {
 	// other letters , exp: , . ( )
 	else return 2;
 }
+
 vector<int> getAllTokenPosition(int start, int end) {
 	vector<int> po;
 	vector<Pre_token>::iterator it;
@@ -117,7 +118,7 @@ void pre_tokenizer(ifstream& ip) {
 	}
 }
 
-
+/*
 int main() {
 	vector<Word> v;
 	ifstream file("Revenue.input");

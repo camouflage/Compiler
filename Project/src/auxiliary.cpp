@@ -5,13 +5,14 @@
 #include<map>
 using namespace std;
 
-// For global variable among auxiliary.cpp
-string lastId = "!";
-
-// Map Id to its alias
-map<string, string> aliasMap;
 // Map view to its content
 map<string, map<string, vector<Word> > > view;
+
+// For global variable among auxiliary.cpp
+string lastId = "!";
+// Map Id to its alias
+map<string, string> aliasMap;
+
 // viewId for create_stmt
 string viewId;
 
@@ -26,6 +27,7 @@ string selectColName;
 
 // selectMap
 map<string, struct selectInfo> selectMap;
+
 
 
 vector<Token> oneStream;

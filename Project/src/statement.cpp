@@ -18,6 +18,15 @@ void optSubSelect_item();
 void from_list();
 void from_item();
 void optSubFrom_item();
+void extract_stmt();
+void extract_spec();
+void regex_spec();
+void pattern_spec();
+void column();
+void name_spec();
+void group_spec();
+void single_group();
+void optSubSingle_group();
 
 void aql_stmt() {
     switch ( currentType ) {
@@ -81,11 +90,9 @@ void view_stmt() {
         case SELECT:
             select_stmt();
             break;
-        /*
         case EXTRACT:
             extract_stmt();
             break;
-        */
         default:
             error();
             break;
@@ -98,12 +105,13 @@ void select_stmt() {
             match(SELECT);
             select_list();
             
+            /*
             // Test selectMap
             map<string, struct selectInfo>::iterator it = selectMap.begin();
             for ( ; it != selectMap.end(); ++it ) {
                 cout << it->first << " " << it->second.selectView << " " << it->second.selectCol << endl;
             }
-            
+            */
 
             match(FROM);
             from_list();
@@ -159,6 +167,7 @@ void select_stmt() {
                 view[viewId][newCol] = selectCol;
             }
 
+            /*
             // Test output
             map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
             for ( ; viewIt != view.end(); ++viewIt ) {
@@ -175,6 +184,7 @@ void select_stmt() {
                 }
                 cout << endl;
             }
+            */
 
             break;
         }
@@ -275,4 +285,117 @@ void optSubFrom_item() {
         default:
             break;
     }
+}
+
+void extract_stmt() {
+    switch ( currentType ) {
+        case EXTRACT:
+            match(EXTRACT);
+            extract_spec();
+            match(FROM);
+            from_list();
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void extract_spec() {
+    switch ( currentType ) {
+        case REGEX:
+            regex_spec();
+            break;
+        case PATTERN:
+            pattern_spec();
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void regex_spec() {
+    switch ( currentType ) {
+        case REGEX: {
+            match(REGEX);
+            string reg;
+            matchReturnId(REG, reg);
+            cout << reg << endl;
+            match(ON);
+            column();
+            name_spec();
+            break;
+        }
+        default:
+            error();
+            break;
+    }
+}
+
+void column() {
+    switch ( currentType ) {
+        case ID:
+            match(ID);
+            match('.');
+            match(ID);
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void name_spec() {
+    switch ( currentType ) {
+        case AS:
+            match(AS);
+            match(ID);
+            break;
+        case RETURN:
+            match(RETURN);
+            group_spec();
+            break;
+    }
+}
+
+void group_spec() {
+    switch ( currentType ) {
+        case GROUP:
+            single_group();
+            optSubSingle_group();
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void single_group() {
+    switch ( currentType ) {
+        case GROUP:
+            match(GROUP);
+            match(NUM);
+            match(AS);
+            match(ID);
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void optSubSingle_group() {
+    switch ( currentType ) {
+        case AND:
+            match(AND);
+            group_spec();
+            break;
+        default:
+            break;
+    }
+}
+
+void pattern_spec() {
+
 }
