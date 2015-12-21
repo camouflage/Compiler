@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include<map>
+#include<cstdlib>
 using namespace std;
 
 // Map view to its content

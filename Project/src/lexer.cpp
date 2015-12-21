@@ -4,6 +4,7 @@
 #include<vector>
 #include<string>
 #include<sstream>
+#include<cstdlib>
 using namespace std;
 
 // #define does not work here.
@@ -26,6 +27,8 @@ int getType(char c) {
     } else if ( c == '\n' ) {
         ++line;
         col = 0;
+        return SPACE;
+    } else if ( c == '\r' ) {
         return SPACE;
     } else if ( c == ' ' ) {
         ++col;
@@ -59,6 +62,8 @@ void revert(char c) {
         col -= 3;
     } else if ( c == '\n' ) {
         --line;
+    } else if ( c == '\r' ) {
+        // Do nothing
     } else {
         --col;
     }
