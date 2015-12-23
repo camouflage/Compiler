@@ -22,12 +22,18 @@ vector<int> getAllTokenPosition(int start, int end) {
 		if (flag == 1) {
 			if (it->start >= end) break;
 			po.push_back(it->position);
-			if(end == it->end) break;
-		} else {
+			if (end <= it->end) break;
+		}
+		else {
 			if (start <= it->start && it->start < end) {
 				po.push_back(it->position);
 				flag = 1;
-				if(end == it->end) break;
+				if (end <= it->end) break;
+			}
+			else if (it->start <= start && it->end > start) {
+				po.push_back(it->position);
+				flag = 1;
+				if (end <= it->end) break;
 			}
 		}
 	}
@@ -117,7 +123,11 @@ void pre_tokenizer() {
 			cont = "";
 		}
 	}
-
+	if (cont != "") {
+		Pre_token ntoken2(cont, start, end - 1, position);
+		position++;
+		all_token.push_back(ntoken2);
+	}
 	documentIfs.clear();
 	documentIfs.seekg(0, documentIfs.beg);
 }
