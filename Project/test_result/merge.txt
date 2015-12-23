@@ -1,0 +1,3 @@
+Plains, Georgia(12,27)
+Georgia, Washington(20,39)
+Westmoreland, Virginia(45,67)
