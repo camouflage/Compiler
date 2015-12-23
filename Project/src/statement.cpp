@@ -9,7 +9,7 @@ void aql_stmt();
 void create_stmt();
 void output_stmt();
 void optAlias();
-void optSelectAlias(string& selectColName);
+void optSelectAlias(string& colName);
 void view_stmt();
 void select_stmt();
 void select_list();
@@ -104,7 +104,6 @@ void select_stmt() {
         case SELECT: {
             match(SELECT);
             select_list();
-            
             /*
             // Test selectMap
             map<string, struct selectInfo>::iterator it = selectMap.begin();
@@ -122,51 +121,8 @@ void select_stmt() {
                 cout << it->first << " " << it->second << endl;
             }
             */
-
-            // Key function
-            // Select
-            /* Example
-                select A.B as C
-                    from D A;
-
-                selectMap: C -> (A, B)
-                aliasMap: A -> D
-             */
-
-            /* Still has a problem in error report.
-             * e.g. When the view is not correct,
-             * we can only report that the col specified is in that view.
-             */
-            map<string, struct selectInfo>::iterator selectMapIt = selectMap.begin();
-            for ( ; selectMapIt != selectMap.end(); ++selectMapIt ) {
-                // A
-                string alias = selectMapIt->second.selectView;
-                // B
-                string col = selectMapIt->second.selectCol;
-                // C
-                string newCol = selectMapIt->first;
-
-                map<string, string>::iterator aliasFoundIt = aliasMap.find(alias);
-                string real;
-                if ( aliasFoundIt != aliasMap.end() ) {
-                    // D
-                    real = aliasFoundIt->second;
-                } else {
-                    notFoundError(alias);
-                }
-
-                map<string, vector<Word> > viewReal = view[real];
-                map<string, vector<Word> >::iterator realColFoundIt = viewReal.find(col);
-                vector<Word> selectCol;
-                if ( realColFoundIt != viewReal.end() ) {
-                    selectCol = realColFoundIt->second;
-                } else {
-                    notFoundError(col);
-                }
-                
-                view[viewId][newCol] = selectCol;
-            }
-
+            
+            select();
             /*
             // Test output
             map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
@@ -185,7 +141,6 @@ void select_stmt() {
                 cout << endl;
             }
             */
-
             break;
         }
         default:
@@ -214,13 +169,12 @@ void select_item() {
             match('.');
             matchReturnId(ID, selectCol);
 
-            struct selectInfo si;
             si.selectView = selectView;
             si.selectCol = selectCol;
 
-            optSelectAlias(selectColName);
+            optSelectAlias(colName);
 
-            selectMap.insert( pair<string, struct selectInfo>(selectColName, si) );
+            selectMap.insert( pair<string, struct selectInfo>(colName, si) );
             break;
         }
         default:
@@ -229,14 +183,14 @@ void select_item() {
     }
 }
 
-void optSelectAlias(string& selectColName) {
+void optSelectAlias(string& colName) {
     switch ( currentType ) {
         case AS:
             match(AS);
-            matchReturnId(ID, selectColName);
+            matchReturnId(ID, colName);
             break;
         default:
-            selectColName = selectCol;
+            colName = selectCol;
             break;
     }
 }
@@ -321,7 +275,21 @@ void regex_spec() {
             match(REGEX);
             string reg;
             matchReturnId(REG, reg);
-            cout << reg << endl;
+            vector<Word> v;
+            v = tokenizer(reg.c_str());
+
+            /*
+            vector<Word>::iterator it = v.begin();
+            for (; it != v.end(); it++) {
+                cout << it->content << "(" << it->start << "," << it->end << ")" << " ";
+                vector<int>::iterator itt = (it->include).begin();
+                for(; itt != (it->include).end(); itt++) {
+                    cout << *itt << " ";
+                }
+                cout << endl;
+            }
+            */
+
             match(ON);
             column();
             name_spec();
@@ -335,11 +303,15 @@ void regex_spec() {
 
 void column() {
     switch ( currentType ) {
-        case ID:
-            match(ID);
+        case ID: {
+            matchReturnId(ID, selectView);
             match('.');
-            match(ID);
+            matchReturnId(ID, selectCol);
+
+            si.selectView = selectView;
+            si.selectCol = selectCol;
             break;
+        }
         default:
             error();
             break;
@@ -350,7 +322,9 @@ void name_spec() {
     switch ( currentType ) {
         case AS:
             match(AS);
-            match(ID);
+            matchReturnId(ID, colName);
+            optSelectAlias(colName);
+            selectMap.insert( pair<string, struct selectInfo>(colName, si) );
             break;
         case RETURN:
             match(RETURN);

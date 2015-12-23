@@ -24,11 +24,16 @@ string selectCol;
 struct selectInfo {
     string selectView;
     string selectCol;
-};
-string selectColName;
+} si;
+
+// colName
+string colName;
 
 // selectMap
 map<string, struct selectInfo> selectMap;
+
+// documentAlias for regex_spec
+string documentAlias;
 
 
 vector<Token> oneStream;
@@ -36,7 +41,7 @@ vector<Token>::iterator current;
 int currentType;
 
 void starter(ifstream& documentIfs) {
-    pre_tokenizer(documentIfs);
+    pre_tokenizer();
 
     // View Loc for test
     vector<Word> vw;
@@ -129,5 +134,49 @@ void output() {
         cout << it->first << " " << it->second << endl;
     } else {
         cout << lastId << endl;
+    }
+}
+
+void select() {
+    /* Example
+        select A.B as C
+            from D A;
+
+        selectMap: C -> (A, B)
+        aliasMap: A -> D
+     */
+
+    /* Still has a problem in error report.
+     * e.g. When the view is not correct,
+     * we can only report that the col specified is in that view.
+     */
+    map<string, struct selectInfo>::iterator selectMapIt = selectMap.begin();
+    for ( ; selectMapIt != selectMap.end(); ++selectMapIt ) {
+        // A
+        string alias = selectMapIt->second.selectView;
+        // B
+        string col = selectMapIt->second.selectCol;
+        // C
+        string newCol = selectMapIt->first;
+
+        map<string, string>::iterator aliasFoundIt = aliasMap.find(alias);
+        string real;
+        if ( aliasFoundIt != aliasMap.end() ) {
+            // D
+            real = aliasFoundIt->second;
+        } else {
+            notFoundError(alias);
+        }
+
+        map<string, vector<Word> > viewReal = view[real];
+        map<string, vector<Word> >::iterator realColFoundIt = viewReal.find(col);
+        vector<Word> selectCol;
+        if ( realColFoundIt != viewReal.end() ) {
+            selectCol = realColFoundIt->second;
+        } else {
+            notFoundError(col);
+        }
+        
+        view[viewId][newCol] = selectCol;
     }
 }

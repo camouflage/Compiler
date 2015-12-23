@@ -35,21 +35,21 @@ vector<int> getAllTokenPosition(int start, int end) {
 }
 
 
-vector<Word> tokenizer(ifstream& ip, const char* regex) {
+vector<Word> tokenizer(const char* regex) {
 	vector<Word> all_word;
 	// read all the contents of a text one time
 	int length;
 
-	ip.seekg(0, ios::end);
-	length = ip.tellg();
-	ip.seekg(0, ios::beg);
+	documentIfs.seekg(0, ios::end);
+	length = documentIfs.tellg();
+	documentIfs.seekg(0, ios::beg);
 
 	char* cont = new char[length];
 
-	ip.read(cont, length);
+	documentIfs.read(cont, length);
 
 	//get the cursor back to the begin.
-	ip.seekg(0, ios::beg);
+	documentIfs.seekg(0, ios::beg);
 
 	vector<vector<int> > coordinates = findall(regex, cont);
 	vector<vector<int> >::iterator it = coordinates.begin();
@@ -67,17 +67,19 @@ vector<Word> tokenizer(ifstream& ip, const char* regex) {
 		all_word.push_back(new_word);
 	}
 
+	documentIfs.clear();
+	documentIfs.seekg(0, documentIfs.beg);
 	return all_word;
 }
 
 
-void pre_tokenizer(ifstream& ip) {
+void pre_tokenizer() {
 	int position = 0;
 	int lookahead = 0;
 	string cont = "";
 	char cur;
 	int start = 0, end = 0;
-	while ((cur = ip.get()) != EOF) {
+	while ((cur = documentIfs.get()) != EOF) {
 		end++;
 		int cur_type = getTypeTokenizer(cur);
 		if (cur_type == 0) {
@@ -115,6 +117,9 @@ void pre_tokenizer(ifstream& ip) {
 			cont = "";
 		}
 	}
+
+	documentIfs.clear();
+	documentIfs.seekg(0, documentIfs.beg);
 }
 
 /*

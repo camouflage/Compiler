@@ -7,12 +7,12 @@
 #include<vector>
 using namespace std;
 
-map<string, Token> symbol;
 vector<vector<Token> > tokenStream;
+ifstream documentIfs;
 
-void AQL(ifstream& aqlIfs, ifstream& documentIfs) {
+void AQL(ifstream& aqlIfs) {
     // lexer
     lex(aqlIfs);
     // parser
-    parse(documentIfs);
+    parse();
 }

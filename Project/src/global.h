@@ -9,7 +9,7 @@
 #include<vector>
 using namespace std;
 
-extern map<string, Token> symbol;
 extern vector<vector<Token> > tokenStream;
+extern ifstream documentIfs;
 
 #endif

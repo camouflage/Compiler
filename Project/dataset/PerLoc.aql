@@ -7,3 +7,8 @@ create view Stt as
     on D.text
     return group 0 as Stt
   from Document D;
+
+  create view My as
+  extract regex /Carter|,/
+    on D.text as kk
+  from Document D;

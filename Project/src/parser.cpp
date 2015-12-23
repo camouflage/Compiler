@@ -4,7 +4,7 @@
 #include<vector>
 using namespace std;
 
-void parse(ifstream& documentIfs) {
+void parse() {
     starter(documentIfs);
     for ( int stmtNum = 0; stmtNum < tokenStream.size(); ++stmtNum ) {
         oneStream = tokenStream[stmtNum];

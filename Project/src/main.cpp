@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
             return 1;
         } else {
             // MAIN FUNCTION
-            AQL(aqlIfs, documentIfs);
+            AQL(aqlIfs);
         }
     } else { // Given directory
         snprintf(documentPath, FILELEN, "../dataset/%s", argv[2]);
@@ -61,13 +61,14 @@ int main(int argc, char* argv[]) {
                 // Get input file name
                 if ( isInput(dirp->d_name, strlen(dirp->d_name) - NAMELEN) ) {
                     snprintf(documentPath, FILELEN, "../dataset/%s/%s", argv[2], dirp->d_name);
-                    ifstream documentIfs(documentPath);
+                    // ifstream documentIfs(documentPath);
+                    documentIfs.open(documentPath);
                     if ( !documentIfs ) {
                         cerr << "Could not open document file!" << endl;
                         return 1;
                     } else {
                         // MAIN FUNCTION
-                        AQL(aqlIfs, documentIfs);
+                        AQL(aqlIfs);
                     }
                 }
                 dirp = readdir(dp);

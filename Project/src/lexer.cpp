@@ -7,6 +7,9 @@
 #include<cstdlib>
 using namespace std;
 
+// Symbol table 
+map<string, Token> symbol;
+
 // #define does not work here.
 const int SPACE = 0;
 const int DIGIT = 1;
