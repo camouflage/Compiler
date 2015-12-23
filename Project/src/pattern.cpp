@@ -85,7 +85,7 @@ vector<Word> getNewResult(vector<Word> result, vector<Word> pmv, int minToken, i
 }
 
 
-vector<Word> match_pattern(vector<PatternMatch> pm, ifstream& ip) {
+vector<Word> match_pattern(vector<PatternMatch> pm) {
     vector<Word> result;
     vector<PatternMatch>::iterator pat = pm.begin();
     // get the first expression
@@ -97,7 +97,7 @@ vector<Word> match_pattern(vector<PatternMatch> pm, ifstream& ip) {
                 result = pat->column;
             } 
             else if (pat->type == 3) {
-                result = tokenizer(ip, (pat->reg).c_str());
+                result = tokenizer((pat->reg).c_str());
                 //result = tokenizer((pat->reg).c_str());
             } else {
                 cerr << "Invalid Pattern" << endl;
@@ -120,7 +120,7 @@ vector<Word> match_pattern(vector<PatternMatch> pm, ifstream& ip) {
                 // <column> + <Token> + REG
                 else if ((pat+1)->type == 3){
                     //vector<Word> regex = tokenizer(((pat+1)->reg).c_str());
-                    vector<Word> regex = tokenizer(ip, ((pat+1)->reg).c_str());
+                    vector<Word> regex = tokenizer(((pat+1)->reg).c_str());
                     result = getNewResult(result, regex, pat->token_min, pat->token_max);
                 }
                 pat++;
@@ -128,7 +128,7 @@ vector<Word> match_pattern(vector<PatternMatch> pm, ifstream& ip) {
             else if (pat->type == 3) {
                 // <column> + REG
                 //vector<Word> regex = tokenizer((pat->reg).c_str());
-                vector<Word> regex = tokenizer(ip, (pat->reg).c_str());
+                vector<Word> regex = tokenizer((pat->reg).c_str());
 
                 /*
                 //test function
@@ -161,7 +161,7 @@ vector<Word> match_pattern(vector<PatternMatch> pm, ifstream& ip) {
 
 
 
-
+/*
 int main() {
     vector<Word> v, vv;
     ifstream file("Revenue.input");
@@ -224,3 +224,4 @@ int main() {
 
     return 0;
 }
+*/
