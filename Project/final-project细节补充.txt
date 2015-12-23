@@ -1,0 +1,42 @@
+实现细节的补充说明：
+1. extract regex 的正则表达式可以有多个捕获块（正则表示中的圆括号包围起来的即为一个捕获块）,对应return的多个group。
+   不写『return group』语句 或者 『return group 0』 都是默认为整个正则表达式所捕获的串作为一个span存入列中。
+2. return group num1 as col1 and num2 as col2 and ... 其中num1, num2可以是乱序的。
+   即 可以写成 return group 1 as col1 and group 0 as col2 and group 4 as col3 and group 3 as col4。
+   其中,group 0如上所说的默认设置为整个捕获的串,而1、2、3、4分别为正则表达式中自左往右数第一个、第二个、第三个以及第四个左圆括号所括起来的内容。
+3. pattern
+  3.1 正则表达式忽略内部的捕获块,整体算一个group;
+  3.2 一个group不仅限于单个列或者单条正则表达式,如：(<C.Cap>{2, 3} {PL.Per})可以作为一个group。
+
+4. select语句的from_list部分关于从多个view的列中选择不作具体实现要求,如：
+   create view seletSample as
+          select v1.col1, v2.col2
+          from view1 v1, view2 v2;
+   只用实现from中只存在一个view的情况,上面举例的情况可以不考虑。
+
+5. 不要忘了处理输入数据为整个文件夹的情况,即代码可以一次处理多个文章,每个文章一个文件,放入同一个文件夹下。代码可能是不可移植的,请在README中说明运行环境等信息。
+
+6. 小数1.23这种情况,在文章分词时就是三个token「1」,「.」和「23」, 整体可以被正则作为一个span取出。
+
+7. 关键代码处最好写上注释。
+
+PS：
+1. 计算span之间的token数目
+  假设span1, span2在原文本中的位置下标分别为[b1, e1), [b2, e2),跨越的单词区间分别为[wb1, we1], [wb2, we2]
+  1.1 <column1> <column2>情况下,则span1, span2之间要满足：e1<=b2 && wb2-we1>=0 && wb2-we1<=1
+  1.2 <column>{m, n}可以分解成第一种情况
+  1.3 <column1> <Token>{m, n} <column2>情况下,e1<=b2 && wb2-we1>m && wb2-we1<=n+1
+  以上只是建议处理方式,不强制要求。
+2. 中文处理提示
+  2.1 中文分词库：NLPIR
+  2.2 正则中文支持：C++11标准 <regex>,gcc4.9以上版本才能提供较好的支持
+  2.3 根据AQL Reference扩展语法实现类似的extract dictionary语句(使用Tried树,即字典树)
+
+勘误：
+1. 示例PerLoc.aql的 <token> 应该为 <Token> 。
+2. 示例Revenue.aql 中的 第17行"from Currency C, Number...."中,去掉 "Currency C,"。
+
+迟交扣分规则：
+每迟一天扣2分。不满一天的,算一天。 
+
+建议到这里提问http://compilerteam.sinaapp.com/question, 我们会随时注意回答,方便其他人也能看到问题。

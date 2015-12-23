@@ -1,4 +1,5 @@
 #include"global.h"
+#include"tokenizer.cpp"
 #include<iostream>
 #include<vector>
 #include<string>
@@ -30,12 +31,13 @@ string selectColName;
 map<string, struct selectInfo> selectMap;
 
 
-
 vector<Token> oneStream;
 vector<Token>::iterator current;
 int currentType;
 
-void test() {
+void starter(ifstream& documentIfs) {
+    pre_tokenizer(documentIfs);
+
     // View Loc for test
     vector<Word> vw;
     Word w1;

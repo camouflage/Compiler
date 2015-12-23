@@ -16,38 +16,39 @@ const int REGEXSTART = 4;
 const int STMTEND = 5;
 const int INVALID = 6;
 
-int line = 1;
-int col = 0;
+// Avoid conflict with regex.cpp
+int _line = 1;
+int _col = 0;
 
-// Return the type of the char then advance line and col.
+// Return the type of the char then advance _line and _col.
 int getType(char c) {
     if ( c == '\t' ) {
-        col += 3;
+        _col += 3;
         return SPACE;
     } else if ( c == '\n' ) {
-        ++line;
-        col = 0;
+        ++_line;
+        _col = 0;
         return SPACE;
     } else if ( c == '\r' ) {
         return SPACE;
     } else if ( c == ' ' ) {
-        ++col;
+        ++_col;
         return SPACE;
     } else if ( c >= '0' && c <= '9' ) {
-        ++col;
+        ++_col;
         return DIGIT;
     } else if ( c == '(' || c == ')' || c == '<' || c == '>' || c == '{' || c == '}' ||
         c == ',' || c == '.' ) {
-        ++col;
+        ++_col;
         return DELIMIT;
     } else if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' ) {
-        ++col;
+        ++_col;
         return LETTER;
     } else if ( c == '/' ) {
-        ++col;
+        ++_col;
         return REGEXSTART;
     } else if ( c == ';' ) {
-        ++col;
+        ++_col;
         return STMTEND;
     } else {
         return INVALID;
@@ -55,17 +56,17 @@ int getType(char c) {
 }
 
 /* If the lookahead does not belong to the previous token,
- * revert the col and row.
+ * revert the _col and row.
  */
 void revert(char c) {
     if ( c == '\t' ) {
-        col -= 3;
+        _col -= 3;
     } else if ( c == '\n' ) {
-        --line;
+        --_line;
     } else if ( c == '\r' ) {
         // Do nothing
     } else {
-        --col;
+        --_col;
     }
 }
 
@@ -114,7 +115,7 @@ void lex(ifstream& ifs) {
         } else if ( type == DIGIT ) {
             // Get the actual number
             int v = 0;
-            int startCol = col;
+            int startCol = _col;
             do {
                 v = 10 * v + current - '0';
                 current = ifs.get();
@@ -122,12 +123,12 @@ void lex(ifstream& ifs) {
             ifs.putback(current);
             revert(current);
 
-            Token num(NUM, line, startCol, v);
+            Token num(NUM, _line, startCol, v);
             oneStmtToken.push_back(num);
         } else if ( type == LETTER ) {
             string buffer;
             int subType;
-            int startCol = col;
+            int startCol = _col;
             do {
                 buffer += current;
                 current = ifs.get();
@@ -139,10 +140,10 @@ void lex(ifstream& ifs) {
             // If it is keyword
             int tag = symbol.find(buffer)->second.tag;
             if ( tag >= 256 && tag <= 269 ) {
-                Token keyword(tag, line, startCol, -1, buffer);
+                Token keyword(tag, _line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
             } else {
-                Token keyword(ID, line, startCol, -1, buffer);
+                Token keyword(ID, _line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
             }
         } else if ( type == DELIMIT ) {
@@ -152,12 +153,12 @@ void lex(ifstream& ifs) {
             string cur;
             ss >> cur;
 
-            Token delimit(current, line, col, -1, cur);
+            Token delimit(current, _line, _col, -1, cur);
             oneStmtToken.push_back(delimit);
         } else if ( type == REGEXSTART ) {
             string buffer;
             // Ignore '/'
-            int startCol = col + 1;
+            int startCol = _col + 1;
             int subType;
             // Assume that there is no '/' in regex.
             current = ifs.get();
@@ -166,7 +167,7 @@ void lex(ifstream& ifs) {
                 // Enforce escape
                 if ( subType == SPACE ) {
                     cerr << "Error: invalid regex in AQL"
-                         << " at line " << line << " col " << startCol
+                         << " at _line " << _line << " _col " << startCol
                          << ": \\t, \\n and space are not allowed, please escape them." << endl;
                     exit(1);
                 }
@@ -176,10 +177,10 @@ void lex(ifstream& ifs) {
                 subType = getType(current);
             }
 
-            Token regex(REG, line, startCol, -1, buffer);
+            Token regex(REG, _line, startCol, -1, buffer);
             oneStmtToken.push_back(regex);
         } else if ( type == STMTEND ) {
-            Token delimit(';', line, col, -1, ";");
+            Token delimit(';', _line, _col, -1, ";");
             oneStmtToken.push_back(delimit);
 
             // Push oneStmtToken to the tokenStream and clear oneStmtToken
@@ -188,7 +189,7 @@ void lex(ifstream& ifs) {
         } else {
             // Deal with invalid char
             cerr << "Error: invalid AQL input symbol " << current 
-                 << " at line " << line << " col " << col << endl;
+                 << " at _line " << _line << " _col " << _col << endl;
             exit(1);
         }
     }
@@ -199,7 +200,7 @@ void lex(ifstream& ifs) {
         vector<Token>::iterator it = tokenStream[i].begin();
         for ( ; it != tokenStream[i].end(); ++it ) {
             cout << it->tag << " " << it->num << " " << it->idReg << " "
-                 << it->line << " " << it->col << endl;
+                 << it->_line << " " << it->_col << endl;
         }
         cout << endl;
     }

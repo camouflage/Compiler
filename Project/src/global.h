@@ -3,6 +3,7 @@
 
 #include"tag.h"
 #include"word.h"
+#include"pre_token.h"
 #include"token.cpp"
 #include<map>
 #include<vector>

@@ -13,7 +13,6 @@ vector<vector<Token> > tokenStream;
 void AQL(ifstream& aqlIfs, ifstream& documentIfs) {
     // lexer
     lex(aqlIfs);
-    parse();
+    // parser
+    parse(documentIfs);
 }
-
-

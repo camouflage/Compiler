@@ -1,12 +1,11 @@
 #include<iostream>
 #include<fstream>
-#include"word.h"
 #include"regex.cpp"
 using namespace std;
 
 vector<Pre_token> all_token;
 
-int getType(char c) {
+int getTypeTokenizer(char c) {
 	// invalid char, return 0
 	if (c == '\t' || c == '\r' || c == '\n' || c == ' ') return 0;
 	// int or char, return 1
@@ -80,7 +79,7 @@ void pre_tokenizer(ifstream& ip) {
 	int start = 0, end = 0;
 	while ((cur = ip.get()) != EOF) {
 		end++;
-		int cur_type = getType(cur);
+		int cur_type = getTypeTokenizer(cur);
 		if (cur_type == 0) {
 			if (lookahead == 1) {
 				Pre_token ntoken(cont, start, end - 1, position);
@@ -145,3 +144,4 @@ int main() {
 	}	
 	return 0;
 }
+*/
