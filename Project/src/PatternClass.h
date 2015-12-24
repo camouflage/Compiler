@@ -6,6 +6,8 @@
 
 class PatternMatch {
 	public:
+		string selectView;
+		string selectCol;
 		// production rule:
 		// atom -> < column > | < Token > | REG
 

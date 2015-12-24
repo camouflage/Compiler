@@ -27,6 +27,13 @@ void name_spec();
 void group_spec();
 void single_group();
 void optSubSingle_group();
+vector<PatternMatch> pattern_expr();
+void pattern_pkg(vector<PatternMatch>& pm);
+void optSubPattern_pkg();
+void pattern_group();
+void atom(PatternMatch& currentPc);
+void optRange(PatternMatch& currentPc);
+
 
 void aql_stmt() {
     switch ( currentType ) {
@@ -104,43 +111,9 @@ void select_stmt() {
         case SELECT: {
             match(SELECT);
             select_list();
-            /*
-            // Test selectMap
-            map<string, struct selectInfo>::iterator it = selectMap.begin();
-            for ( ; it != selectMap.end(); ++it ) {
-                cout << it->first << " " << it->second.selectView << " " << it->second.selectCol << endl;
-            }
-            */
-
             match(FROM);
             from_list();
-            /*
-            // Test aliasMap
-            map<string, string>::iterator it = aliasMap.begin();
-            for ( ; it != aliasMap.end(); ++it ) {
-                cout << it->first << " " << it->second << endl;
-            }
-            */
-            
             select();
-            /*
-            // Test output
-            map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
-            for ( ; viewIt != view.end(); ++viewIt ) {
-                cout << "View: " << viewIt->first << endl;
-                map<string, vector<Word> > col = viewIt->second;
-                map<string, vector<Word> >::iterator colIt = col.begin();
-                for ( ; colIt != col.end(); ++colIt ) {
-                    cout << "   Col: " << colIt->first << endl;
-                    vector<Word> w = colIt->second;
-                    vector<Word>::iterator wIt = w.begin();
-                    for ( ; wIt != w.end(); ++wIt ) {
-                        cout << "       " << wIt->content << endl; 
-                    }
-                }
-                cout << endl;
-            }
-            */
             break;
         }
         default:
@@ -208,10 +181,11 @@ void optSubSelect_item() {
 
 void from_list() {
     switch ( currentType ) {
-        case ID:
+        case ID: {
             from_item();
             optSubFrom_item();
             break;
+        }
         default:
             error();
             break;
@@ -293,6 +267,13 @@ void regex_spec() {
             match(ON);
             column();
             name_spec();
+
+            // Test selectMap
+            map<string, struct selectInfo>::iterator it = selectMap.begin();
+            for ( ; it != selectMap.end(); ++it ) {
+                cout << it->first << " " << it->second.selectView << " " << it->second.selectCol << endl;
+            }
+
             break;
         }
         default:
@@ -323,7 +304,6 @@ void name_spec() {
         case AS:
             match(AS);
             matchReturnId(ID, colName);
-            optSelectAlias(colName);
             selectMap.insert( pair<string, struct selectInfo>(colName, si) );
             break;
         case RETURN:
@@ -347,12 +327,14 @@ void group_spec() {
 
 void single_group() {
     switch ( currentType ) {
-        case GROUP:
+        case GROUP: {
             match(GROUP);
-            match(NUM);
+            string num;
+            matchReturnId(NUM, num);
             match(AS);
             match(ID);
             break;
+        }
         default:
             error();
             break;
@@ -371,5 +353,137 @@ void optSubSingle_group() {
 }
 
 void pattern_spec() {
+    switch ( currentType ) {
+        case PATTERN:
+            match(PATTERN);
+            pattern_expr();
+            name_spec();
+            break;
+        default:
+            error();
+            break;
+    }
+}
 
+vector<PatternMatch> pattern_expr() {
+    vector<PatternMatch> pm;
+    switch ( currentType ) {
+        case '<':
+        case REG:
+        case '(': {
+            pattern_pkg(pm);
+            optSubPattern_pkg();
+
+            vector<PatternMatch>::iterator it = pm.begin();
+            for ( ; it != pm.end(); ++it ) {
+                cout << it->type << endl;
+            }
+            
+            break;
+        }
+        default:
+            error();
+            break;
+    }
+    return pm;
+}
+
+void pattern_pkg(vector<PatternMatch>& pm) {
+    switch ( currentType ) {
+        case '<':
+        case REG: {
+            PatternMatch currentPc;
+            atom(currentPc);
+            optRange(currentPc);
+            pm.push_back(currentPc);
+            break;
+        }
+        case '(':
+            pattern_group();
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void optSubPattern_pkg() {
+    switch ( currentType ) {
+        case '<':
+        case REG:
+        case '(':
+            pattern_expr();
+            break;
+        default:
+            break;
+    }
+}
+
+void optRange(PatternMatch& currentPc) {
+    switch ( currentType ) {
+        case '{':
+            match('{');
+            int min, max;
+            matchReturnNum(NUM, min);
+            match(',');
+            matchReturnNum(NUM, max);
+            currentPc.token_min = min;
+            currentPc.token_max = max;
+            match('}');
+            break;
+        default:
+            break;
+    }
+}
+
+void atom(PatternMatch& currentPc) {
+    switch ( currentType ) {
+        case '<': {
+            match('<');
+            switch ( currentType ) {
+                case ID: {
+                    column();
+                    currentPc.selectView = si.selectView;
+                    currentPc.selectCol = si.selectCol;
+                    currentPc.type = 1;
+                    match('>');
+                    break;
+                }
+                case TOKEN:
+                    match(TOKEN);
+                    currentPc.type = 2;
+                    match('>');
+                    break;
+                default:
+                    error();
+                    break;
+            }
+            break;
+        }
+        case REG: {
+            string reg;
+            matchReturnId(REG, reg);
+            currentPc.type = 3;
+            currentPc.reg = reg;
+            break;
+        }
+        default:
+            error();
+            break;
+    }
+}
+
+void pattern_group() {
+    switch ( currentType ) {
+        case '(': {
+            match('(');
+            int currentParen = parenNum++;
+            pattern_expr();
+            match(')');
+            break;
+        }
+        default:
+            error();
+            break;
+    }
 }

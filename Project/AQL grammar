@@ -24,7 +24,7 @@ single_group -> group NUM as ID
 pattern_spec -> pattern pattern_expr name_spec 
 pattern_expr -> pattern_pkg subPattern_pkg
 subPattern_pkg -> EPSILON | pattern_expr  
-pattern_pkg -> atom range | parttern_group
+pattern_pkg -> atom range | pattern_group
 range -> EPSILON | { NUM , NUM }
 atom -> < column > | < Token > | REG
 pattern_group -> ( pattern_expr )

@@ -1,6 +1,5 @@
 #include"tokenizer.cpp"
 #include"PatternClass.h"
-#include"word.h"
 #include<iostream>
 #include<string>
 #include<vector>

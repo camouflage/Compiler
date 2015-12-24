@@ -1,5 +1,5 @@
 #include"global.h"
-#include"tokenizer.cpp"
+#include"pattern.cpp"
 #include<iostream>
 #include<vector>
 #include<string>
@@ -34,6 +34,8 @@ map<string, struct selectInfo> selectMap;
 
 // documentAlias for regex_spec
 string documentAlias;
+
+int parenNum;
 
 
 vector<Token> oneStream;
@@ -77,6 +79,8 @@ void init() {
 
     // Clear the select map
     selectMap.clear();
+
+    parenNum = 1;
 }
 
 void error() {
@@ -128,13 +132,45 @@ void matchReturnId(int first, string& id) {
     }
 }
 
+// Match and return number
+void matchReturnNum(int first, int& num) {
+    if ( currentType == first ) {
+        num = current->num;
+        // Move forward
+        ++current;
+        currentType = current->tag;
+    } else {
+        error();
+    }
+}
+
 void output() {
+    /*
     map<string, string>::iterator it = aliasMap.find(lastId);
     if ( it != aliasMap.end() ) {
         cout << it->first << " " << it->second << endl;
     } else {
         cout << lastId << endl;
     }
+    */
+
+            // Test output
+            map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
+            for ( ; viewIt != view.end(); ++viewIt ) {
+                cout << "View: " << viewIt->first << endl;
+                map<string, vector<Word> > col = viewIt->second;
+                map<string, vector<Word> >::iterator colIt = col.begin();
+                for ( ; colIt != col.end(); ++colIt ) {
+                    cout << "   Col: " << colIt->first << endl;
+                    vector<Word> w = colIt->second;
+                    vector<Word>::iterator wIt = w.begin();
+                    for ( ; wIt != w.end(); ++wIt ) {
+                        cout << "       " << wIt->content << endl; 
+                    }
+                }
+                cout << endl;
+            }
+            
 }
 
 void select() {

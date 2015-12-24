@@ -5,6 +5,7 @@
 #include"word.h"
 #include"pre_token.h"
 #include"token.cpp"
+#include"PatternClass.h"
 #include<map>
 #include<vector>
 using namespace std;

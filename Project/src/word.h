@@ -1,3 +1,6 @@
+#ifndef WORD
+#define WORD
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -21,3 +24,5 @@ class Word {
 			include = v;
 		}
 };
+
+#endif
