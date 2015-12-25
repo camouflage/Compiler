@@ -27,10 +27,10 @@ void name_spec();
 void group_spec();
 void single_group();
 void optSubSingle_group();
-vector<PatternMatch> pattern_expr();
+vector<Word> pattern_expr();
 void pattern_pkg(vector<PatternMatch>& pm);
-void optSubPattern_pkg();
-void pattern_group();
+void optSubPattern_pkg(vector<PatternMatch>& pm);
+void pattern_group(vector<PatternMatch>& pm);
 void atom(PatternMatch& currentPc);
 void optRange(PatternMatch& currentPc);
 
@@ -218,13 +218,14 @@ void optSubFrom_item() {
 void extract_stmt() {
     switch ( currentType ) {
         case EXTRACT: {
+            from();
+            /*
             map<string, string>::iterator it = aliasMap.begin();
             for ( ; it != aliasMap.end(); ++it ) {
                 cout << it->first << " " << it->second << endl;
             }
+            */
             cout << endl;
-            from();
-
             match(EXTRACT);
             extract_spec();
             match(FROM);
@@ -275,13 +276,13 @@ void regex_spec() {
             match(ON);
             column();
             name_spec();
-
+            /*
             // Test selectMap
             map<string, struct selectInfo>::iterator it = selectMap.begin();
             for ( ; it != selectMap.end(); ++it ) {
                 cout << it->first << " " << it->second.selectView << " " << it->second.selectCol << endl;
             }
-
+            */
             break;
         }
         default:
@@ -297,7 +298,24 @@ void column() {
             match('.');
             matchReturnId(ID, selectCol);
 
-            si.selectView = selectView;
+            string realView;
+            if ( aliasMap.count(selectView) == 0 ) {
+                cerr << "Syntax Error: Alias does not exist" << endl;
+                exit(1);
+            } else {
+                realView = aliasMap[selectView];
+                if ( realView == "Document" && selectCol == "text" ) {
+                    // Do nothing
+                } else if ( !hasView(realView) ) {
+                    cerr << "Syntax Error: View does not exist" << endl;
+                    exit(1);
+                } else if ( !hasCol(realView, selectCol) ) {
+                    cerr << "Syntax Error: Column does not exist" << endl;
+                    exit(1);
+                }
+            }
+
+            si.selectView = realView;
             si.selectCol = selectCol;
             break;
         }
@@ -373,27 +391,35 @@ void pattern_spec() {
     }
 }
 
-vector<PatternMatch> pattern_expr() {
+vector<Word> pattern_expr() {
     vector<PatternMatch> pm;
+    vector<Word> result;
     switch ( currentType ) {
         case '<':
         case REG:
         case '(': {
             pattern_pkg(pm);
-            optSubPattern_pkg();
-
+            optSubPattern_pkg(pm);
+            /*
             vector<PatternMatch>::iterator it = pm.begin();
             for ( ; it != pm.end(); ++it ) {
-                cout << it->type << endl;
+                it->output();
             }
-            
+            cout << "--\n";
+            */
+            result = match_pattern(pm);
+            vector<Word>::iterator it = result.begin();
+            for ( ; it != result.end(); ++it ) {
+                cout << it->content << endl;
+            }
+            cout << "--\n";
             break;
         }
         default:
             error();
             break;
     }
-    return pm;
+    return result;
 }
 
 void pattern_pkg(vector<PatternMatch>& pm) {
@@ -407,7 +433,7 @@ void pattern_pkg(vector<PatternMatch>& pm) {
             break;
         }
         case '(':
-            pattern_group();
+            pattern_group(pm);
             break;
         default:
             error();
@@ -415,13 +441,16 @@ void pattern_pkg(vector<PatternMatch>& pm) {
     }
 }
 
-void optSubPattern_pkg() {
+void optSubPattern_pkg(vector<PatternMatch>& pm) {
     switch ( currentType ) {
         case '<':
         case REG:
-        case '(':
-            pattern_expr();
+        case '(': {
+            vector<Word> subPm = pattern_expr();
+            PatternMatch newPm(1, subPm);
+            pm.push_back(newPm);
             break;
+        }
         default:
             break;
     }
@@ -451,8 +480,7 @@ void atom(PatternMatch& currentPc) {
             switch ( currentType ) {
                 case ID: {
                     column();
-                    currentPc.selectView = si.selectView;
-                    currentPc.selectCol = si.selectCol;
+                    currentPc.column = view[selectView][selectCol];
                     currentPc.type = 1;
                     match('>');
                     break;
@@ -481,12 +509,14 @@ void atom(PatternMatch& currentPc) {
     }
 }
 
-void pattern_group() {
+void pattern_group(vector<PatternMatch>& pm) {
     switch ( currentType ) {
         case '(': {
             match('(');
             int currentParen = parenNum++;
-            pattern_expr();
+            vector<Word> subPm = pattern_expr();
+            PatternMatch newPm(1, subPm);
+            pm.push_back(newPm);
             match(')');
             break;
         }

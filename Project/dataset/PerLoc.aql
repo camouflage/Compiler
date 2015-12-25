@@ -8,22 +8,17 @@ create view Stt as
     return group 0 as Stt
   from Document D;
 
+
 create view My as
   extract regex /Carter|,/
     on D.text as kk
   from Document D;
 
 create view Loc as
-  extract pattern (<Loc.Cap>) /,/ (<PerLocOnly.Loca>)
+  extract pattern <L.Cap> <PL.Loca>
   return group 0 as Loc
     and group 1 as Cap
     and group 2 as Stt
-  from Cap C, Stt S;
+  from Loc L, PerLocOnly PL;
 
 
-create view PerLoc as
-  extract pattern (<P.Per>) <Token>{1,2} (<L.Loc>)
-  return group 0 as PerLoc
-    and group 1 as Per
-    and group 2 as Loc
-  from Per P, Loc L;

@@ -83,8 +83,7 @@ void from() {
     for ( int i = oneStream.size() - 1; i >= 0; --i ) {
         if ( oneStream[i].tag == FROM ) {
             hasFrom = 1;
-            bool loop = 1;
-            while ( loop == 1 ) {
+            while ( 1 ) {
                 Token real = oneStream[++i];
                 if ( real.tag == ';' ) {
                     cerr << "Syntax error: Expects ID." << endl;
@@ -101,7 +100,7 @@ void from() {
                         aliasMap[alias.idReg] = real.idReg;
                         Token comma = oneStream[++i];
                         if ( comma.tag == ';' ) {
-                            loop = 0;
+                            return;
                         } else if ( comma.tag != ',' ) {
                             cerr << "Syntax error: Expects Comma." << endl;
                             exit(1);
@@ -184,6 +183,22 @@ void matchReturnNum(int first, int& num) {
         currentType = current->tag;
     } else {
         error();
+    }
+}
+
+bool hasView(string viewName) {
+    if ( view.count(viewName) > 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool hasCol(string viewName, string colName) {
+    if ( view[viewName].count(colName) > 0 ) {
+        return true;
+    } else {
+        return false;
     }
 }
 

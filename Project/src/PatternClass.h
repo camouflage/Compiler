@@ -6,8 +6,6 @@
 
 class PatternMatch {
 	public:
-		string selectView;
-		string selectCol;
 		// production rule:
 		// atom -> < column > | < Token > | REG
 
@@ -46,6 +44,10 @@ class PatternMatch {
 			token_min = ti;
 			token_max = ta;
 			column = cc;
+		}
+
+		void output() {
+			cout << type << " " << reg << " " << token_min << " " << token_max << endl;
 		}
 };
 
