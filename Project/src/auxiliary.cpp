@@ -12,7 +12,7 @@ map<string, map<string, vector<Word> > > view;
 
 // For global variable among auxiliary.cpp
 string lastId = "!";
-// Map Id to its alias
+// Map alias to its id
 map<string, string> aliasMap;
 
 // viewId for create_stmt
@@ -69,6 +69,57 @@ void starter(ifstream& documentIfs) {
     view["Loc"] = msv;
 }
 
+void error() {
+    cerr << "Syntax error!" << endl;
+}
+
+void notFoundError(string symbol) {
+    cerr << "Symbol " << symbol << " not found!" << endl;
+    exit(1);
+}
+
+void from() {
+    bool hasFrom = 0;
+    for ( int i = oneStream.size() - 1; i >= 0; --i ) {
+        if ( oneStream[i].tag == FROM ) {
+            hasFrom = 1;
+            bool loop = 1;
+            while ( loop == 1 ) {
+                Token real = oneStream[++i];
+                if ( real.tag == ';' ) {
+                    cerr << "Syntax error: Expects ID." << endl;
+                    exit(1);
+                }
+
+                Token alias = oneStream[++i];
+                if ( real.tag == ID && alias.tag == ID ) {
+
+                    if ( aliasMap.count(alias.idReg) > 0 ) {
+                        cerr << "Syntax error: Duplicate alias " << alias.idReg << endl;
+                        exit(1);
+                    } else {
+                        aliasMap[alias.idReg] = real.idReg;
+                        Token comma = oneStream[++i];
+                        if ( comma.tag == ';' ) {
+                            loop = 0;
+                        } else if ( comma.tag != ',' ) {
+                            cerr << "Syntax error: Expects Comma." << endl;
+                            exit(1);
+                        }
+                    }
+                } else {
+                    cerr << "Syntax error: Expects ID." << endl;
+                    exit(1);
+                }
+            }
+        }
+    }
+
+    if ( hasFrom == 0 ) {
+        notFoundError("From");
+    }
+}
+
 void init() {
     current = oneStream.begin();
     currentType = current->tag;
@@ -83,14 +134,6 @@ void init() {
     parenNum = 1;
 }
 
-void error() {
-    cerr << "Syntax error!" << endl;
-}
-
-void notFoundError(string symbol) {
-    cerr << "Symbol " << symbol << " not found!" << endl;
-    exit(1);
-}
 
 // Simple match and advances input
 void match(int first) {

@@ -217,12 +217,20 @@ void optSubFrom_item() {
 
 void extract_stmt() {
     switch ( currentType ) {
-        case EXTRACT:
+        case EXTRACT: {
+            map<string, string>::iterator it = aliasMap.begin();
+            for ( ; it != aliasMap.end(); ++it ) {
+                cout << it->first << " " << it->second << endl;
+            }
+            cout << endl;
+            from();
+
             match(EXTRACT);
             extract_spec();
             match(FROM);
-            from_list();
+            // from_list();
             break;
+        }
         default:
             error();
             break;
