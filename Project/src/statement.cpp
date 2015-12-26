@@ -273,9 +273,52 @@ void regex_spec() {
             }
             */
 
+
+            from();
             match(ON);
-            column();
-            name_spec();
+
+
+            // match ID after ON;
+            if (aliasMap.find(current->idReg) != aliasMap.end()) {
+                current++;
+                currentType = current->tag;
+            } else {
+                cerr << "Syntax Error: (regex_spec) Match ID after On -- don't exist this ID, " << current->idReg << endl;
+                exit(1);
+            }
+
+            //match .
+            match('.');
+
+            // match text
+            if (current->idReg == "text") {
+                current++;
+                currentType = current->tag;
+            } else {
+                cerr << "Syntax Error: (regex_spec) column " << current->idReg << " doesn't exist" << endl;
+                exit(1);
+            }
+
+            switch ( currentType ) {
+                case AS:
+                    match(AS);
+                    matchReturnId(ID, colName);
+                    view[viewId][colName] = v;
+                    break;
+                case RETURN:
+                    match(RETURN);
+                    match(GROUP);
+                    string num;
+                    matchReturnId(NUM, num);
+                    if (num != "0") {
+                        cerr << "Syntax Error: (regex_spec) the number of group should be 0" << endl;
+                        exit(1);
+                    }
+                    match(AS);
+                    matchReturnId(ID, colName);
+                    view[viewId][colName] = v;
+                    break;
+            }
             /*
             // Test selectMap
             map<string, struct selectInfo>::iterator it = selectMap.begin();
