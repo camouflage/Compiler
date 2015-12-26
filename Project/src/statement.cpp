@@ -223,9 +223,8 @@ void extract_stmt() {
             map<string, string>::iterator it = aliasMap.begin();
             for ( ; it != aliasMap.end(); ++it ) {
                 cout << it->first << " " << it->second << endl;
-            }
-            */
-            cout << endl;
+            }*/
+            
             match(EXTRACT);
             extract_spec();
             match(FROM);
@@ -264,6 +263,7 @@ void regex_spec() {
             /*
             vector<Word>::iterator it = v.begin();
             for (; it != v.end(); it++) {
+
                 cout << it->content << "(" << it->start << "," << it->end << ")" << " ";
                 vector<int>::iterator itt = (it->include).begin();
                 for(; itt != (it->include).end(); itt++) {
@@ -274,10 +274,7 @@ void regex_spec() {
             */
 
 
-            from();
             match(ON);
-
-
             // match ID after ON;
             if (aliasMap.find(current->idReg) != aliasMap.end()) {
                 current++;
@@ -308,9 +305,10 @@ void regex_spec() {
                 case RETURN:
                     match(RETURN);
                     match(GROUP);
-                    string num;
-                    matchReturnId(NUM, num);
-                    if (num != "0") {
+                    int num;
+                    matchReturnNum(NUM, num);
+                    if (num != 0) {
+                        cout << num << endl;
                         cerr << "Syntax Error: (regex_spec) the number of group should be 0" << endl;
                         exit(1);
                     }

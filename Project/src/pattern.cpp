@@ -36,7 +36,7 @@ vector<Word> getNewResult(vector<Word> result, vector<Word> pmv, int minToken, i
     
     //test function
 
-    cout << endl << endl;
+    /*cout << endl << endl;
     cout << "getNewResult:" << endl;
 
     cout << "result:" << endl;
@@ -49,7 +49,7 @@ vector<Word> getNewResult(vector<Word> result, vector<Word> pmv, int minToken, i
     it = pmv.begin();
     for (; it != pmv.end(); it++) {
         cout << it->content << "(" << it->start << "," << it->end << ")" << endl;
-    }
+    }*/
     
 
     // save the result we get after matching.
@@ -60,7 +60,7 @@ vector<Word> getNewResult(vector<Word> result, vector<Word> pmv, int minToken, i
         for (pm_it = pmv.begin(); pm_it != pmv.end(); pm_it++) {
             // match: succeed
 
-            cout << pm_it->include.front() << " " << r_it->include.back() << endl;
+            //cout << pm_it->include.front() << " " << r_it->include.back() << endl;
 
             if (pm_it->include.front() - r_it->include.back() <= (maxToken + 1) && 
                 pm_it->include.front() - r_it->include.back() >= (minToken + 1)) {
