@@ -212,22 +212,108 @@ void output() {
     }
     */
 
-            // Test output
-            map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
-            for ( ; viewIt != view.end(); ++viewIt ) {
-                cout << "View: " << viewIt->first << endl;
-                map<string, vector<Word> > col = viewIt->second;
-                map<string, vector<Word> >::iterator colIt = col.begin();
-                for ( ; colIt != col.end(); ++colIt ) {
-                    cout << "   Col: " << colIt->first << endl;
-                    vector<Word> w = colIt->second;
-                    vector<Word>::iterator wIt = w.begin();
-                    for ( ; wIt != w.end(); ++wIt ) {
-                        cout << "       " << wIt->content << endl; 
+    // Test output
+    // map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
+    // for ( ; viewIt != view.end(); ++viewIt ) {
+    //     cout << "View: " << viewIt->first << endl;
+    //     map<string, vector<Word> > col = viewIt->second;
+    //     map<string, vector<Word> >::iterator colIt = col.begin();
+    //     for ( ; colIt != col.end(); ++colIt ) {
+    //         cout << "   Col: " << colIt->first << endl;
+    //         vector<Word> w = colIt->second;
+    //         vector<Word>::iterator wIt = w.begin();
+    //         for ( ; wIt != w.end(); ++wIt ) {
+    //             cout << "       " << wIt->content << endl; 
+    //         }
+    //     }
+    //     cout << endl;
+    // }
+    int maxrow;
+    vector<int> colsize;
+    vector<string> colname;
+    vector< vector<Word>::iterator > wIts;
+    stringstream ss;
+    string startstr, endstr;
+    map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
+    for ( ; viewIt != view.end(); ++viewIt ) {
+        colsize.clear();
+        colname.clear();
+        wIts.clear();
+        maxrow = 0;
+        cout << "View: " << viewIt->first << endl;
+        map<string, vector<Word> > cols = viewIt->second;
+        map<string, vector<Word> >::iterator colIt = cols.begin();
+        for ( ; colIt != cols.end(); ++colIt ) {
+            colsize.push_back(0);
+            colname.push_back(colIt->first);
+            vector<Word>::iterator wIt = colIt->second.begin();
+            maxrow = colIt->second.size();
+            for ( ; wIt != colIt->second.end(); ++wIt ) {
+                ss.clear();
+                ss << wIt->start;
+                ss >> startstr;
+                ss.clear();
+                ss << wIt->end;
+                ss >> endstr;
+                wIt->content += ":(" + startstr + "," + endstr + ")";
+                if (wIt->content.length() > colsize[colsize.size() - 1]) colsize[colsize.size() - 1] = wIt->content.length();
+            }
+            wIt = colIt->second.begin();
+            wIts.push_back(wIt);
+        }
+        if (colsize.size() > 0) {
+            //seperate row
+            cout << "+";
+            for (int i = 0; i < colsize.size(); i++) {
+                cout << "-";
+                for (int j = 0; j < colsize[i]; j++) cout << "-";
+                cout << "-+";
+            }
+            cout << endl;
+            //name row
+            cout << "|";
+            for (int i = 0; i < colsize.size(); i++) {
+                cout << ' ';
+                for (int j = 0; j < colsize[i]; j++) {
+                    if (j < colname[i].length()) cout << colname[i][j];
+                    else cout << ' ';
+                }
+                cout << " |";
+            }
+            cout << endl;
+            //seperate row
+            cout << "+";
+            for (int i = 0; i < colsize.size(); i++) {
+                cout << "-";
+                for (int j = 0; j < colsize[i]; j++) cout << "-";
+                cout << "-+";
+            }
+            cout << endl;
+            //data rows
+            for (int k = 0; k < maxrow; k++) {
+                cout << "|";
+                for (int i = 0; i < colsize.size(); i++) {
+                    cout << ' ';
+                    for (int j = 0; j < colsize[i]; j++) {
+                        if (j < wIts[i]->content.length()) cout << wIts[i]->content[j];
+                        else cout << ' ';
                     }
+                    cout << " |";
+                    (wIts[i])++;
                 }
                 cout << endl;
             }
+            //seperate row
+            cout << "+";
+            for (int i = 0; i < colsize.size(); i++) {
+                cout << "-";
+                for (int j = 0; j < colsize[i]; j++) cout << "-";
+                cout << "-+";
+            }
+            cout << endl;
+        }
+        cout << maxrow << " rows in set\n\n";
+    } 
             
 }
 
