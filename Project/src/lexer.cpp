@@ -100,7 +100,7 @@ void reserve() {
     Token _and(AND);
     symbol.insert(pair<string, Token>("and", _and));
     Token token(TOKEN);
-    symbol.insert(pair<string, Token>("token", token));
+    symbol.insert(pair<string, Token>("Token", token));
     Token pattern(PATTERN);
     symbol.insert(pair<string, Token>("pattern", pattern));
 }

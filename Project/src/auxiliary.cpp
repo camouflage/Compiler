@@ -36,9 +36,6 @@ map<string, struct selectInfo> selectMap;
 // documentAlias for regex_spec
 string documentAlias;
 
-int parenNum;
-
-
 vector<Token> oneStream;
 vector<Token>::iterator current;
 int currentType;
@@ -108,8 +105,6 @@ void init() {
 
     // Clear the select map
     selectMap.clear();
-
-    parenNum = 1;
 }
 
 
@@ -197,7 +192,7 @@ void output() {
         colname.clear();
         wIts.clear();
         maxrow = 0;
-        
+
         if ( aliasId == "!" ) {
             cout << "View: " << viewIt->first << endl;
         } else {
