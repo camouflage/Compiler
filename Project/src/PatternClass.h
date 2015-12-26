@@ -48,6 +48,10 @@ class PatternMatch {
 
 		void output() {
 			cout << type << " " << reg << " " << token_min << " " << token_max << endl;
+			vector<Word>::iterator it = column.begin();
+			for ( ; it != column.end(); ++it ) {
+				cout << it->content << endl;
+			}
 		}
 };
 

@@ -15,8 +15,9 @@ string lastId = "!";
 // Map alias to its id
 map<string, string> aliasMap;
 
-// viewId for create_stmt
+// viewId & aliasId
 string viewId;
+string aliasId;
 
 // selectView & selectCol & selectColName for select_item
 string selectView;
@@ -44,29 +45,6 @@ int currentType;
 
 void starter(ifstream& documentIfs) {
     pre_tokenizer();
-
-    // View Loc for test
-    vector<Word> vw;
-    Word w1;
-    w1.content = "G";
-    vw.push_back(w1);
-    w1.content = "W";
-    vw.push_back(w1);
-    w1.content = "V";
-    vw.push_back(w1);
-    map<string, vector<Word> > msv;
-    msv["Cap"] = vw;
-
-    vw.clear();
-    w1.content = "P,G";
-    vw.push_back(w1);
-    w1.content = "G,W";
-    vw.push_back(w1);
-    w1.content = "W,V";
-    vw.push_back(w1);
-    msv["Loc"] = vw;
-
-    view["Loc"] = msv;
 }
 
 void error() {
@@ -126,6 +104,7 @@ void init() {
     // Clear the alias map
     aliasMap.clear();
     lastId = "!";
+    aliasId = "!";
 
     // Clear the select map
     selectMap.clear();
@@ -203,44 +182,28 @@ bool hasCol(string viewName, string colName) {
 }
 
 void output() {
-    /*
-    map<string, string>::iterator it = aliasMap.find(lastId);
-    if ( it != aliasMap.end() ) {
-        cout << it->first << " " << it->second << endl;
-    } else {
-        cout << lastId << endl;
-    }
-    */
-
-    // Test output
-    // map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
-    // for ( ; viewIt != view.end(); ++viewIt ) {
-    //     cout << "View: " << viewIt->first << endl;
-    //     map<string, vector<Word> > col = viewIt->second;
-    //     map<string, vector<Word> >::iterator colIt = col.begin();
-    //     for ( ; colIt != col.end(); ++colIt ) {
-    //         cout << "   Col: " << colIt->first << endl;
-    //         vector<Word> w = colIt->second;
-    //         vector<Word>::iterator wIt = w.begin();
-    //         for ( ; wIt != w.end(); ++wIt ) {
-    //             cout << "       " << wIt->content << endl; 
-    //         }
-    //     }
-    //     cout << endl;
-    // }
     int maxrow;
     vector<int> colsize;
     vector<string> colname;
     vector< vector<Word>::iterator > wIts;
     stringstream ss;
     string startstr, endstr;
-    map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
-    for ( ; viewIt != view.end(); ++viewIt ) {
+
+    map<string, map<string, vector<Word> > >::iterator viewIt;
+    viewIt = view.find(viewId);
+    // map<string, map<string, vector<Word> > >::iterator viewIt = view.begin();
+    // for ( ; viewIt != view.end(); ++viewIt ) {
         colsize.clear();
         colname.clear();
         wIts.clear();
         maxrow = 0;
-        cout << "View: " << viewIt->first << endl;
+        
+        if ( aliasId == "!" ) {
+            cout << "View: " << viewIt->first << endl;
+        } else {
+            cout << "View: " << aliasId << endl;
+        }
+        
         map<string, vector<Word> > cols = viewIt->second;
         map<string, vector<Word> >::iterator colIt = cols.begin();
         for ( ; colIt != cols.end(); ++colIt ) {
@@ -313,8 +276,7 @@ void output() {
             cout << endl;
         }
         cout << maxrow << " rows in set\n\n";
-    } 
-            
+    // }    
 }
 
 void select() {
