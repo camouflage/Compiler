@@ -202,6 +202,8 @@ void lex(ifstream& ifs) {
         }
     }
 
+    ifs.close();
+
     /*
     // Output token info
     for ( int i = 0; i < tokenStream.size(); ++i ) {

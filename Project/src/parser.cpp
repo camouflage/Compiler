@@ -12,4 +12,7 @@ void parse() {
 
         aql_stmt();
     }
+
+    documentIfs.close();
+    outputIfs.close();
 }

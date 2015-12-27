@@ -12,5 +12,6 @@ using namespace std;
 
 extern vector<vector<Token> > tokenStream;
 extern ifstream documentIfs;
+extern ofstream outputIfs;
 
 #endif
