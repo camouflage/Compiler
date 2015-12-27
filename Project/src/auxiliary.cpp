@@ -102,7 +102,7 @@ void init() {
     aliasMap.clear();
     lastId = "!";
     aliasId = "!";
-    patternGroup.clear();
+
     // Clear the select map
     selectMap.clear();
 }
