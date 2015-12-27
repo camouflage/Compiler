@@ -45,7 +45,7 @@ class PatternMatch {
 			token_max = ta;
 			column = cc;
 		}
-
+		// Only for TEST
 		void output() {
 			cout << type << " " << reg << " " << token_min << " " << token_max << endl;
 			vector<Word>::iterator it = column.begin();

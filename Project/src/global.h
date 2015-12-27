@@ -6,12 +6,13 @@
 #include"pre_token.h"
 #include"token.cpp"
 #include"PatternClass.h"
-#include<map>
-#include<vector>
 using namespace std;
 
+// Global variables
+// tokenStream stores the tokens returned by lexer 
 extern vector<vector<Token> > tokenStream;
+// Stores document and output 
 extern ifstream documentIfs;
-extern ofstream outputIfs;
+extern ofstream outputOfs;
 
 #endif

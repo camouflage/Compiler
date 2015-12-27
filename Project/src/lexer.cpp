@@ -5,6 +5,8 @@
 #include<string>
 #include<sstream>
 #include<cstdlib>
+#include<map>
+#include<vector>
 using namespace std;
 
 // Symbol table 

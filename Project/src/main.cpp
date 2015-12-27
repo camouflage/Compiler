@@ -48,17 +48,17 @@ int main(int argc, char* argv[]) {
 
         snprintf(documentPath, FILELEN, "../dataset/%s/%s", lowerNamePath, argv[2]);
         documentIfs.open(documentPath);
-        outputIfs.open(outputPath);
+        outputOfs.open(outputPath);
         // Cannot open document
         if ( !documentIfs ) {
             cerr << "Could not open document file(" << documentPath << ")!" << endl;
             return 1;
         } else {
-            if ( !outputIfs ) {
+            if ( !outputOfs ) {
                 cerr << "Could not open output file(" << outputPath << ")!" << endl;
                 return 1;
             } else {
-                outputIfs << "Processing " << argv[2] << endl;
+                outputOfs << "Processing " << argv[2] << endl;
                 // MAIN FUNCTION AQL
                 AQL(aqlIfs);
             }
@@ -86,17 +86,17 @@ int main(int argc, char* argv[]) {
                     // Append .output
                     snprintf(outputPath, FILELEN, "../dataset/%s/%s%s", argv[2], fileName, dotOutput);
                     documentIfs.open(documentPath);
-                    outputIfs.open(outputPath);
+                    outputOfs.open(outputPath);
                     // Cannot open document
                     if ( !documentIfs ) {
                         cerr << "Could not open document file(" << documentPath << ")!" << endl;
                         return 1;
                     } else {
-                        if ( !outputIfs ) {
+                        if ( !outputOfs ) {
                             cerr << "Could not open output file(" << outputPath << ")!" << endl;
                             return 1;
                         } else {
-                            outputIfs << "Processing " << dirp->d_name << endl;
+                            outputOfs << "Processing " << dirp->d_name << endl;
                             // MAIN FUNCTION AQL
                             AQL(aqlIfs);
                         }

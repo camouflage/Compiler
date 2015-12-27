@@ -9,7 +9,7 @@ using namespace std;
 
 vector<vector<Token> > tokenStream;
 ifstream documentIfs;
-ofstream outputIfs;
+ofstream outputOfs;
 
 void AQL(ifstream& aqlIfs) {
     // lexer
