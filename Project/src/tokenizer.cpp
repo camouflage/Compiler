@@ -54,7 +54,7 @@ vector<Word> tokenizer(const char* regex) {
 
 	documentIfs.read(cont, length);
 
-	//get the cursor back to the begin.
+	// get the cursor back to the begin.
 	documentIfs.seekg(0, ios::beg);
 
 	vector<vector<int> > coordinates = findall(regex, cont);
