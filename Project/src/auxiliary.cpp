@@ -1,4 +1,3 @@
-#include"global.h"
 #include"pattern.cpp"
 #include<iostream>
 #include<vector>
@@ -103,6 +102,7 @@ void init() {
     lastId = "!";
     aliasId = "!";
 
+    patternGroup.clear();
     // Clear the select map
     selectMap.clear();
 }
