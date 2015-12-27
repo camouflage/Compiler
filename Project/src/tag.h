@@ -1,6 +1,3 @@
-#ifndef TAG
-#define TAG
-
 // Keyword
 #define CREATE      256
 #define VIEW        257
@@ -20,5 +17,3 @@
 #define NUM         279
 #define ID          280
 #define REG         281
-
-#endif

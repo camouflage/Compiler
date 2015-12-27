@@ -5,15 +5,12 @@
 #include<string>
 #include<sstream>
 #include<cstdlib>
-#include<map>
-#include<vector>
 using namespace std;
 
 // Symbol table 
 map<string, Token> symbol;
 
-// #define does not work here
-// const for getType()
+// #define does not work here.
 const int SPACE = 0;
 const int DIGIT = 1;
 const int DELIMIT = 2;
@@ -22,11 +19,11 @@ const int REGEXSTART = 4;
 const int STMTEND = 5;
 const int INVALID = 6;
 
-// Avoid conflict with regex.cpp, so rename them with _ at front
+// Avoid conflict with regex.cpp
 int _line = 1;
 int _col = 0;
 
-// Return the type of the char then advance _line and _col
+// Return the type of the char then advance _line and _col.
 int getType(char c) {
     if ( c == '\t' ) {
         _col += 3;
@@ -57,13 +54,12 @@ int getType(char c) {
         ++_col;
         return STMTEND;
     } else {
-        ++_col;
         return INVALID;
     }
 }
 
 /* If the lookahead does not belong to the previous token,
- * revert the _col and row
+ * revert the _col and row.
  */
 void revert(char c) {
     if ( c == '\t' ) {
@@ -113,7 +109,6 @@ void lex(ifstream& ifs) {
     // Reserve
     reserve();
 
-    // Vector of tokens in one statement (statement ends with semicolon)
     vector<Token> oneStmtToken;
     char current;
     while ( (current = ifs.get()) != EOF ) {
@@ -134,7 +129,6 @@ void lex(ifstream& ifs) {
             Token num(NUM, _line, startCol, v);
             oneStmtToken.push_back(num);
         } else if ( type == LETTER ) {
-            // Get the id
             string buffer;
             int subType;
             int startCol = _col;
@@ -151,12 +145,12 @@ void lex(ifstream& ifs) {
             if ( tag >= 256 && tag <= 269 ) {
                 Token keyword(tag, _line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
-            } else { // It is identifier 
+            } else {
                 Token keyword(ID, _line, startCol, -1, buffer);
                 oneStmtToken.push_back(keyword);
             }
         } else if ( type == DELIMIT ) {
-            // Convert char to string to be stored in Token
+            // Convert char to string
             stringstream ss;
             ss << current;
             string cur;
@@ -169,15 +163,14 @@ void lex(ifstream& ifs) {
             // Ignore '/'
             int startCol = _col + 1;
             int subType;
-            // Assume that there is no '/' in regex
+            // Assume that there is no '/' in regex.
             current = ifs.get();
             subType = getType(current);
-            // Get the regex
             while ( subType != REGEXSTART ) {
                 // Enforce escape
                 if ( subType == SPACE ) {
                     cerr << "Error: invalid regex in AQL"
-                         << " at line " << _line << " col " << startCol
+                         << " at _line " << _line << " _col " << startCol
                          << ": \\t, \\n and space are not allowed, please escape them." << endl;
                     exit(1);
                 }
@@ -199,22 +192,21 @@ void lex(ifstream& ifs) {
         } else {
             // Deal with invalid char
             cerr << "Error: invalid AQL input symbol " << current 
-                 << " at line " << _line << " col " << _col << endl;
+                 << " at _line " << _line << " _col " << _col << endl;
             exit(1);
         }
     }
 
-    ifs.close();
-
     /*
-    // Output token info
+    // Output only for TEST
     for ( int i = 0; i < tokenStream.size(); ++i ) {
         vector<Token>::iterator it = tokenStream[i].begin();
         for ( ; it != tokenStream[i].end(); ++it ) {
             cout << it->tag << " " << it->num << " " << it->idReg << " "
-                 << it->line << " " << it->col << endl;
+                 << it->_line << " " << it->_col << endl;
         }
         cout << endl;
     }
     */
+    
 }

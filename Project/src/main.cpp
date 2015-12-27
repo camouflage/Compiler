@@ -15,53 +15,37 @@ bool isInput(char* fileName, int nameLen) {
 }
 
 int main(int argc, char* argv[]) {
-    // Path of AQL
     char aqlPath[FILELEN];
     snprintf(aqlPath, FILELEN, "../dataset/%s", argv[1]);
     ifstream aqlIfs(aqlPath);
-    // Cannot open AQL file
+    // AQL input
     if ( !aqlIfs ) {
-        cerr << "Could not open aql file(" <<  aqlPath << ")!" << endl;
+        cerr << "Could not open aql file!" << endl;
         return 2;
     }
 
-    // Path of document
     char documentPath[FILELEN];
-    // Length of document's name, not considering extension
     int nameLen = strlen(argv[2]) - NAMELEN;
-    char outputPath[FILELEN];
-    char dotOutput[8] = ".output";
     
-    // Single input file case(with .input as the ending of the argument)
+    // Single input file
     if (  isInput(argv[2], nameLen) ) {
-        // File name with lower case character
+        // File name
         char lowerNamePath[FILELEN];
         strncpy(lowerNamePath, argv[2], nameLen);
-
-        // Get path of output 
-        snprintf(outputPath, FILELEN, "../dataset/%s/%s%s", lowerNamePath, lowerNamePath, dotOutput);
         
-        // Convert to lower case, get directory name
+        // To lower case: directory name
         for ( int i = 0; i < strlen(lowerNamePath); ++i ) {
             lowerNamePath[i] = tolower(lowerNamePath[i]);
         }
 
         snprintf(documentPath, FILELEN, "../dataset/%s/%s", lowerNamePath, argv[2]);
-        documentIfs.open(documentPath);
-        outputOfs.open(outputPath);
-        // Cannot open document
+        ifstream documentIfs(documentPath);
         if ( !documentIfs ) {
-            cerr << "Could not open document file(" << documentPath << ")!" << endl;
+            cerr << "Could not open document file!" << endl;
             return 1;
         } else {
-            if ( !outputOfs ) {
-                cerr << "Could not open output file(" << outputPath << ")!" << endl;
-                return 1;
-            } else {
-                outputOfs << "Processing " << argv[2] << endl;
-                // MAIN FUNCTION AQL
-                AQL(aqlIfs);
-            }
+            // MAIN FUNCTION
+            AQL(aqlIfs);
         }
     } else { // Given directory
         snprintf(documentPath, FILELEN, "../dataset/%s", argv[2]);
@@ -69,37 +53,22 @@ int main(int argc, char* argv[]) {
         DIR* dp = opendir(documentPath);
 
         if ( dp == NULL ) {
-            cerr << "Could not find the directory(" << documentPath << ")!" << endl;
+            cerr << "Could not find the directory!" << endl;
             return 3;
         } else {
             struct dirent* dirp = readdir(dp);
-            // Iterate through the directory
             while ( dirp != NULL ) {
-                // Choose those that are .input file
-                int fileNameLen = strlen(dirp->d_name) - NAMELEN;
-                if ( isInput(dirp->d_name, fileNameLen) ) {
+                // Get input file name
+                if ( isInput(dirp->d_name, strlen(dirp->d_name) - NAMELEN) ) {
                     snprintf(documentPath, FILELEN, "../dataset/%s/%s", argv[2], dirp->d_name);
-
-                    // Get fileName
-                    char fileName[FILELEN];
-                    snprintf(fileName, fileNameLen + 1, "%s", dirp->d_name);
-                    // Append .output
-                    snprintf(outputPath, FILELEN, "../dataset/%s/%s%s", argv[2], fileName, dotOutput);
+                    // ifstream documentIfs(documentPath);
                     documentIfs.open(documentPath);
-                    outputOfs.open(outputPath);
-                    // Cannot open document
                     if ( !documentIfs ) {
-                        cerr << "Could not open document file(" << documentPath << ")!" << endl;
+                        cerr << "Could not open document file!" << endl;
                         return 1;
                     } else {
-                        if ( !outputOfs ) {
-                            cerr << "Could not open output file(" << outputPath << ")!" << endl;
-                            return 1;
-                        } else {
-                            outputOfs << "Processing " << dirp->d_name << endl;
-                            // MAIN FUNCTION AQL
-                            AQL(aqlIfs);
-                        }
+                        // MAIN FUNCTION
+                        AQL(aqlIfs);
                     }
                 }
                 dirp = readdir(dp);

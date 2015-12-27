@@ -1,6 +1,3 @@
-#ifndef PRETOKEN
-#define PRETOKEN
-
 #include<iostream>
 #include<string>
 
@@ -24,5 +21,3 @@ class Pre_token {
 			position = p;
 		}
 };
-
-#endif
