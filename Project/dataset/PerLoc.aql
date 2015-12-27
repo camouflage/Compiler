@@ -36,6 +36,6 @@ create view PerLocOnly as
 output view Cap;
 output view Stt;
 output view Loc;
-output view Per as P;
+output view Per;
 output view PerLoc;
 output view PerLocOnly;

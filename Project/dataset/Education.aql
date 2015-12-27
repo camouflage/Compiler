@@ -1,0 +1,20 @@
+create view Age as
+    extract regex /[0-9]+\-year\-old/
+        on D.text as age
+    from Document D;
+
+create view Name as
+    extract regex /[A-Z][a-z]*/
+        on D.text as name
+    from Document D;
+
+create view AgeOfPerson as 
+    extract pattern (<A.age>) /,/ (<N.name>)
+        return group 0 as ageOfPerson
+           and group 1 as age
+           and group 2 as person
+    from Age A, Name N;
+
+output view Age;
+output view Name;
+output view AgeOfPerson;

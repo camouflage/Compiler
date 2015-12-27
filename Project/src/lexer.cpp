@@ -175,10 +175,10 @@ void lex(ifstream& ifs) {
             // Get the regex
             while ( subType != REGEXSTART ) {
                 // Enforce escape
-                if ( subType == SPACE ) {
+                if ( subType == '\n' || subType == '\r' || subType == '\t' ) {
                     cerr << "Error: invalid regex in AQL"
                          << " at line " << _line << " col " << startCol
-                         << ": \\t, \\n and space are not allowed, please escape them." << endl;
+                         << ": \\t, \\n and \\r are not allowed, please escape them." << endl;
                     exit(1);
                 }
 
