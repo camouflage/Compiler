@@ -23,10 +23,10 @@ void extract_spec();
 void regex_spec();
 void pattern_spec();
 void column();
-void name_spec(vector<vector<Word> >& pg);
-void group_spec(vector<vector<Word> >& pg);
-void singleGroup(vector<vector<Word> >& pg);
-vector<Word> pattern_expr(vector<vector<Word> >& pg);
+void name_spec();
+void group_spec();
+void singleGroup();
+vector<Word> pattern_expr();
 void atom(PatternMatch& currentPc);
 void optRange(PatternMatch& currentPc);
 
@@ -358,17 +358,17 @@ void column() {
     }
 }
 
-void name_spec(vector<vector<Word> >& pg) {
+void name_spec() {
     switch ( currentType ) {
         case AS:
             match(AS);
             matchReturnId(ID, colName);
             
-            view[viewId][colName] = pg[pg.size() - 1];
+            view[viewId][colName] = patternGroup[patternGroup.size() - 1];
             break;
         case RETURN:
             match(RETURN);
-            group_spec(pg);
+            group_spec();
             break;
         default:
             error();
@@ -376,12 +376,12 @@ void name_spec(vector<vector<Word> >& pg) {
     }
 }
 
-void group_spec(vector<vector<Word> >& pg) {
-    singleGroup(pg);
+void group_spec() {
+    singleGroup();
     while ( 1 ) {
         if ( currentType == AND ) {
             match(AND);
-            singleGroup(pg);
+            singleGroup();
         } else if ( currentType == FROM ) {
             break;
         } else {
@@ -391,7 +391,7 @@ void group_spec(vector<vector<Word> >& pg) {
     }
 }
 
-void singleGroup(vector<vector<Word> >& pg) {
+void singleGroup() {
     switch ( currentType ) {
         case GROUP: {
             match(GROUP);
@@ -400,9 +400,9 @@ void singleGroup(vector<vector<Word> >& pg) {
             match(AS);
             matchReturnId(ID, colName);
             if ( num == 0 ) {
-                view[viewId][colName] = pg[pg.size() - 1];
+                view[viewId][colName] = patternGroup[patternGroup.size() - 1];
             } else {
-                view[viewId][colName] = pg[num - 1];
+                view[viewId][colName] = patternGroup[num - 1];
             }
             break;
         }
@@ -416,9 +416,8 @@ void pattern_spec() {
     switch ( currentType ) {
         case PATTERN: {
             match(PATTERN);
-            // Note: group 0 saved as the last element.
-            vector<vector<Word> > patternGroup;
-            pattern_expr(patternGroup);
+            
+            pattern_expr();
             /*
             for ( int i = 0 ; i < patternGroup.size(); ++i ) {
                 vector<Word> vw = patternGroup[i];
@@ -429,7 +428,7 @@ void pattern_spec() {
                 }
             }
             */
-            name_spec(patternGroup);
+            name_spec();
             break;
         }
         default:
@@ -439,14 +438,14 @@ void pattern_spec() {
 }
 
 
-vector<Word> pattern_expr(vector<vector<Word> >& pg) {
+vector<Word> pattern_expr() {
     vector<PatternMatch> pm;
     vector<Word> result;
     
     while ( 1 ) {
         if ( currentType == '(' ) {
             match('(');
-            vector<Word> temp = pattern_expr(pg);
+            vector<Word> temp = pattern_expr();
             PatternMatch pmTemp(1, temp);
             pm.push_back(pmTemp);
         } else if ( currentType == '<' || currentType == REG ) {
@@ -466,7 +465,7 @@ vector<Word> pattern_expr(vector<vector<Word> >& pg) {
     }
 
     result = match_pattern(pm);
-    pg.push_back(result);
+    patternGroup.push_back(result);
 
     return result;
 }

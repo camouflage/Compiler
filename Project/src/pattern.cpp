@@ -7,6 +7,9 @@
 
 using namespace std;
 
+// Note: group 0 saved as the last element.
+vector<vector<Word> > patternGroup;
+
 Word merge_word(Word first, Word second) {
 
     string newCont = first.content;
