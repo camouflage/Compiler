@@ -19,31 +19,37 @@ class PatternMatch {
 		int token_min;
 		int token_max;
 
+		bool isGroup;
 		// if <column>, save to column
 		vector<Word> column;
 		PatternMatch() {
 			token_min = token_max = type = 0;
 			reg = "";
+			isGroup = false;
 		}
-		PatternMatch(int t, string r) {
+		PatternMatch(int t, string r, bool isg) {
 			type = t;
 			reg = r;
+			isGroup = isg;
 		}
-		PatternMatch(int t, int ti, int ta) {
+		PatternMatch(int t, int ti, int ta, bool isg) {
 			type = t;
 			token_min = ti;
 			token_max = ta;
+			isGroup = isg;
 		}
-		PatternMatch(int t, vector<Word> cc) {
+		PatternMatch(int t, vector<Word> cc, bool isg) {
 			type = t;
 			column = cc;
+			isGroup = isg;
 		}
-		PatternMatch(int t, string r, int ti, int ta, vector<Word> cc) {
+		PatternMatch(int t, string r, int ti, int ta, vector<Word> cc, bool isg) {
 			type = t;
 			reg = r;
 			token_min = ti;
 			token_max = ta;
 			column = cc;
+			isGroup = isg;
 		}
 
 		void output() {

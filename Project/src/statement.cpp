@@ -26,7 +26,7 @@ void column();
 void name_spec(vector<vector<Word> >& pg);
 void group_spec(vector<vector<Word> >& pg);
 void singleGroup(vector<vector<Word> >& pg);
-vector<Word> pattern_expr(vector<vector<Word> >& pg);
+vector<Word> pattern_expr(vector<vector<Word> >& pg, bool isLast);
 void atom(PatternMatch& currentPc);
 void optRange(PatternMatch& currentPc);
 
@@ -416,9 +416,8 @@ void pattern_spec() {
     switch ( currentType ) {
         case PATTERN: {
             match(PATTERN);
-            // Note: group 0 saved as the last element.
-            vector<vector<Word> > patternGroup;
-            pattern_expr(patternGroup);
+            
+            pattern_expr(patternGroup, true);
             /*
             for ( int i = 0 ; i < patternGroup.size(); ++i ) {
                 vector<Word> vw = patternGroup[i];
@@ -439,20 +438,21 @@ void pattern_spec() {
 }
 
 
-vector<Word> pattern_expr(vector<vector<Word> >& pg) {
+vector<Word> pattern_expr(vector<vector<Word> >& pg, bool isLast) {
     vector<PatternMatch> pm;
     vector<Word> result;
-    
+    cout << "in pattern_expr" << endl;
     while ( 1 ) {
         if ( currentType == '(' ) {
             match('(');
-            vector<Word> temp = pattern_expr(pg);
-            PatternMatch pmTemp(1, temp);
+            vector<Word> temp = pattern_expr(pg, false);
+            PatternMatch pmTemp(1, temp, true);
             pm.push_back(pmTemp);
         } else if ( currentType == '<' || currentType == REG ) {
             PatternMatch currentPc;
             atom(currentPc);
             optRange(currentPc);
+            currentPc.isGroup = false;
             pm.push_back(currentPc);
         } else if ( currentType == ')' ) {
             match(')');
@@ -465,8 +465,7 @@ vector<Word> pattern_expr(vector<vector<Word> >& pg) {
         }
     }
 
-    result = match_pattern(pm);
-    pg.push_back(result);
+    result = match_pattern(pm, isLast);
 
     return result;
 }
