@@ -260,19 +260,6 @@ void regex_spec() {
             vector<Word> v;
             v = tokenizer(reg.c_str());
 
-            /*
-            vector<Word>::iterator it = v.begin();
-            for (; it != v.end(); it++) {
-
-                cout << it->content << "(" << it->start << "," << it->end << ")" << " ";
-                vector<int>::iterator itt = (it->include).begin();
-                for(; itt != (it->include).end(); itt++) {
-                    cout << *itt << " ";
-                }
-                cout << endl;
-            }
-            */
-
             match(ON);
             // match ID after ON;
             if (aliasMap.find(current->idReg) != aliasMap.end()) {
@@ -295,16 +282,21 @@ void regex_spec() {
                 exit(1);
             }
 
+
             switch ( currentType ) {
+            	// if D.text has alias, then match it
                 case AS:
                     match(AS);
                     matchReturnId(ID, colName);
                     view[viewId][colName] = v;
                     break;
+
+                // D.text doesn't has alias
                 case RETURN:
                     match(RETURN);
                     match(GROUP);
                     int num;
+                    // get the group number
                     matchReturnNum(NUM, num);
                     if (num != 0) {
                         cout << num << endl;
@@ -418,16 +410,6 @@ void pattern_spec() {
             match(PATTERN);
             
             pattern_expr(patternGroup, true);
-            /*
-            for ( int i = 0 ; i < patternGroup.size(); ++i ) {
-                vector<Word> vw = patternGroup[i];
-                cout << i << ":\n";
-                vector<Word>::iterator ita = vw.begin();
-                for ( ; ita != vw.end(); ++ita ) {
-                    cout << ita->content << endl;
-                }
-            }
-            */
             name_spec(patternGroup);
             break;
         }
@@ -441,7 +423,6 @@ void pattern_spec() {
 vector<Word> pattern_expr(vector<vector<Word> >& pg, bool isLast) {
     vector<PatternMatch> pm;
     vector<Word> result;
-    cout << "in pattern_expr" << endl;
     while ( 1 ) {
         if ( currentType == '(' ) {
             match('(');
