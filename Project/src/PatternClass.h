@@ -1,6 +1,13 @@
 #ifndef PATTERNMATCH
 #define PATTERNMATCH
 
+/*
+	@function
+	
+	This class is used when we transport the pattern we analyzed to the pattern.cpp
+
+*/
+
 #include"word.h"
 #include<string>
 
@@ -19,9 +26,12 @@ class PatternMatch {
 		int token_min;
 		int token_max;
 
+		// if it belongs to a group
 		bool isGroup;
+
 		// if <column>, save to column
 		vector<Word> column;
+
 		PatternMatch() {
 			token_min = token_max = type = 0;
 			reg = "";
