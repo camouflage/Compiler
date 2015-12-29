@@ -139,9 +139,7 @@ vector<resultStrt> getNewResult(vector<resultStrt> result, vector<Word> pmv, int
 vector<resultStrt> Initialize_Result(vector<resultStrt> result, vector<Word> column) {
     for (int i = 0; i < column.size(); i++) {
         vector<int> ele;
-        if (isGroup) {
-            ele.push_back(i);
-        }
+        ele.push_back(i);
         resultStrt res(column[i], ele);
         result.push_back(res);
     }
@@ -159,7 +157,7 @@ vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
         // the first expression cannot be Token<>{};
         if (first) {
             if (pat->type == 1) {
-                result = Initialize_Result(result, pat->column, pat->isGroup);
+                result = Initialize_Result(result, pat->column);
             } 
             else if (pat->type == 2){
                 cerr << "Invalid Pattern" << endl;
@@ -170,7 +168,7 @@ vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
             // <column> + <column>
             if (pat->type == 1) {
                 // cover the old result using the new result
-                result = getNewResult(result, pat->column, 0, 0, pat->isGroup);
+                result = getNewResult(result, pat->column, 0, 0);
             }
 
             else if (pat->type == 2) {

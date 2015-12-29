@@ -35,6 +35,7 @@ map<string, struct selectInfo> selectMap;
 // documentAlias for regex_spec
 string documentAlias;
 
+
 vector<Token> oneStream;
 vector<Token>::iterator current;
 int currentType;
@@ -102,7 +103,6 @@ void init() {
     lastId = "!";
     aliasId = "!";
 
-    patternGroup.clear();
     // Clear the select map
     selectMap.clear();
 }

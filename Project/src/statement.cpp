@@ -23,10 +23,10 @@ void extract_spec();
 void regex_spec();
 void pattern_spec();
 void column();
-void name_spec(vector<vector<Word> >& pg);
-void group_spec(vector<vector<Word> >& pg);
-void singleGroup(vector<vector<Word> >& pg);
-vector<Word> pattern_expr(vector<vector<Word> >& pg);
+void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+void group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+vector<int> pattern_expr(vector<PatternMatch>& vpm, map<int, vector<int> >& index, int& position, int& paren);
 void atom(PatternMatch& currentPc);
 void optRange(PatternMatch& currentPc);
 
@@ -220,6 +220,7 @@ void extract_stmt() {
     switch ( currentType ) {
         case EXTRACT: {
             from();
+
             /*
             map<string, string>::iterator it = aliasMap.begin();
             for ( ; it != aliasMap.end(); ++it ) {
@@ -350,17 +351,17 @@ void column() {
     }
 }
 
-void name_spec(vector<vector<Word> >& pg) {
+void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
     switch ( currentType ) {
         case AS:
             match(AS);
             matchReturnId(ID, colName);
             
-            view[viewId][colName] = pg[pg.size() - 1];
+            //view[viewId][colName] = pg[pg.size() - 1];
             break;
         case RETURN:
             match(RETURN);
-            group_spec(pg);
+            group_spec(result, index, vpm);
             break;
         default:
             error();
@@ -368,12 +369,12 @@ void name_spec(vector<vector<Word> >& pg) {
     }
 }
 
-void group_spec(vector<vector<Word> >& pg) {
-    singleGroup(pg);
+void group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
+    singleGroup(result, index, vpm);
     while ( 1 ) {
         if ( currentType == AND ) {
             match(AND);
-            singleGroup(pg);
+            singleGroup(result, index, vpm);
         } else if ( currentType == FROM ) {
             break;
         } else {
@@ -383,7 +384,7 @@ void group_spec(vector<vector<Word> >& pg) {
     }
 }
 
-void singleGroup(vector<vector<Word> >& pg) {
+void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
     switch ( currentType ) {
         case GROUP: {
             match(GROUP);
@@ -392,9 +393,28 @@ void singleGroup(vector<vector<Word> >& pg) {
             match(AS);
             matchReturnId(ID, colName);
             if ( num == 0 ) {
-                view[viewId][colName] = pg[pg.size() - 1];
+                vector<resultStrt>::iterator it = result.begin();
+                vector<Word> match;
+                for ( ; it != result.end(); ++it ) {
+                    match.push_back(it->word);
+                }
+                view[viewId][colName] = match;
             } else {
-                view[viewId][colName] = pg[num - 1];
+                vector<int> pos = index[num];
+                vector<Word> all = vpm[pos[0]].column;
+                vector<Word> match;
+                /*
+                vector<resultStrt>::iterator it = result.begin();
+                for ( ; it != result.end(); ++it ) {
+                    vector<int> valid = it->validElement;
+                    for ( int i = 0; i < valid.size(); ++i ) {
+                        match.push_back(all[valid[i]]);
+                    }
+                }
+                */
+                if ( pos.size() == 1 ) {
+                    view[viewId][colName] = all;
+                }
             }
             break;
         }
@@ -408,9 +428,24 @@ void pattern_spec() {
     switch ( currentType ) {
         case PATTERN: {
             match(PATTERN);
+            vector<PatternMatch> vpm;
+            map<int, vector<int> > index;
+            int position = 0;
+            int paren = 0;
+            pattern_expr(vpm, index, position, paren);
             
-            pattern_expr(patternGroup);
-            name_spec(patternGroup);
+            /*
+            map<int, vector<int> >::iterator it = index.begin();
+            for ( ; it != index.end(); ++it ) {
+                cout << it->first << ":" << endl;
+                vector<int> temp = it->second;
+                for ( int i = 0; i < temp.size(); ++i ) {
+                    cout << temp[i] << endl;
+                }
+            }
+            */
+            vector<resultStrt> result = match_pattern(vpm);
+            name_spec(result, index, vpm);
             break;
         }
         default:
@@ -419,21 +454,22 @@ void pattern_spec() {
     }
 }
 
-
-vector<Word> pattern_expr(vector<vector<Word> >& pg) {
-    vector<PatternMatch> pm;
-    vector<Word> result;
+vector<int> pattern_expr(vector<PatternMatch>& vpm, map<int, vector<int> >& index, int& position, int& paren) {
+    vector<int> subIndex;
+    int curParen = paren;
     while ( 1 ) {
         if ( currentType == '(' ) {
             match('(');
-            vector<Word> temp = pattern_expr(pg);
-            PatternMatch pmTemp(1, temp);
-            pm.push_back(pmTemp);
+            vector<int> temp = pattern_expr(vpm, index, position, ++paren);
+            for ( int i = 0; i < temp.size(); ++i ) {
+                subIndex.push_back(temp[i]);
+            }
         } else if ( currentType == '<' || currentType == REG ) {
             PatternMatch currentPc;
             atom(currentPc);
             optRange(currentPc);
-            pm.push_back(currentPc);
+            vpm.push_back(currentPc);
+            subIndex.push_back(position++);
         } else if ( currentType == ')' ) {
             match(')');
             break;
@@ -444,9 +480,9 @@ vector<Word> pattern_expr(vector<vector<Word> >& pg) {
             break;
         }
     }
-    result = match_pattern(pm);
 
-    return result;
+    index[curParen] = subIndex;
+    return subIndex;
 }
 
 void optRange(PatternMatch& currentPc) {
@@ -489,8 +525,8 @@ void atom(PatternMatch& currentPc) {
         case REG: {
             string reg;
             matchReturnId(REG, reg);
-            currentPc.type = 3;
-            currentPc.reg = reg;
+            currentPc.type = 1;
+            currentPc.column = tokenizer(reg.c_str());
             break;
         }
         default:
