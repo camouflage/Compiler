@@ -16,7 +16,7 @@ class PatternMatch {
 		// production rule:
 		// atom -> < column > | < Token > | REG
 
-		// <column> --> type = 1, < Token > --> type = 2, REG --> type = 3
+		// <column> --> type = 1, < Token > --> type = 2
 		int type;
 
 		// if REG, save the expression using reg;
@@ -26,32 +26,25 @@ class PatternMatch {
 		int token_min;
 		int token_max;
 
-		// if it belongs to a group
-		bool isGroup;
-
 		// if <column>, save to column
 		vector<Word> column;
 
 		PatternMatch() {
 			token_min = token_max = type = 0;
 			reg = "";
-			isGroup = false;
 		}
 		PatternMatch(int t, string r, bool isg) {
 			type = t;
 			reg = r;
-			isGroup = isg;
 		}
 		PatternMatch(int t, int ti, int ta, bool isg) {
 			type = t;
 			token_min = ti;
 			token_max = ta;
-			isGroup = isg;
 		}
 		PatternMatch(int t, vector<Word> cc, bool isg) {
 			type = t;
 			column = cc;
-			isGroup = isg;
 		}
 		PatternMatch(int t, string r, int ti, int ta, vector<Word> cc, bool isg) {
 			type = t;
@@ -59,7 +52,6 @@ class PatternMatch {
 			token_min = ti;
 			token_max = ta;
 			column = cc;
-			isGroup = isg;
 		}
 
 		void output() {
