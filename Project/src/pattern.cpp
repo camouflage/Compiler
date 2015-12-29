@@ -25,15 +25,15 @@ struct resultStrt {
 
 	// save the word
     Word word;
-	// record the element that the word uses from each group
+	// record the element that the word uses from each column
 	// exp :   (<A>)<B>(<C>)
 	// A has three element: element 0 : a, element 1: b, element 2 : c
 	// B has three element: element 0 : d, element 1: e, element 2 : f
 	// C has three element: element 0 : g, element 1: h, element 2 : i
 	// after merge the table
-	// the result is "aei", then validElement is {0, 2};  
-	// the result is "adg", then validElement is {0, 0}; 
-	// the result is "adh", then validElement is {0, 1};  
+	// the result is "aei", then validElement is {0, 1, 2};  
+	// the result is "adg", then validElement is {0, 0, 0}; 
+	// the result is "adh", then validElement is {0, 0, 1};  
 	// which only records the subscripts that belong to groups
     vector<int> validElement;
     resultStrt(Word w, vector<int> va) {
@@ -42,6 +42,23 @@ struct resultStrt {
     } 
 };
 
+// no debug - version, give to my dog, delete this comment after you see it~~~~~
+vector<Word> merge_vector(vector<vector<Word>> v) {
+	vector<Word> old_vector = v[0];
+	vector<Word>::iterator l_it, r_it;
+	vector<vector<Word>>::iterator it = v.begin() + 1;
+	for (; it != end(); it++) {
+		l_it = old_vector.begin();
+		r_it = (*it).begin();
+		vector<Word> new_vector;
+		for (; l_it != old_vector.end(); l_it++, r_it++) {
+			Word newword = merge_word(*l_it, *r_it);
+			new_vector.push_back(newword);
+		}
+		old_vector = new_vector;
+	}
+	return old_vector;
+}
 
 Word merge_word(Word first, Word second) {
 
