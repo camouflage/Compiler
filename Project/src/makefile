@@ -1,5 +1,7 @@
 main: 
 	g++ -o main main.cpp
+
+execute:
 	./main ds1.aql ds1.input
 	./main ds2.aql ds2.input
 	./main ds3.aql ds3.input

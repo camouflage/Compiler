@@ -100,35 +100,18 @@ vector<Word> merge_vector(vector< vector<Word> > v) {
 }
 
 vector<resultStrt> getNewResult(vector<resultStrt> result, vector<Word> pmv, int minToken, int maxToken) {
-    
-    //test function
-
-    /*cout << endl << endl;
-    cout << "getNewResult:" << endl;
-    cout << "result:" << endl;
-    vector<Word>::iterator it = result.begin();
-    for (; it != result.end(); it++) {
-        cout << it->content << "(" << it->start << "," << it->end << ")" << endl;
-    }
-    cout << "pmv:" << endl;
-    it = pmv.begin();
-    for (; it != pmv.end(); it++) {
-        cout << it->content << "(" << it->start << "," << it->end << ")" << endl;
-    }*/
-    
 
     // save the result we get after matching.
     vector<resultStrt> new_result;
     vector<resultStrt>::iterator r_it = result.begin();
     vector<Word>::iterator pm_it;
+
     //match: one-to-one corresponding
     for (; r_it != result.end(); r_it++) {
         int position_of_pm = 0;
         for (pm_it = pmv.begin(); pm_it != pmv.end(); pm_it++, position_of_pm++) {
+
             // match: succeed
-
-            //cout << pm_it->include.front() << " " << r_it->include.back() << endl;
-
             if (pm_it->include.front() - (r_it->word).include.back() <= (maxToken + 1) && 
                 pm_it->include.front() - (r_it->word).include.back() >= (minToken + 1)) {
 
@@ -137,18 +120,10 @@ vector<resultStrt> getNewResult(vector<resultStrt> result, vector<Word> pmv, int
                 ele.push_back(position_of_pm);
                 resultStrt res(new_word, ele);
                 new_result.push_back(res);
+
             }
         }
     }
-
-    /*
-    //test function
-    cout << "new_result:" << endl;
-    it = new_result.begin();
-    for (; it != new_result.end(); it++) {
-        cout << it->content << "(" << it->start << "," << it->end << ")" << endl;
-    }
-    */
     return new_result;
 }
 
@@ -163,9 +138,7 @@ vector<resultStrt> Initialize_Result(vector<resultStrt> result, vector<Word> col
 }
 
 vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
-    //cout << pm.size() << endl;
-    
-    //cout << "in match_pattern ," << isLast << " " << patternGroup.size() << endl;
+
     vector<resultStrt> result;
     vector<PatternMatch>::iterator pat = pm.begin();
     // get the first expression
@@ -189,8 +162,7 @@ vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
             }
 
             else if (pat->type == 2) {
-                //cout <<  pat->token_min <<  pat->token_max << endl;
-                // Assuming that there must be a <column> or REG behind <Token>
+                // Assuming that there must be a <column> behind <Token>
                 // <column> + <Token> + <column>
                 vector<resultStrt>::iterator it = result.begin();
                 for (; it != result.end(); it++) {
@@ -202,13 +174,6 @@ vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
         }
 
     }
-    /*
-    vector<resultStrt>::iterator it = result.begin();
-    for (; it != result.end(); it++) {
-        cout << it->word.content << "(" << it->word.start << "," << it->word.end << ")";
-        for (int i = 0; i < it->validElement.size(); i++) {
-            cout << " " << it->validElement[i] << " ";
-        }
-    }*/
+
     return result;
 }

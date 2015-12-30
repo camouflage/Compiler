@@ -8,9 +8,9 @@ create view Year as
 	extract regex /((([0-9])[0-9])[0-9])[0-9]/
 		on D.text
     return group 0 as year
-    and group 1 as qian
-    and group 2 as bai
-    and group 3 as ge
+    and group 1 as three
+    and group 2 as two
+    and group 3 as one
   from Document D;
 
 create view Key as
