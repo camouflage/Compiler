@@ -116,7 +116,8 @@ void match(int first) {
         ++current;
         currentType = current->tag;
     } else {
-        error();
+        cerr << "Syntax Error: (match)" << endl;
+        exit(1);
     }
 }
 
@@ -133,7 +134,8 @@ void matchInsertAlias(int first) {
         ++current;
         currentType = current->tag;
     } else {
-        error();
+        cerr << "Syntax Error: (match)" << endl;
+        exit(1);
     }
 }
 
@@ -145,7 +147,8 @@ void matchReturnId(int first, string& id) {
         ++current;
         currentType = current->tag;
     } else {
-        error();
+        cerr << "Syntax Error: (match)" << endl;
+        exit(1);
     }
 }
 
@@ -157,7 +160,8 @@ void matchReturnNum(int first, int& num) {
         ++current;
         currentType = current->tag;
     } else {
-        error();
+        cerr << "Syntax Error: (match)" << endl;
+        exit(1);
     }
 }
 

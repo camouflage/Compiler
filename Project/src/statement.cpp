@@ -63,7 +63,8 @@ void create_stmt() {
             view_stmt();
             break;
         default:
-            error();
+            cerr << "Syntax Error: (create_stmt) Expects CREATE, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -81,8 +82,8 @@ void output_stmt() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (output_stmt) Expects OUTPUT, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -107,8 +108,8 @@ void view_stmt() {
             extract_stmt();
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (view_stmt) Expects SELECT OR EXTRACT, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -123,8 +124,8 @@ void select_stmt() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (select_stmt) Expects SELECT, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -135,14 +136,14 @@ void select_list() {
             optSubSelect_item();
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (select_list) Expects ID, but not found" << endl;
+            exit(1);
     }
 }
 
 void select_item() {
     switch ( currentType ) {
-        // error: switch case is in protected scope
+        // Error: switch case is in protected scope
         case ID: {
             matchReturnId(ID, selectView);
             match('.');
@@ -157,8 +158,8 @@ void select_item() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (select_item) Expects ID, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -193,8 +194,8 @@ void from_list() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (from_list) Expects ID, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -205,8 +206,8 @@ void from_item() {
             matchInsertAlias(ID);
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (select_item) Expects ID, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -224,15 +225,7 @@ void optSubFrom_item() {
 void extract_stmt() {
     switch ( currentType ) {
         case EXTRACT: {
-            from();
-
-            /*
-            map<string, string>::iterator it = aliasMap.begin();
-            for ( ; it != aliasMap.end(); ++it ) {
-                cout << it->first << " " << it->second << endl;
-            }
-            */
-            
+            from();            
             match(EXTRACT);
             extract_spec();
             break;
@@ -252,8 +245,8 @@ void extract_spec() {
             pattern_spec();
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (extract_spec) Expects REGEX OR PATTERN, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -291,8 +284,8 @@ void regex_spec() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (regex_spec) Expects REGEX, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -311,8 +304,8 @@ void regex_name_spec(vector< vector<Word> >& v) {
             regex_group_spec(v);
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (regex_name_spec) Expects AS OR RETURN, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -325,8 +318,8 @@ void regex_group_spec(vector< vector<Word> >& v) {
         } else if ( currentType == FROM ) {
             break;
         } else {
-            error();
-            break;
+            cerr << "Syntax Error: (regex_group_spec) Expects AND OR FROM, but not found" << endl;
+            exit(1);
         }
     }
 }
@@ -339,18 +332,13 @@ void regex_singleGroup(vector< vector<Word> >& v) {
             matchReturnNum(NUM, num);
             match(AS);
             matchReturnId(ID, colName);
-            /*
-            cout << "num:" << num << endl;
-            for ( int i = 0; i < v[num].size(); ++i ) {
-                cout << v[num][i].content << endl;
-            }
-            */
+
             view[viewId][colName] = v[num];
             break;
         } 
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (regex_singleGroup) Expects GROUP, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -383,8 +371,8 @@ void column() {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (column) Expects ID, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -407,8 +395,8 @@ void pattern_name_spec(vector<resultStrt>& result, map<int, vector<int> >& index
             pattern_group_spec(result, index, vpm);
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (pattern_name_spec) Expects AS OR RETURN, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -421,8 +409,8 @@ void pattern_group_spec(vector<resultStrt>& result, map<int, vector<int> >& inde
         } else if ( currentType == FROM ) {
             break;
         } else {
-            error();
-            break;
+            cerr << "Syntax Error: (pattern_group_spec) Expects AND OR FROM, but not found" << endl;
+            exit(1);
         }
     }
 }
@@ -471,8 +459,8 @@ void pattern_singleGroup(vector<resultStrt>& result, map<int, vector<int> >& ind
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (pattern_singleGroup) Expects GROUP, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -485,30 +473,14 @@ void pattern_spec() {
             int position = 0;
             int paren = 0;
             pattern_expr(vpm, index, position, paren);
-            /*
-            vector<Word> oneCol = vpm[2].column;
-            for ( int j = 0; j < oneCol.size(); ++j ) {
-                        cout << oneCol[j].content << endl;
-                    }
-                    cout << "--\n";
-            
-            map<int, vector<int> >::iterator it = index.begin();
-            for ( ; it != index.end(); ++it ) {
-                cout << it->first << ":" << endl;
-                vector<int> temp = it->second;
-                for ( int i = 0; i < temp.size(); ++i ) {
-                    cout << temp[i] << endl;
-                }
-            }
-            */
 
             vector<resultStrt> result = match_pattern(vpm);
             pattern_name_spec(result, index, vpm);
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (pattern_spec) Expects PATTERN, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -534,8 +506,8 @@ vector<int> pattern_expr(vector<PatternMatch>& vpm, map<int, vector<int> >& inde
         } else if ( currentType == RETURN ) {
             break;
         } else {
-            error();
-            break;
+            cerr << "Syntax Error: (pattern_expr) Expects ( OR < OR REG OR ) OR RETURN, but not found" << endl;
+            exit(1);
         }
     }
 
@@ -575,8 +547,8 @@ void atom(PatternMatch& currentPc) {
                     match('>');
                     break;
                 default:
-                    error();
-                    break;
+                    cerr << "Syntax Error: (atom) Expects ID OR TOKEN, but not found" << endl;
+                    exit(1);
             }
             break;
         }
@@ -588,7 +560,7 @@ void atom(PatternMatch& currentPc) {
             break;
         }
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (atom) Expects < OR REG, but not found" << endl;
+            exit(1);
     }
 }
