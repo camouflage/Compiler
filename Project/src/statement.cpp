@@ -416,11 +416,9 @@ void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vect
                     vector<Word> valid;
 
                     vector<resultStrt>::iterator it = result.begin();
-                        for ( ; it != result.end(); ++it ) {
-                            cout << "valid:" <<  it->validElement[col[i]] << endl;
-                            valid.push_back(oneCol[it->validElement[col[i]]]);
-                        }
-                    cout << "--\n";
+                    for ( ; it != result.end(); ++it ) {
+                        valid.push_back(oneCol[it->validElement[col[i]]]);
+                    }
                     all.push_back(valid);
                     /*
                     for ( int j = 0; j < valid.size(); ++j ) {

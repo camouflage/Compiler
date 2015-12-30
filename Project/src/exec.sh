@@ -1,2 +1,2 @@
 g++ main.cpp -o main
-./main PerLoc.aql perloc.input
+./main Economy.aql economy

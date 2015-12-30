@@ -99,6 +99,9 @@ int main(int argc, char* argv[]) {
                             outputOfs << "Processing " << dirp->d_name << endl;
                             // MAIN FUNCTION AQL
                             AQL(aqlIfs);
+                            // Move back to beginning
+                            aqlIfs.clear();
+                            aqlIfs.seekg(0, aqlIfs.beg);
                         }
                     }
                 }
