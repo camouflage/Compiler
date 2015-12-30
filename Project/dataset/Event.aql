@@ -11,20 +11,42 @@ create view Number as
 output view Number;
 
 create view Date as
-	extract pattern (<M.month> <N.number>)
+	extract pattern <M.month> <N.number>
 		return group 0 as date
-           and group 1 as dateParen
 	from Month M, Number N;
 output view Date;
 
-create view Content as
+create view Symbol as
+	extract regex / - /
+		on D.text as symbol
+	from Document D;
+
+create view Sentence as
+	extract pattern (<S.symbol>) <Token>{10,50} /\./
+		return group 1 as symbol
+		   and group 0 as sentence
+	from Symbol S;
+output view Sentence;
+
+create view ShortContent as
 	extract regex / - .*? /
-		on D.text as content
+		on D.text
+		return group 0 as content
     from Document D;
-output view Content;
+output view ShortContent;
+
 
 create view Event as
-	extract pattern <D.date> <C.content>
-		return group 0 as event
-	from Date D, Content C;
+	extract pattern (((<M.month>) (<N.number>)) (<C.content>))
+		return group 1 as event
+		   and group 2 as date
+		   and group 3 as month
+		   and group 4 as day
+		   and group 5 as content
+	from Month M, Number N, ShortContent C;
 output view Event;
+
+create view DateOnly as
+  select E.date as date
+  from Event E;
+output view DateOnly;
