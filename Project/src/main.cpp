@@ -36,8 +36,7 @@ int main(int argc, char* argv[]) {
     if (  isInput(argv[2], nameLen) ) {
         // File name with lower case character
         char lowerNamePath[FILELEN];
-        strncpy(lowerNamePath, argv[2], nameLen);
-
+        snprintf(lowerNamePath, nameLen + 1, "%s", argv[2]);
         // Get path of output 
         snprintf(outputPath, FILELEN, "../dataset/%s/%s%s", lowerNamePath, lowerNamePath, dotOutput);
         
