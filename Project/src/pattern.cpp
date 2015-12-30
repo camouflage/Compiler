@@ -163,6 +163,7 @@ vector<resultStrt> Initialize_Result(vector<resultStrt> result, vector<Word> col
 }
 
 vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
+    cout << pm.size() << endl;
     
     //cout << "in match_pattern ," << isLast << " " << patternGroup.size() << endl;
     vector<resultStrt> result;
@@ -188,14 +189,26 @@ vector<resultStrt> match_pattern(vector<PatternMatch> pm) {
             }
 
             else if (pat->type == 2) {
+                cout <<  pat->token_min <<  pat->token_max << endl;
                 // Assuming that there must be a <column> or REG behind <Token>
                 // <column> + <Token> + <column>
+                vector<resultStrt>::iterator it = result.begin();
+                for (; it != result.end(); it++) {
+                    it->validElement.push_back(-1);
+                }
                 result = getNewResult(result, (pat+1)->column, pat->token_min, pat->token_max);
                 pat++;
             }
         }
 
     }
-    
+    /*
+    vector<resultStrt>::iterator it = result.begin();
+    for (; it != result.end(); it++) {
+        cout << it->word.content << "(" << it->word.start << "," << it->word.end << ")";
+        for (int i = 0; i < it->validElement.size(); i++) {
+            cout << " " << it->validElement[i] << " ";
+        }
+    }*/
     return result;
 }
