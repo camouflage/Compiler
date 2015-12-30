@@ -2,7 +2,7 @@ main:
 	g++ -o main main.cpp
 clean:
 	rm main
-excute:
+execute:
 	./main PerLoc.aql perloc
 	./main Revenue.aql revenue
 	./main Education.aql education
