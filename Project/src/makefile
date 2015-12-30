@@ -1,5 +1,5 @@
 main: 
-	g++ -o main main.cpp
+	g++ -w -o main main.cpp
 
 execute:
 	./main ds1.aql ds1.input

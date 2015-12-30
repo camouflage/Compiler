@@ -123,5 +123,252 @@ View: Number
 | 28:(5846,5848)   |
 | 8501:(5876,5880) |
 | 162:(5983,5986)  |
-|  :(6003,6004)    |
 +------------------+
+72 rows in set
+
+View: Date
++--------------------------+
+| date                     |
++--------------------------+
+| January 1:(0,9)          |
+| February 7-23:(108,121)  |
+| February 13:(182,193)    |
+| February 22:(307,318)    |
+| February 26:(517,528)    |
+| March 5:(680,687)        |
+| March 8:(870,877)        |
+| March 16:(1099,1107)     |
+| March 21:(1157,1165)     |
+| March 24:(1280,1288)     |
+| March 27:(1442,1450)     |
+| March 31:(1633,1641)     |
+| April 10:(1812,1820)     |
+| April 14:(2182,2190)     |
+| April 16:(2283,2291)     |
+| April 27:(2420,2428)     |
+| April 28:(2512,2520)     |
+| May 5:(2696,2701)        |
+| May 20:(2838,2844)       |
+| May 22:(2913,2919)       |
+| June 5:(3072,3078)       |
+| June 12:(3356,3363)      |
+| June 19:(3433,3440)      |
+| July 8:(3553,3559)       |
+| July 17:(3967,3974)      |
+| July 17:(4081,4088)      |
+| July 21:(4234,4241)      |
+| July 24:(4365,4372)      |
+| August 7:(4450,4458)     |
+| August 8:(4622,4630)     |
+| September 22:(4739,4751) |
+| September 26:(4840,4852) |
+| October 19:(5118,5128)   |
+| October 31:(5182,5192)   |
+| November 2:(5336,5346)   |
+| November 12:(5562,5573)  |
+| December 17:(5722,5733)  |
+| December 28:(5837,5848)  |
++--------------------------+
+38 rows in set
+
+View: Sentence
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| sentence                                                                                                                                                                                                                                                                                                                                 | symbol          |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+|  - Latvia officially adopts the euro as its currency and becomes the 18th member of the Eurozone.:(9,106)                                                                                                                                                                                                                                |  - :(9,12)      |
+|  - Latvia officially adopts the euro as its currency and becomes the 18th member of the Eurozone.  February 7-23 - The XXII Olympic Winter Games are held in Sochi, Russia.:(9,180)                                                                                                                                                      |  - :(9,12)      |
+|  - The XXII Olympic Winter Games are held in Sochi, Russia.:(121,180)                                                                                                                                                                                                                                                                    |  - :(121,124)   |
+|  - The XXII Olympic Winter Games are held in Sochi, Russia.  February 13 - Belgium becomes the first country in the world to legalise euthanasia for terminally ill patients of any age.:(121,305)                                                                                                                                       |  - :(121,124)   |
+|  - Belgium becomes the first country in the world to legalise euthanasia for terminally ill patients of any age.:(193,305)                                                                                                                                                                                                               |  - :(193,196)   |
+|  - The Ukrainian parliament votes to remove President Viktor Yanukovych from office, replacing him with Oleksandr Turchynov, after days of civil unrest left around 100 people dead in Kiev, Ukraine.:(318,515)                                                                                                                          |  - :(318,321)   |
+|  - The pro-Russian unrest in Ukraine leads to the annexation of Crimea by the Russian Federation and an insurgency in the Donetsk and Luhansk oblasts.:(528,678)                                                                                                                                                                         |  - :(528,531)   |
+|  - Nicolas Maduro, the President of Venezuela, severs diplomatic and political ties with Panama, accusing Panama of being involved in a conspiracy against the Venezuelan government.:(687,868)                                                                                                                                          |  - :(687,690)   |
+|  - Malaysia Airlines Flight 370, a Boeing 777 airliner en route to Beijing from Kuala Lumpur, disappears over the Gulf of Thailand with 239 people on board.:(877,1033)                                                                                                                                                                  |  - :(877,880)   |
+|  - Malaysia Airlines Flight 370, a Boeing 777 airliner en route to Beijing from Kuala Lumpur, disappears over the Gulf of Thailand with 239 people on board. The aircraft is presumed to have crashed into the Indian Ocean.:(877,1097)                                                                                                  |  - :(877,880)   |
+|  - A referendum on the status of Crimea is held.  March 21 - Russia formally annexes Crimea after President Vladimir Putin signed a bill finalizing the annexation process.:(1107,1278)                                                                                                                                                  |  - :(1107,1110) |
+|  - Russia formally annexes Crimea after President Vladimir Putin signed a bill finalizing the annexation process.:(1165,1278)                                                                                                                                                                                                            |  - :(1165,1168) |
+|  - Russia formally annexes Crimea after President Vladimir Putin signed a bill finalizing the annexation process.  March 24 - During an emergency meeting, the United Kingdom, the United States, Italy, Germany, France, Japan, and Canada temporarily suspend Russia from the G8.:(1165,1440)                                          |  - :(1165,1168) |
+|  - During an emergency meeting, the United Kingdom, the United States, Italy, Germany, France, Japan, and Canada temporarily suspend Russia from the G8.:(1288,1440)                                                                                                                                                                     |  - :(1288,1291) |
+|  - The United Nations General Assembly passes Resolution 68/262, recognizing Crimea within Ukraine's international borders and rejecting the validity of the 2014 Crimean referendum.:(1450,1631)                                                                                                                                        |  - :(1450,1453) |
+|  - The United Nations International Court of Justice rules that Japan's Antarctic whaling program is not scientific but commercial and forbids grants of further permits.:(1641,1810)                                                                                                                                                    |  - :(1641,1644) |
+|  - An estimated 276 girls and women are abducted and held hostage from a school in Nigeria.:(2190,2281)                                                                                                                                                                                                                                  |  - :(2190,2193) |
+|  - An estimated 276 girls and women are abducted and held hostage from a school in Nigeria.  April 16 - Korean ferry MV Sewol capsizes and sinks after an unmanageable cargo shift, killing 304 people, mostly high school students.:(2190,2418)                                                                                         |  - :(2190,2193) |
+|  - Korean ferry MV Sewol capsizes and sinks after an unmanageable cargo shift, killing 304 people, mostly high school students.:(2291,2418)                                                                                                                                                                                              |  - :(2291,2294) |
+|  - Korean ferry MV Sewol capsizes and sinks after an unmanageable cargo shift, killing 304 people, mostly high school students.  April 27 - The Catholic Church simultaneously canonizes Popes John XXIII and John Paul II.:(2291,2510)                                                                                                  |  - :(2291,2294) |
+|  - The Catholic Church simultaneously canonizes Popes John XXIII and John Paul II.:(2428,2510)                                                                                                                                                                                                                                           |  - :(2428,2431) |
+|  - The Catholic Church simultaneously canonizes Popes John XXIII and John Paul II.  April 28 - United States President Barack Obama's new economic sanctions against Russia go into effect, targeting companies and individuals close to Russian President Vladimir Putin.:(2428,2694)                                                   |  - :(2428,2431) |
+|  - United States President Barack Obama's new economic sanctions against Russia go into effect, targeting companies and individuals close to Russian President Vladimir Putin.:(2520,2694)                                                                                                                                               |  - :(2520,2523) |
+|  - United States President Barack Obama's new economic sanctions against Russia go into effect, targeting companies and individuals close to Russian President Vladimir Putin.  May 5 - The World Health Organization identifies the spread of poliomyelitis in at least 10 countries as a major worldwide health emergency.:(2520,2836) |  - :(2520,2523) |
+|  - The World Health Organization identifies the spread of poliomyelitis in at least 10 countries as a major worldwide health emergency.:(2701,2836)                                                                                                                                                                                      |  - :(2701,2704) |
+|  - The World Health Organization identifies the spread of poliomyelitis in at least 10 countries as a major worldwide health emergency.  May 20 - Terrorists in Nigeria detonate bombs at Jos, killing 118 people.:(2701,2911)                                                                                                           |  - :(2701,2704) |
+|  - Terrorists in Nigeria detonate bombs at Jos, killing 118 people.:(2844,2911)                                                                                                                                                                                                                                                          |  - :(2844,2847) |
+|  - Terrorists in Nigeria detonate bombs at Jos, killing 118 people.  May 22 - The Royal Thai Army overthrows the caretaker government of Niwatthamrong Boonsongpaisan after a failure to resolve the political unrest in Thailand.:(2844,3070)                                                                                           |  - :(2844,2847) |
+|  - The Royal Thai Army overthrows the caretaker government of Niwatthamrong Boonsongpaisan after a failure to resolve the political unrest in Thailand.:(2919,3070)                                                                                                                                                                      |  - :(2919,2922) |
+|  - The 2014 FIFA World Cup is held in Brazil, and is won by Germany.:(3363,3431)                                                                                                                                                                                                                                                         |  - :(3363,3366) |
+|  - The 2014 FIFA World Cup is held in Brazil, and is won by Germany.  June 19 - King Juan Carlos I of Spain abdicates in favor of his son, who ascends the Spanish throne as King Felipe VI.:(3363,3551)                                                                                                                                 |  - :(3363,3366) |
+|  - King Juan Carlos I of Spain abdicates in favor of his son, who ascends the Spanish throne as King Felipe VI.:(3440,3551)                                                                                                                                                                                                              |  - :(3440,3443) |
+|  - After a five-hour humanitarian ceasefire, Israel confirms the beginning of a ground offensive in Gaza.:(3974,4079)                                                                                                                                                                                                                    |  - :(3974,3977) |
+|  - After a five-hour humanitarian ceasefire, Israel confirms the beginning of a ground offensive in Gaza.  July 17 - Malaysia Airlines Flight 17, a Boeing 777, crashes in eastern Ukraine after being shot down by a missile.:(3974,4196)                                                                                               |  - :(3974,3977) |
+|  - After a five-hour humanitarian ceasefire, Israel confirms the beginning of a ground offensive in Gaza.  July 17 - Malaysia Airlines Flight 17, a Boeing 777, crashes in eastern Ukraine after being shot down by a missile. All 298 people on board are killed.:(3974,4232)                                                           |  - :(3974,3977) |
+|  - Malaysia Airlines Flight 17, a Boeing 777, crashes in eastern Ukraine after being shot down by a missile.:(4088,4196)                                                                                                                                                                                                                 |  - :(4088,4091) |
+|  - Malaysia Airlines Flight 17, a Boeing 777, crashes in eastern Ukraine after being shot down by a missile. All 298 people on board are killed.:(4088,4232)                                                                                                                                                                             |  - :(4088,4091) |
+|  - Malaysia Airlines Flight 17, a Boeing 777, crashes in eastern Ukraine after being shot down by a missile. All 298 people on board are killed.  July 21 - The United Nations Security Council adopts Resolution 2166 in response to the shootdown of Malaysia Airlines Flight 17.:(4088,4363)                                          |  - :(4088,4091) |
+|  - The United Nations Security Council adopts Resolution 2166 in response to the shootdown of Malaysia Airlines Flight 17.:(4241,4363)                                                                                                                                                                                                   |  - :(4241,4244) |
+|  - The United Nations Security Council adopts Resolution 2166 in response to the shootdown of Malaysia Airlines Flight 17.  July 24 - Air Algerie Flight 5017 crashes in Mali, killing all 116 people on board.:(4241,4448)                                                                                                              |  - :(4241,4244) |
+|  - Air Algerie Flight 5017 crashes in Mali, killing all 116 people on board.:(4372,4448)                                                                                                                                                                                                                                                 |  - :(4372,4375) |
+|  - Air Algerie Flight 5017 crashes in Mali, killing all 116 people on board.  August 7 - Khmer Rouge leaders Nuon Chea and Khieu Samphan are found guilty of crimes against humanity and are sentenced to life imprisonment by the Khmer Rouge Tribunal.:(4372,4620)                                                                     |  - :(4372,4375) |
+|  - Khmer Rouge leaders Nuon Chea and Khieu Samphan are found guilty of crimes against humanity and are sentenced to life imprisonment by the Khmer Rouge Tribunal.:(4458,4620)                                                                                                                                                           |  - :(4458,4461) |
+|  - Khmer Rouge leaders Nuon Chea and Khieu Samphan are found guilty of crimes against humanity and are sentenced to life imprisonment by the Khmer Rouge Tribunal.  August 8 - The United States military begins an air campaign in northern Iraq to stem the influx of ISIS militants.:(4458,4737)                                      |  - :(4458,4461) |
+|  - The United States military begins an air campaign in northern Iraq to stem the influx of ISIS militants.:(4630,4737)                                                                                                                                                                                                                  |  - :(4630,4633) |
+|  - The United States military begins an air campaign in northern Iraq to stem the influx of ISIS militants.  September 22 - The United States and several Arab partners begin their airstrike campaign in Syria.:(4630,4838)                                                                                                             |  - :(4630,4633) |
+|  - The United States and several Arab partners begin their airstrike campaign in Syria.:(4751,4838)                                                                                                                                                                                                                                      |  - :(4751,4754) |
+|  - The Roman Catholic Church beatifies Pope Paul VI.  October 31 - Burkina Faso President Blaise Compaore resigns after widespread protests in response to the attempt in abolishing presidential term limits.:(5128,5334)                                                                                                               |  - :(5128,5131) |
+|  - Burkina Faso President Blaise Compaore resigns after widespread protests in response to the attempt in abolishing presidential term limits.:(5192,5334)                                                                                                                                                                               |  - :(5192,5195) |
+|  - The Intergovernmental Panel on Climate Change (IPCC) releases the final part of its Fifth Assessment Report, warning that the world faces "severe, pervasive and irreversible" damage from global emissions of CO2.:(5346,5560)                                                                                                       |  - :(5346,5349) |
+|  - The Rosetta spacecraft's Philae probe successfully lands on Comet 67P, the first time in history that a spacecraft has landed on such an object.:(5573,5720)                                                                                                                                                                          |  - :(5573,5576) |
+|  - The Rosetta spacecraft's Philae probe successfully lands on Comet 67P, the first time in history that a spacecraft has landed on such an object.  December 17 - U.:(5573,5738)                                                                                                                                                        |  - :(5573,5576) |
+|  - The Rosetta spacecraft's Philae probe successfully lands on Comet 67P, the first time in history that a spacecraft has landed on such an object.  December 17 - U.S.:(5573,5740)                                                                                                                                                      |  - :(5573,5576) |
+|  - The Rosetta spacecraft's Philae probe successfully lands on Comet 67P, the first time in history that a spacecraft has landed on such an object.  December 17 - U.S. President Barack Obama announces the resumption of normal relations between the U.:(5573,5823)                                                                   |  - :(5573,5576) |
+|  - The Rosetta spacecraft's Philae probe successfully lands on Comet 67P, the first time in history that a spacecraft has landed on such an object.  December 17 - U.S. President Barack Obama announces the resumption of normal relations between the U.S.:(5573,5825)                                                                 |  - :(5573,5576) |
+|  - U.S. President Barack Obama announces the resumption of normal relations between the U.:(5733,5823)                                                                                                                                                                                                                                   |  - :(5733,5736) |
+|  - U.S. President Barack Obama announces the resumption of normal relations between the U.S.:(5733,5825)                                                                                                                                                                                                                                 |  - :(5733,5736) |
+|  - U.S. President Barack Obama announces the resumption of normal relations between the U.S. and Cuba.:(5733,5835)                                                                                                                                                                                                                       |  - :(5733,5736) |
+|  - Indonesia AirAsia Flight 8501 from Surabaya, Indonesia to Singapore crashes into the Java Sea just southwest of Borneo, killing all 162 people on board.:(5848,6003)                                                                                                                                                                  |  - :(5848,5851) |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+59 rows in set
+
+View: ShortContent
++----------------------------+
+| content                    |
++----------------------------+
+|  - Latvia :(9,19)          |
+|  - The :(121,128)          |
+|  - Belgium :(193,204)      |
+|  - The :(318,325)          |
+|  - The :(528,535)          |
+|  - Nicolas :(687,698)      |
+|  - Malaysia :(877,889)     |
+|  - A :(1107,1112)          |
+|  - Russia :(1165,1175)     |
+|  - During :(1288,1298)     |
+|  - The :(1450,1457)        |
+|  - The :(1641,1648)        |
+|  - In :(1820,1826)         |
+|  - An :(2190,2196)         |
+|  - Korean :(2291,2301)     |
+|  - The :(2428,2435)        |
+|  - United :(2520,2530)     |
+|  - The :(2701,2708)        |
+|  - Terrorists :(2844,2858) |
+|  - The :(2919,2926)        |
+|  - A :(3078,3083)          |
+|  - The :(3363,3370)        |
+|  - King :(3440,3448)       |
+|  - Amid :(3559,3567)       |
+|  - After :(3974,3983)      |
+|  - Malaysia :(4088,4100)   |
+|  - The :(4241,4248)        |
+|  - Air :(4372,4379)        |
+|  - Khmer :(4458,4467)      |
+|  - The :(4630,4637)        |
+|  - The :(4751,4758)        |
+|  - The :(4852,4859)        |
+|  - The :(5128,5135)        |
+|  - Burkina :(5192,5203)    |
+|  - The :(5346,5353)        |
+|  - The :(5573,5580)        |
+|  - U.S. :(5733,5741)       |
+|  - Indonesia :(5848,5861)  |
++----------------------------+
+38 rows in set
+
+View: Event
++----------------------------+--------------------------+----------------+--------------------------------------+-----------------------+
+| content                    | date                     | day            | event                                | month                 |
++----------------------------+--------------------------+----------------+--------------------------------------+-----------------------+
+|  - Latvia :(9,19)          | January 1:(0,9)          | 1:(8,9)        | January 1 - Latvia :(0,19)           | January:(0,7)         |
+|  - The :(121,128)          | February 7-23:(108,121)  | 7-23:(117,121) | February 7-23 - The :(108,128)       | February:(108,116)    |
+|  - Belgium :(193,204)      | February 13:(182,193)    | 13:(191,193)   | February 13 - Belgium :(182,204)     | February:(182,190)    |
+|  - The :(318,325)          | February 22:(307,318)    | 22:(316,318)   | February 22 - The :(307,325)         | February:(307,315)    |
+|  - The :(528,535)          | February 26:(517,528)    | 26:(526,528)   | February 26 - The :(517,535)         | February:(517,525)    |
+|  - Nicolas :(687,698)      | March 5:(680,687)        | 5:(686,687)    | March 5 - Nicolas :(680,698)         | March:(680,685)       |
+|  - Malaysia :(877,889)     | March 8:(870,877)        | 8:(876,877)    | March 8 - Malaysia :(870,889)        | March:(870,875)       |
+|  - A :(1107,1112)          | March 16:(1099,1107)     | 16:(1105,1107) | March 16 - A :(1099,1112)            | March:(1099,1104)     |
+|  - Russia :(1165,1175)     | March 21:(1157,1165)     | 21:(1163,1165) | March 21 - Russia :(1157,1175)       | March:(1157,1162)     |
+|  - During :(1288,1298)     | March 24:(1280,1288)     | 24:(1286,1288) | March 24 - During :(1280,1298)       | March:(1280,1285)     |
+|  - The :(1450,1457)        | March 27:(1442,1450)     | 27:(1448,1450) | March 27 - The :(1442,1457)          | March:(1442,1447)     |
+|  - The :(1641,1648)        | March 31:(1633,1641)     | 31:(1639,1641) | March 31 - The :(1633,1648)          | March:(1633,1638)     |
+|  - In :(1820,1826)         | April 10:(1812,1820)     | 10:(1818,1820) | April 10 - In :(1812,1826)           | April:(1812,1817)     |
+|  - An :(2190,2196)         | April 14:(2182,2190)     | 14:(2188,2190) | April 14 - An :(2182,2196)           | April:(2182,2187)     |
+|  - Korean :(2291,2301)     | April 16:(2283,2291)     | 16:(2289,2291) | April 16 - Korean :(2283,2301)       | April:(2283,2288)     |
+|  - The :(2428,2435)        | April 27:(2420,2428)     | 27:(2426,2428) | April 27 - The :(2420,2435)          | April:(2420,2425)     |
+|  - United :(2520,2530)     | April 28:(2512,2520)     | 28:(2518,2520) | April 28 - United :(2512,2530)       | April:(2512,2517)     |
+|  - The :(2701,2708)        | May 5:(2696,2701)        | 5:(2700,2701)  | May 5 - The :(2696,2708)             | May:(2696,2699)       |
+|  - Terrorists :(2844,2858) | May 20:(2838,2844)       | 20:(2842,2844) | May 20 - Terrorists :(2838,2858)     | May:(2838,2841)       |
+|  - The :(2919,2926)        | May 22:(2913,2919)       | 22:(2917,2919) | May 22 - The :(2913,2926)            | May:(2913,2916)       |
+|  - A :(3078,3083)          | June 5:(3072,3078)       | 5:(3077,3078)  | June 5 - A :(3072,3083)              | June:(3072,3076)      |
+|  - The :(3363,3370)        | June 12:(3356,3363)      | 12:(3361,3363) | June 12 - The :(3356,3370)           | June:(3356,3360)      |
+|  - King :(3440,3448)       | June 19:(3433,3440)      | 19:(3438,3440) | June 19 - King :(3433,3448)          | June:(3433,3437)      |
+|  - Amid :(3559,3567)       | July 8:(3553,3559)       | 8:(3558,3559)  | July 8 - Amid :(3553,3567)           | July:(3553,3557)      |
+|  - After :(3974,3983)      | July 17:(3967,3974)      | 17:(3972,3974) | July 17 - After :(3967,3983)         | July:(3967,3971)      |
+|  - Malaysia :(4088,4100)   | July 17:(4081,4088)      | 17:(4086,4088) | July 17 - Malaysia :(4081,4100)      | July:(4081,4085)      |
+|  - The :(4241,4248)        | July 21:(4234,4241)      | 21:(4239,4241) | July 21 - The :(4234,4248)           | July:(4234,4238)      |
+|  - Air :(4372,4379)        | July 24:(4365,4372)      | 24:(4370,4372) | July 24 - Air :(4365,4379)           | July:(4365,4369)      |
+|  - Khmer :(4458,4467)      | August 7:(4450,4458)     | 7:(4457,4458)  | August 7 - Khmer :(4450,4467)        | August:(4450,4456)    |
+|  - The :(4630,4637)        | August 8:(4622,4630)     | 8:(4629,4630)  | August 8 - The :(4622,4637)          | August:(4622,4628)    |
+|  - The :(4751,4758)        | September 22:(4739,4751) | 22:(4749,4751) | September 22 - The :(4739,4758)      | September:(4739,4748) |
+|  - The :(4852,4859)        | September 26:(4840,4852) | 26:(4850,4852) | September 26 - The :(4840,4859)      | September:(4840,4849) |
+|  - The :(5128,5135)        | October 19:(5118,5128)   | 19:(5126,5128) | October 19 - The :(5118,5135)        | October:(5118,5125)   |
+|  - Burkina :(5192,5203)    | October 31:(5182,5192)   | 31:(5190,5192) | October 31 - Burkina :(5182,5203)    | October:(5182,5189)   |
+|  - The :(5346,5353)        | November 2:(5336,5346)   | 2:(5345,5346)  | November 2 - The :(5336,5353)        | November:(5336,5344)  |
+|  - The :(5573,5580)        | November 12:(5562,5573)  | 12:(5571,5573) | November 12 - The :(5562,5580)       | November:(5562,5570)  |
+|  - U.S. :(5733,5741)       | December 17:(5722,5733)  | 17:(5731,5733) | December 17 - U.S. :(5722,5741)      | December:(5722,5730)  |
+|  - Indonesia :(5848,5861)  | December 28:(5837,5848)  | 28:(5846,5848) | December 28 - Indonesia :(5837,5861) | December:(5837,5845)  |
++----------------------------+--------------------------+----------------+--------------------------------------+-----------------------+
+38 rows in set
+
+View: DateOnly
++--------------------------+
+| date                     |
++--------------------------+
+| January 1:(0,9)          |
+| February 7-23:(108,121)  |
+| February 13:(182,193)    |
+| February 22:(307,318)    |
+| February 26:(517,528)    |
+| March 5:(680,687)        |
+| March 8:(870,877)        |
+| March 16:(1099,1107)     |
+| March 21:(1157,1165)     |
+| March 24:(1280,1288)     |
+| March 27:(1442,1450)     |
+| March 31:(1633,1641)     |
+| April 10:(1812,1820)     |
+| April 14:(2182,2190)     |
+| April 16:(2283,2291)     |
+| April 27:(2420,2428)     |
+| April 28:(2512,2520)     |
+| May 5:(2696,2701)        |
+| May 20:(2838,2844)       |
+| May 22:(2913,2919)       |
+| June 5:(3072,3078)       |
+| June 12:(3356,3363)      |
+| June 19:(3433,3440)      |
+| July 8:(3553,3559)       |
+| July 17:(3967,3974)      |
+| July 17:(4081,4088)      |
+| July 21:(4234,4241)      |
+| July 24:(4365,4372)      |
+| August 7:(4450,4458)     |
+| August 8:(4622,4630)     |
+| September 22:(4739,4751) |
+| September 26:(4840,4852) |
+| October 19:(5118,5128)   |
+| October 31:(5182,5192)   |
+| November 2:(5336,5346)   |
+| November 12:(5562,5573)  |
+| December 17:(5722,5733)  |
+| December 28:(5837,5848)  |
++--------------------------+
+38 rows in set
+
