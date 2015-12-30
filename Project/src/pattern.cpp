@@ -42,29 +42,11 @@ struct resultStrt {
     } 
 };
 
-// no debug - version, give to my dog, delete this comment after you see it~~~~~
-vector<Word> merge_vector(vector<vector<Word>> v) {
-	vector<Word> old_vector = v[0];
-	vector<Word>::iterator l_it, r_it;
-	vector<vector<Word>>::iterator it = v.begin() + 1;
-	for (; it != end(); it++) {
-		l_it = old_vector.begin();
-		r_it = (*it).begin();
-		vector<Word> new_vector;
-		for (; l_it != old_vector.end(); l_it++, r_it++) {
-			Word newword = merge_word(*l_it, *r_it);
-			new_vector.push_back(newword);
-		}
-		old_vector = new_vector;
-	}
-	return old_vector;
-}
-
 Word merge_word(Word first, Word second) {
 
     string newCont = first.content;
 
-	// if there are Tokens between the two word, add them to the new word's content
+    // if there are Tokens between the two word, add them to the new word's content
     Pre_token startToken = all_token[first.include.back()];
     Pre_token endToken = all_token[second.include.front()];
 
@@ -90,7 +72,7 @@ Word merge_word(Word first, Word second) {
 
     newCont += second.content;
 
-	// merge two word to get a new word
+    // merge two word to get a new word
     int newStart = first.start;
     int newEnd = second.end;
     vector<int> newInclude;
@@ -98,6 +80,23 @@ Word merge_word(Word first, Word second) {
     newInclude.push_back(second.include.back());
 
     return Word(newCont, newStart, newEnd, newInclude);
+}
+
+vector<Word> merge_vector(vector< vector<Word> > v) {
+	vector<Word> old_vector = v[0];
+	vector<Word>::iterator l_it, r_it;
+	vector< vector<Word> >::iterator it = v.begin() + 1;
+	for (; it != v.end(); it++) {
+		l_it = old_vector.begin();
+		r_it = (*it).begin();
+		vector<Word> new_vector;
+		for (; l_it != old_vector.end(); l_it++, r_it++) {
+			Word newword = merge_word(*l_it, *r_it);
+			new_vector.push_back(newword);
+		}
+		old_vector = new_vector;
+	}
+	return old_vector;
 }
 
 vector<resultStrt> getNewResult(vector<resultStrt> result, vector<Word> pmv, int minToken, int maxToken) {

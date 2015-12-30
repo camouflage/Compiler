@@ -300,7 +300,7 @@ void regex_spec() {
                     // get the group number
                     matchReturnNum(NUM, num);
                     if (num != 0) {
-                        cout << num << endl;
+                        //cout << num << endl;
                         cerr << "Syntax Error: (regex_spec) the number of group should be 0" << endl;
                         exit(1);
                     }
@@ -353,12 +353,18 @@ void column() {
 
 void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
     switch ( currentType ) {
-        case AS:
+        case AS: {
             match(AS);
             matchReturnId(ID, colName);
-            
-            //view[viewId][colName] = pg[pg.size() - 1];
+
+            vector<Word> g0;
+            vector<resultStrt>::iterator it = result.begin();
+            for ( ; it != result.end(); ++it ) {
+                g0.push_back(it->word);
+            }
+            view[viewId][colName] = g0;
             break;
+        }
         case RETURN:
             match(RETURN);
             group_spec(result, index, vpm);
@@ -392,29 +398,45 @@ void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vect
             matchReturnNum(NUM, num);
             match(AS);
             matchReturnId(ID, colName);
+            vector<Word> match;
             if ( num == 0 ) {
                 vector<resultStrt>::iterator it = result.begin();
-                vector<Word> match;
                 for ( ; it != result.end(); ++it ) {
                     match.push_back(it->word);
                 }
                 view[viewId][colName] = match;
             } else {
-                vector<int> pos = index[num];
-                vector<Word> all = vpm[pos[0]].column;
-                vector<Word> match;
-                /*
-                vector<resultStrt>::iterator it = result.begin();
-                for ( ; it != result.end(); ++it ) {
-                    vector<int> valid = it->validElement;
-                    for ( int i = 0; i < valid.size(); ++i ) {
-                        match.push_back(all[valid[i]]);
+                // Save which column is used
+                vector<int> col = index[num];
+                vector< vector<Word> > all;
+
+                // Iterate through each column and get all words
+                for ( int i = 0; i < col.size(); ++i ) {
+                    vector<Word> oneCol = vpm[col[i]].column;    
+                    vector<Word> valid;
+
+                    vector<resultStrt>::iterator it = result.begin();
+                        for ( ; it != result.end(); ++it ) {
+                            cout << "valid:" <<  it->validElement[col[i]] << endl;
+                            valid.push_back(oneCol[it->validElement[col[i]]]);
+                        }
+                    cout << "--\n";
+                    all.push_back(valid);
+                    /*
+                    for ( int j = 0; j < valid.size(); ++j ) {
+                        cout << valid[j].content << endl;
                     }
+                    cout << "--\n";
+                    */
+                }
+
+                vector<Word> match = merge_vector(all);
+                /*
+                for ( int j = 0; j < match.size(); ++j ) {
+                    cout << match[j].content << endl;
                 }
                 */
-                if ( pos.size() == 1 ) {
-                    view[viewId][colName] = all;
-                }
+                view[viewId][colName] = match;
             }
             break;
         }
@@ -433,8 +455,13 @@ void pattern_spec() {
             int position = 0;
             int paren = 0;
             pattern_expr(vpm, index, position, paren);
-            
             /*
+            vector<Word> oneCol = vpm[2].column;
+            for ( int j = 0; j < oneCol.size(); ++j ) {
+                        cout << oneCol[j].content << endl;
+                    }
+                    cout << "--\n";
+            
             map<int, vector<int> >::iterator it = index.begin();
             for ( ; it != index.end(); ++it ) {
                 cout << it->first << ":" << endl;
@@ -444,6 +471,7 @@ void pattern_spec() {
                 }
             }
             */
+
             vector<resultStrt> result = match_pattern(vpm);
             name_spec(result, index, vpm);
             break;
