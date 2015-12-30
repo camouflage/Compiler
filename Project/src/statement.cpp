@@ -8,6 +8,7 @@ using namespace std;
 void aql_stmt();
 void create_stmt();
 void output_stmt();
+
 void optAlias();
 void optSelectAlias(string& colName);
 void view_stmt();
@@ -18,14 +19,18 @@ void optSubSelect_item();
 void from_list();
 void from_item();
 void optSubFrom_item();
+
 void extract_stmt();
 void extract_spec();
 void regex_spec();
+void regex_name_spec(vector< vector<Word> >& v);
+void regex_group_spec(vector< vector<Word> >& v);
+void regex_singleGroup(vector< vector<Word> >& v);
 void pattern_spec();
 void column();
-void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
-void group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
-void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+void pattern_name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+void pattern_group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
+void pattern_singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm);
 vector<int> pattern_expr(vector<PatternMatch>& vpm, map<int, vector<int> >& index, int& position, int& paren);
 void atom(PatternMatch& currentPc);
 void optRange(PatternMatch& currentPc);
@@ -43,8 +48,8 @@ void aql_stmt() {
             output();
             break;
         default:
-            error();
-            break;
+            cerr << "Syntax Error: (aql_stmt) Expects CREATE or OUTPUT, but not found" << endl;
+            exit(1);
     }
 }
 
@@ -258,16 +263,15 @@ void regex_spec() {
             match(REGEX);
             string reg;
             matchReturnId(REG, reg);
-            vector<Word> v;
-            v = tokenizer(reg.c_str());
-
+            vector< vector<Word> > v = tokenizer(reg.c_str());
+            
             match(ON);
             // match ID after ON;
             if (aliasMap.find(current->idReg) != aliasMap.end()) {
                 current++;
                 currentType = current->tag;
             } else {
-                cerr << "Syntax Error: (regex_spec) Match ID after On -- don't exist this ID, " << current->idReg << endl;
+                cerr << "Syntax Error: (regex_spec) Match ID after On -- " << current->idReg << "doesn't exist" << endl;
                 exit(1);
             }
 
@@ -283,34 +287,67 @@ void regex_spec() {
                 exit(1);
             }
 
-
-            switch ( currentType ) {
-            	// if D.text has alias, then match it
-                case AS:
-                    match(AS);
-                    matchReturnId(ID, colName);
-                    view[viewId][colName] = v;
-                    break;
-
-                // D.text doesn't has alias
-                case RETURN:
-                    match(RETURN);
-                    match(GROUP);
-                    int num;
-                    // get the group number
-                    matchReturnNum(NUM, num);
-                    if (num != 0) {
-                        //cout << num << endl;
-                        cerr << "Syntax Error: (regex_spec) the number of group should be 0" << endl;
-                        exit(1);
-                    }
-                    match(AS);
-                    matchReturnId(ID, colName);
-                    view[viewId][colName] = v;
-                    break;
-            }
+            regex_name_spec(v);
             break;
         }
+        default:
+            error();
+            break;
+    }
+}
+
+void regex_name_spec(vector< vector<Word> >& v) {
+    switch ( currentType ) {
+        // if D.text has alias, then match it
+        case AS:
+            match(AS);
+            matchReturnId(ID, colName);
+            view[viewId][colName] = v[0];
+            break;
+
+        // D.text doesn't has alias
+        case RETURN:
+            match(RETURN);
+            regex_group_spec(v);
+            break;
+        default:
+            error();
+            break;
+    }
+}
+
+void regex_group_spec(vector< vector<Word> >& v) {
+    regex_singleGroup(v);
+    while ( 1 ) {
+        if ( currentType == AND ) {
+            match(AND);
+            regex_singleGroup(v);
+        } else if ( currentType == FROM ) {
+            break;
+        } else {
+            error();
+            break;
+        }
+    }
+}
+
+void regex_singleGroup(vector< vector<Word> >& v) {
+    switch ( currentType ) {
+        case GROUP: {
+            match(GROUP);
+            int num;
+            matchReturnNum(NUM, num);
+            match(AS);
+            matchReturnId(ID, colName);
+            /*
+            cout << "num:" << num << endl;
+            for ( int i = 0; i < v[num].size(); ++i ) {
+                cout << v[num][i].content << endl;
+            }
+            */
+            view[viewId][colName] = v[num];
+            break;
+        } 
         default:
             error();
             break;
@@ -351,7 +388,7 @@ void column() {
     }
 }
 
-void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
+void pattern_name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
     switch ( currentType ) {
         case AS: {
             match(AS);
@@ -367,7 +404,7 @@ void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector
         }
         case RETURN:
             match(RETURN);
-            group_spec(result, index, vpm);
+            pattern_group_spec(result, index, vpm);
             break;
         default:
             error();
@@ -375,12 +412,12 @@ void name_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector
     }
 }
 
-void group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
-    singleGroup(result, index, vpm);
+void pattern_group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
+    pattern_singleGroup(result, index, vpm);
     while ( 1 ) {
         if ( currentType == AND ) {
             match(AND);
-            singleGroup(result, index, vpm);
+            pattern_singleGroup(result, index, vpm);
         } else if ( currentType == FROM ) {
             break;
         } else {
@@ -390,7 +427,7 @@ void group_spec(vector<resultStrt>& result, map<int, vector<int> >& index, vecto
     }
 }
 
-void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
+void pattern_singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vector<PatternMatch>& vpm) {
     switch ( currentType ) {
         case GROUP: {
             match(GROUP);
@@ -429,11 +466,6 @@ void singleGroup(vector<resultStrt>& result, map<int, vector<int> >& index, vect
                 }
 
                 vector<Word> match = merge_vector(all);
-                /*
-                for ( int j = 0; j < match.size(); ++j ) {
-                    cout << match[j].content << endl;
-                }
-                */
                 view[viewId][colName] = match;
             }
             break;
@@ -471,7 +503,7 @@ void pattern_spec() {
             */
 
             vector<resultStrt> result = match_pattern(vpm);
-            name_spec(result, index, vpm);
+            pattern_name_spec(result, index, vpm);
             break;
         }
         default:
@@ -552,7 +584,7 @@ void atom(PatternMatch& currentPc) {
             string reg;
             matchReturnId(REG, reg);
             currentPc.type = 1;
-            currentPc.column = tokenizer(reg.c_str());
+            currentPc.column = tokenizer(reg.c_str())[0];
             break;
         }
         default:

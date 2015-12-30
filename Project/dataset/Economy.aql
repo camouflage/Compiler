@@ -1,32 +1,35 @@
 create view Percent as
-	extract regex /[0-9]+(\.[0-9])?(percent|%)/
-		on D.text as percent
+    extract regex /[0-9]+(\.[0-9])?( percent|%)/
+        on D.text as percent
     from Document D;
 
 create view Year as
-	extract regex /[0-9][0-9][0-9][0-9]/
-		on D.text as year
+    extract regex /([0-9][0-9])([0-9][0-9])/
+        on D.text
+      return group 0 as year
+         and group 1 as first2Year
+         and group 2 as last2Year
     from Document D;
 
 create view Key as
-	extract regex /target|expanded|annual|targeted|expected/
-		on D.text as key
+    extract regex /target|expanded|annual|targeted|expected/
+        on D.text as key
     from Document D;
 
 create view GDP1 as
-	extract pattern (<K.key>) <Token>{0,5} (<P.percent>)
+    extract pattern (<K.key>) <Token>{0,5} (<P.percent>)
         return group 2 as GDP
            and group 1 as key
     from Percent P, Key K;
 
 create view GDP2 as
-	extract pattern (<P.percent>) <Token>{0,5} (<K.key>)
+    extract pattern (<P.percent>) <Token>{0,5} (<K.key>)
         return group 1 as GDP
            and group 2 as key
     from Percent P, Key K;
 
 create view GDP3 as
-	extract pattern (<P.percent>) <Token>{0,3} (<Y.year>)
+    extract pattern (<P.percent>) <Token>{0,3} (<Y.year>)
         return group 1 as GDP
            and group 2 as year
     from Percent P, Year Y;

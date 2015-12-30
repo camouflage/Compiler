@@ -78,6 +78,7 @@ int main(int argc, char* argv[]) {
                 // Choose those that are .input file
                 int fileNameLen = strlen(dirp->d_name) - NAMELEN;
                 if ( isInput(dirp->d_name, fileNameLen) ) {
+                    cout << dirp->d_name << endl;
                     snprintf(documentPath, FILELEN, "../dataset/%s/%s", argv[2], dirp->d_name);
 
                     // Get fileName
@@ -102,6 +103,8 @@ int main(int argc, char* argv[]) {
                             // Move back to beginning
                             aqlIfs.clear();
                             aqlIfs.seekg(0, aqlIfs.beg);
+                            documentIfs.clear();
+                            documentIfs.seekg(0, documentIfs.beg);
                         }
                     }
                 }

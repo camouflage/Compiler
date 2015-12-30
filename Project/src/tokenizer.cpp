@@ -41,8 +41,8 @@ vector<int> getAllTokenPosition(int start, int end) {
 }
 
 
-vector<Word> tokenizer(const char* regex) {
-	vector<Word> all_word;
+vector< vector<Word> >tokenizer(const char* regex) {
+	vector< vector<Word> > all_catch;
 	// read all the contents of a text one time
 	int length;
 
@@ -58,28 +58,36 @@ vector<Word> tokenizer(const char* regex) {
 	documentIfs.seekg(0, ios::beg);
 
 	vector<vector<int> > coordinates = findall(regex, cont);
-	vector<vector<int> >::iterator it = coordinates.begin();
 	
-	for (; it != coordinates.end(); it++) {
-		vector<int> v;
-		int begin = (*it)[0];
-		int end = (*it)[1];
-		v = getAllTokenPosition(begin, end);
-		string content = "";
-		for (int i = begin; i < end; i++) {
-			content += cont[i];
+	for ( int i = 0; i < coordinates[0].size(); i += 2 ) {
+		vector<vector<int> >::iterator it = coordinates.begin();
+		vector<Word> all_word;
+		for (; it != coordinates.end(); it++) {
+			vector<int> v;
+			int begin = (*it)[i];
+			int end = (*it)[i + 1];
+			// cout << begin << " " << end << endl;
+			v = getAllTokenPosition(begin, end);
+			string content = "";
+			for (int i = begin; i < end; i++) {
+				content += cont[i];
+			}
+			Word new_word(content, begin, end, v);
+			// cout << new_word.content << "--\n";
+			all_word.push_back(new_word);
 		}
-		Word new_word(content, begin, end, v);
-		all_word.push_back(new_word);
+		all_catch.push_back(all_word);
 	}
 
 	documentIfs.clear();
 	documentIfs.seekg(0, documentIfs.beg);
-	return all_word;
+
+	return all_catch;
 }
 
 
 void pre_tokenizer() {
+	all_token.clear();
 	int position = 0;
 	int lookahead = 0;
 	string cont = "";
@@ -128,6 +136,7 @@ void pre_tokenizer() {
 		position++;
 		all_token.push_back(ntoken2);
 	}
+
 	documentIfs.clear();
 	documentIfs.seekg(0, documentIfs.beg);
 }

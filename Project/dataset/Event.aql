@@ -1,0 +1,30 @@
+create view Month as
+    extract regex /January|February|March|April|May|June|July|August|October|September|November|December/
+        on D.text as month
+    from Document D;
+output view Month;
+
+create view Number as
+	extract regex /[0-9]+(-[0-9]+)?/
+		on D.text as number
+    from Document D;
+output view Number;
+
+create view Date as
+	extract pattern (<M.month> <N.number>)
+		return group 0 as date
+           and group 1 as dateParen
+	from Month M, Number N;
+output view Date;
+
+create view Content as
+	extract regex / - .*? /
+		on D.text as content
+    from Document D;
+output view Content;
+
+create view Event as
+	extract pattern <D.date> <C.content>
+		return group 0 as event
+	from Date D, Content C;
+output view Event;
