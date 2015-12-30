@@ -1,3 +1,7 @@
+// Class Token to save token in lexer
+#ifndef TOKENL
+#define TOKENL
+
 #include<string>
 #include<cstring>
 using namespace std;
@@ -17,3 +21,5 @@ class Token {
             :tag(tag), num(num), idReg(idReg), line(line), col(col)   {
         }
 };
+
+#endif

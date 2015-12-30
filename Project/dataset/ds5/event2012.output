@@ -1,0 +1,324 @@
+Processing event2012.input
+View: Month
++-----------------------+
+| month                 |
++-----------------------+
+| January:(0,7)         |
+| February:(158,166)    |
+| February:(398,406)    |
+| January:(541,548)     |
+| February:(550,558)    |
+| February:(681,689)    |
+| March:(839,844)       |
+| March:(994,999)       |
+| March:(1110,1115)     |
+| April:(1244,1249)     |
+| April:(1365,1370)     |
+| April:(1629,1634)     |
+| April:(1966,1971)     |
+| May:(2144,2147)       |
+| May:(2333,2336)       |
+| May:(2397,2400)       |
+| June:(2513,2517)      |
+| June:(2640,2644)      |
+| June:(2903,2907)      |
+| July:(3066,3070)      |
+| July:(3218,3222)      |
+| July:(3298,3302)      |
+| August:(3420,3426)    |
+| August:(3515,3521)    |
+| September:(3903,3912) |
+| September:(4122,4131) |
+| October:(4509,4516)   |
+| October:(4795,4802)   |
+| October:(4902,4909)   |
+| November:(5115,5123)  |
+| November:(5589,5597)  |
+| November:(5780,5788)  |
+| December:(5889,5897)  |
++-----------------------+
+33 rows in set
+
+View: Number
++-------------------+
+| number            |
++-------------------+
+| 23:(8,10)         |
+| 6:(167,168)       |
+| 60:(223,225)      |
+| 60:(339,341)      |
+| 19:(407,409)      |
+| 21:(559,561)      |
+| 130:(654,657)     |
+| 27:(690,692)      |
+| 4:(845,846)       |
+| 250:(977,980)     |
+| 13:(1000,1002)    |
+| 244:(1011,1014)   |
+| 22:(1116,1118)    |
+| 6:(1250,1251)     |
+| 12:(1371,1373)    |
+| 13:(1635,1637)    |
+| 3:(1655,1656)     |
+| 15:(1859,1861)    |
+| 26:(1972,1974)    |
+| 11:(2037,2039)    |
+| 2:(2148,2149)     |
+| 120:(2236,2239)   |
+| 12:(2337,2339)    |
+| 2012:(2346,2350)  |
+| 22:(2401,2403)    |
+| 634:(2471,2474)   |
+| 5-6:(2518,2521)   |
+| 2117:(2625,2629)  |
+| 2125:(2634,2638)  |
+| 18:(2645,2647)    |
+| 9:(2659,2660)     |
+| 1:(2796,2797)     |
+| 24:(2908,2910)    |
+| 4:(3071,3072)     |
+| 27:(3223,3225)    |
+| 2012:(3232,3236)  |
+| 30-31:(3303,3308) |
+| 2012:(3359,3363)  |
+| 620:(3386,3389)   |
+| 6:(3427,3428)     |
+| 31:(3522,3524)    |
+| 24:(3621,3623)    |
+| 2004:(3832,3836)  |
+| 7:(3913,3914)     |
+| 11-27:(4132,4137) |
+| 14:(4517,4519)    |
+| 24:(4723,4725)    |
+| 39:(4733,4735)    |
+| 16:(4803,4805)    |
+| 25:(4831,4833)    |
+| 24-30:(4910,4915) |
+| 209:(4949,4952)   |
+| 14-21:(5124,5129) |
+| 140:(5286,5289)   |
+| 25:(5598,5600)    |
+| 1:(5670,5671)     |
+| 067:(5672,5675)   |
+| 838:(5688,5691)   |
+| 29:(5789,5791)    |
+| 8:(5898,5899)     |
+| 2020:(5987,5991)  |
++-------------------+
+61 rows in set
+
+View: Date
++-----------------------------+
+| date                        |
++-----------------------------+
+| January 23:(0,10)           |
+| February 6:(158,168)        |
+| February 19:(398,409)       |
+| February 21:(550,561)       |
+| February 27:(681,692)       |
+| March 4:(839,846)           |
+| March 13:(994,1002)         |
+| March 22:(1110,1118)        |
+| April 6:(1244,1251)         |
+| April 12:(1365,1373)        |
+| April 13:(1629,1637)        |
+| April 26:(1966,1974)        |
+| May 2:(2144,2149)           |
+| May 12:(2333,2339)          |
+| May 22:(2397,2403)          |
+| June 5-6:(2513,2521)        |
+| June 18:(2640,2647)         |
+| June 24:(2903,2910)         |
+| July 4:(3066,3072)          |
+| July 27:(3218,3225)         |
+| July 30-31:(3298,3308)      |
+| August 6:(3420,3428)        |
+| August 31:(3515,3524)       |
+| September 7:(3903,3914)     |
+| September 11-27:(4122,4137) |
+| October 14:(4509,4519)      |
+| October 16:(4795,4805)      |
+| October 24-30:(4902,4915)   |
+| November 14-21:(5115,5129)  |
+| November 25:(5589,5600)     |
+| November 29:(5780,5791)     |
+| December 8:(5889,5899)      |
++-----------------------------+
+32 rows in set
+
+View: Sentence
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| sentence                                                                                                                                                                                                                                                                                                                              | symbol          |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+|  - Iran-European Union relations: The European Union adopts an embargo against Iran in protest of that nation's continued effort to enrich uranium.:(10,157)                                                                                                                                                                          |  - :(10,13)     |
+|  - The Diamond Jubilee of Queen Elizabeth II marks the 60th anniversary of her accession to the thrones of the United Kingdom, Canada, Australia, and New Zealand, and the 60th anniversary of her becoming Head of the Commonwealth.:(168,397)                                                                                       |  - :(168,171)   |
+|  - Iran suspends oil exports to Britain and France, following sanctions put in place by the European Union and the United States in January.:(409,549)                                                                                                                                                                                |  - :(409,412)   |
+|  - Iran suspends oil exports to Britain and France, following sanctions put in place by the European Union and the United States in January. February 21 - Greek government-debt crisis: Eurozone finance ministers reach an agreement on a second, $130-billion Greek bailout.:(409,680)                                             |  - :(409,412)   |
+|  - Greek government-debt crisis: Eurozone finance ministers reach an agreement on a second, $130-billion Greek bailout.:(561,680)                                                                                                                                                                                                     |  - :(561,564)   |
+|  - Arab Spring: As a result of continuing protests, Yemeni President Ali Abdullah Saleh is succeeded by his Vice President Abd Rabbuh Mansur Hadi.:(692,838)                                                                                                                                                                          |  - :(692,695)   |
+|  - A series of explosions are reported at a munitions dump in Brazzaville, the capital of the Republic of the Congo, with at least 250 people dead.:(846,993)                                                                                                                                                                         |  - :(846,849)   |
+|  - A series of explosions are reported at a munitions dump in Brazzaville, the capital of the Republic of the Congo, with at least 250 people dead. March 13 - After 244 years since its first publication, the Encyclopadia Britannica discontinues its print edition.:(846,1109)                                                    |  - :(846,849)   |
+|  - After 244 years since its first publication, the Encyclopadia Britannica discontinues its print edition.:(1002,1109)                                                                                                                                                                                                               |  - :(1002,1005) |
+|  - After 244 years since its first publication, the Encyclopadia Britannica discontinues its print edition. March 22 - The President of Mali, Amadou Toumani Toure, is ousted in a coup d'etat after mutinous soldiers attack government offices.:(1002,1243)                                                                         |  - :(1002,1005) |
+|  - The President of Mali, Amadou Toumani Toure, is ousted in a coup d'etat after mutinous soldiers attack government offices.:(1118,1243)                                                                                                                                                                                             |  - :(1118,1121) |
+|  - The President of Mali, Amadou Toumani Toure, is ousted in a coup d'etat after mutinous soldiers attack government offices. April 6 - The National Movement for the Liberation of Azawad unilaterally declares the independence of Azawad from Mali.:(1118,1364)                                                                    |  - :(1118,1121) |
+|  - The National Movement for the Liberation of Azawad unilaterally declares the independence of Azawad from Mali.:(1251,1364)                                                                                                                                                                                                         |  - :(1251,1254) |
+|  - The National Movement for the Liberation of Azawad unilaterally declares the independence of Azawad from Mali. April 12 - Mutinous soldiers in Guinea-Bissau stage a coup d'etat and take control of the capital city, Bissau.:(1251,1476)                                                                                         |  - :(1251,1254) |
+|  - Mutinous soldiers in Guinea-Bissau stage a coup d'etat and take control of the capital city, Bissau.:(1373,1476)                                                                                                                                                                                                                   |  - :(1373,1376) |
+|  - Mutinous soldiers in Guinea-Bissau stage a coup d'etat and take control of the capital city, Bissau. They arrest interim President Raimundo Pereira and leading presidential candidate Carlos Gomes Junior in the midst of a presidential election campaign.:(1373,1628)                                                           |  - :(1373,1376) |
+|  - Kwangmyongsong-3, a North Korean Earth observation satellite, explodes shortly after launch.:(1637,1732)                                                                                                                                                                                                                           |  - :(1637,1640) |
+|  - Kwangmyongsong-3, a North Korean Earth observation satellite, explodes shortly after launch. The United States and other countries had called the impending launch a violation of United Nations Security Council demands.:(1637,1858)                                                                                             |  - :(1637,1640) |
+|  - Former Liberian President Charles Taylor is found guilty on 11 counts of aiding and abetting war crimes and crimes against humanity during the Sierra Leone Civil War.:(1974,2143)                                                                                                                                                 |  - :(1974,1977) |
+|  - A pastel version of The Scream, by the Norwegian painter Edvard Munch, sells for US$120 million in a New York City auction, setting a new world record for an auctioned work of art.:(2149,2332)                                                                                                                                   |  - :(2149,2152) |
+|  - The 2012 World Expo takes place in Yeosu, South Korea.:(2339,2396)                                                                                                                                                                                                                                                                 |  - :(2339,2342) |
+|  - The 2012 World Expo takes place in Yeosu, South Korea. May 22 - Tokyo Skytree, the tallest self-supporting tower in the world at 634 metres high, is opened to the public.:(2339,2512)                                                                                                                                             |  - :(2339,2342) |
+|  - Tokyo Skytree, the tallest self-supporting tower in the world at 634 metres high, is opened to the public.:(2403,2512)                                                                                                                                                                                                             |  - :(2403,2406) |
+|  - Tokyo Skytree, the tallest self-supporting tower in the world at 634 metres high, is opened to the public. June 5-6 - The century's second and last solar transit of Venus occurs.:(2403,2584)                                                                                                                                     |  - :(2403,2406) |
+|  - The century's second and last solar transit of Venus occurs.:(2521,2584)                                                                                                                                                                                                                                                           |  - :(2521,2524) |
+|  - The century's second and last solar transit of Venus occurs. The next pair are predicted to occur in 2117 and 2125.:(2521,2639)                                                                                                                                                                                                    |  - :(2521,2524) |
+|  - Shenzhou 9, a Chinese spacecraft carrying three Chinese astronauts, including the first-ever female, docks manually with orbiting module Tiangong-1, making them the third country, after the United States and Russia, to successfully perform the mission.:(2647,2902)                                                           |  - :(2647,2650) |
+|  - Lonesome George, the last known individual of the Pinta Island tortoise subspecies, dies in Galapagos National Park, thus making the subspecies extinct.:(2910,3065)                                                                                                                                                               |  - :(2910,2913) |
+|  - CERN announces the discovery of a new particle with properties consistent with the Higgs boson after experiments at the Large Hadron Collider.:(3072,3217)                                                                                                                                                                         |  - :(3072,3075) |
+|  - CERN announces the discovery of a new particle with properties consistent with the Higgs boson after experiments at the Large Hadron Collider. July 27 - The 2012 Summer Olympics are held in London, England, United Kingdom.:(3072,3297)                                                                                         |  - :(3072,3075) |
+|  - The 2012 Summer Olympics are held in London, England, United Kingdom.:(3225,3297)                                                                                                                                                                                                                                                  |  - :(3225,3228) |
+|  - The 2012 Summer Olympics are held in London, England, United Kingdom. July 30-31 - In the worst power outage in world history, the 2012 India blackouts leave 620 million people without power.:(3225,3419)                                                                                                                        |  - :(3225,3228) |
+|  - In the worst power outage in world history, the 2012 India blackouts leave 620 million people without power.:(3308,3419)                                                                                                                                                                                                           |  - :(3308,3311) |
+|  - In the worst power outage in world history, the 2012 India blackouts leave 620 million people without power. August 6 - Curiosity, the Mars Science Laboratory mission's rover, successfully lands on Mars.:(3308,3514)                                                                                                            |  - :(3308,3311) |
+|  - Curiosity, the Mars Science Laboratory mission's rover, successfully lands on Mars.:(3428,3514)                                                                                                                                                                                                                                    |  - :(3428,3431) |
+|  - Curiosity, the Mars Science Laboratory mission's rover, successfully lands on Mars. August 31 - Researchers successfully perform the first implantation of an early prototype bionic eye with 24 electrodes.:(3428,3635)                                                                                                           |  - :(3428,3431) |
+|  - Researchers successfully perform the first implantation of an early prototype bionic eye with 24 electrodes.:(3524,3635)                                                                                                                                                                                                           |  - :(3524,3527) |
+|  - Researchers successfully perform the first implantation of an early prototype bionic eye with 24 electrodes. Armenia severs diplomatic relations with Hungary, following the extradition to Azerbaijan and subsequent pardoning of Ramil Safarov, who was convicted of killing an Armenian soldier in Hungary in 2004.:(3524,3837) |  - :(3524,3527) |
+|  - Canada officially cuts diplomatic ties with Iran by closing its embassy in Tehran, and orders the expulsion of Iranian diplomats from Ottawa, over support for Syria, nuclear plans and human rights abuses.:(3914,4121)                                                                                                           |  - :(3914,3917) |
+|  - A series of terrorist attacks are directed against United States diplomatic missions worldwide, as well as diplomatic missions of Germany, Switzerland and the United Kingdom.:(4137,4314)                                                                                                                                         |  - :(4137,4140) |
+|  - Austrian skydiver Felix Baumgartner becomes the first person to break the sound barrier without any machine assistance during a record space dive out of the Red Bull Stratos helium-filled balloon from 24 miles (39 kilometers) over Roswell, New Mexico in the United States.:(4519,4794)                                       |  - :(4519,4522) |
+|  - Seven paintings worth $25 million are stolen from the Kunsthal in Rotterdam, the Netherlands.:(4805,4901)                                                                                                                                                                                                                          |  - :(4805,4808) |
+|  - Seven paintings worth $25 million are stolen from the Kunsthal in Rotterdam, the Netherlands. October 24-30 - Hurricane Sandy kills at least 209 people in the Caribbean, Bahamas, United States and Canada.:(4805,5012)                                                                                                           |  - :(4805,4808) |
+|  - Hurricane Sandy kills at least 209 people in the Caribbean, Bahamas, United States and Canada.:(4915,5012)                                                                                                                                                                                                                         |  - :(4915,4918) |
+|  - Hurricane Sandy kills at least 209 people in the Caribbean, Bahamas, United States and Canada. Considerable storm surge damage causes major disruption to the eastern seaboard of the United States.:(4915,5114)                                                                                                                   |  - :(4915,4918) |
+|  - Israel launches Operation Pillar of Defense against the Palestinian-governed Gaza Strip, killing Hamas military chief Ahmed Jabari.:(5129,5263)                                                                                                                                                                                    |  - :(5129,5132) |
+|  - Israel launches Operation Pillar of Defense against the Palestinian-governed Gaza Strip, killing Hamas military chief Ahmed Jabari. In the following week 140 Palestinians and five Israelis are killed in an ensuing cycle of violence.:(5129,5364)                                                                               |  - :(5129,5132) |
+|  - Typhoon Bopha, known as "Pablo" in the Philippines, kills at least 1,067 with around 838 people still missing.:(5600,5713)                                                                                                                                                                                                         |  - :(5600,5603) |
+|  - Typhoon Bopha, known as "Pablo" in the Philippines, kills at least 1,067 with around 838 people still missing. The typhoon causes considerable damage in the island of Mindanao.:(5600,5779)                                                                                                                                       |  - :(5600,5603) |
+|  - The UN General Assembly approves a motion granting Palestine non-member observer state status.:(5791,5888)                                                                                                                                                                                                                         |  - :(5791,5794) |
+|  - The UN General Assembly approves a motion granting Palestine non-member observer state status. December 8 - In Qatar, the UN Climate Change Conference agrees to extend the Kyoto Protocol until 2020.:(5791,5992)                                                                                                                 |  - :(5791,5794) |
+|  - In Qatar, the UN Climate Change Conference agrees to extend the Kyoto Protocol until 2020.:(5899,5992)                                                                                                                                                                                                                             |  - :(5899,5902) |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+52 rows in set
+
+View: ShortContent
++-----------------------------------+
+| content                           |
++-----------------------------------+
+|  - Iran-European :(10,27)         |
+|  - The :(168,175)                 |
+|  - Iran :(409,417)                |
+|  - Greek :(561,570)               |
+|  - Arab :(692,700)                |
+|  - A :(846,851)                   |
+|  - After :(1002,1011)             |
+|  - The :(1118,1125)               |
+|  - The :(1251,1258)               |
+|  - Mutinous :(1373,1385)          |
+|  - Kwangmyongsong-3, :(1637,1658) |
+|  - Former :(1974,1984)            |
+|  - A :(2149,2154)                 |
+|  - The :(2339,2346)               |
+|  - Tokyo :(2403,2412)             |
+|  - The :(2521,2528)               |
+|  - Shenzhou :(2647,2659)          |
+|  - Lonesome :(2910,2922)          |
+|  - CERN :(3072,3080)              |
+|  - The :(3225,3232)               |
+|  - In :(3308,3314)                |
+|  - Curiosity, :(3428,3442)        |
+|  - Researchers :(3524,3539)       |
+|  - Canada :(3914,3924)            |
+|  - A :(4137,4142)                 |
+|  - Austrian :(4519,4531)          |
+|  - Seven :(4805,4814)             |
+|  - Hurricane :(4915,4928)         |
+|  - Israel :(5129,5139)            |
+|  - Typhoon :(5600,5611)           |
+|  - The :(5791,5798)               |
+|  - In :(5899,5905)                |
++-----------------------------------+
+32 rows in set
+
+View: Event
++-----------------------------------+-----------------------------+-------------------+-------------------------------------------+-----------------------+
+| content                           | date                        | day               | event                                     | month                 |
++-----------------------------------+-----------------------------+-------------------+-------------------------------------------+-----------------------+
+|  - Iran-European :(10,27)         | January 23:(0,10)           | 23:(8,10)         | January 23 - Iran-European :(0,27)        | January:(0,7)         |
+|  - The :(168,175)                 | February 6:(158,168)        | 6:(167,168)       | February 6 - The :(158,175)               | February:(158,166)    |
+|  - Iran :(409,417)                | February 19:(398,409)       | 19:(407,409)      | February 19 - Iran :(398,417)             | February:(398,406)    |
+|  - Greek :(561,570)               | February 21:(550,561)       | 21:(559,561)      | February 21 - Greek :(550,570)            | February:(550,558)    |
+|  - Arab :(692,700)                | February 27:(681,692)       | 27:(690,692)      | February 27 - Arab :(681,700)             | February:(681,689)    |
+|  - A :(846,851)                   | March 4:(839,846)           | 4:(845,846)       | March 4 - A :(839,851)                    | March:(839,844)       |
+|  - After :(1002,1011)             | March 13:(994,1002)         | 13:(1000,1002)    | March 13 - After :(994,1011)              | March:(994,999)       |
+|  - The :(1118,1125)               | March 22:(1110,1118)        | 22:(1116,1118)    | March 22 - The :(1110,1125)               | March:(1110,1115)     |
+|  - The :(1251,1258)               | April 6:(1244,1251)         | 6:(1250,1251)     | April 6 - The :(1244,1258)                | April:(1244,1249)     |
+|  - Mutinous :(1373,1385)          | April 12:(1365,1373)        | 12:(1371,1373)    | April 12 - Mutinous :(1365,1385)          | April:(1365,1370)     |
+|  - Kwangmyongsong-3, :(1637,1658) | April 13:(1629,1637)        | 13:(1635,1637)    | April 13 - Kwangmyongsong-3, :(1629,1658) | April:(1629,1634)     |
+|  - Former :(1974,1984)            | April 26:(1966,1974)        | 26:(1972,1974)    | April 26 - Former :(1966,1984)            | April:(1966,1971)     |
+|  - A :(2149,2154)                 | May 2:(2144,2149)           | 2:(2148,2149)     | May 2 - A :(2144,2154)                    | May:(2144,2147)       |
+|  - The :(2339,2346)               | May 12:(2333,2339)          | 12:(2337,2339)    | May 12 - The :(2333,2346)                 | May:(2333,2336)       |
+|  - Tokyo :(2403,2412)             | May 22:(2397,2403)          | 22:(2401,2403)    | May 22 - Tokyo :(2397,2412)               | May:(2397,2400)       |
+|  - The :(2521,2528)               | June 5-6:(2513,2521)        | 5-6:(2518,2521)   | June 5-6 - The :(2513,2528)               | June:(2513,2517)      |
+|  - Shenzhou :(2647,2659)          | June 18:(2640,2647)         | 18:(2645,2647)    | June 18 - Shenzhou :(2640,2659)           | June:(2640,2644)      |
+|  - Lonesome :(2910,2922)          | June 24:(2903,2910)         | 24:(2908,2910)    | June 24 - Lonesome :(2903,2922)           | June:(2903,2907)      |
+|  - CERN :(3072,3080)              | July 4:(3066,3072)          | 4:(3071,3072)     | July 4 - CERN :(3066,3080)                | July:(3066,3070)      |
+|  - The :(3225,3232)               | July 27:(3218,3225)         | 27:(3223,3225)    | July 27 - The :(3218,3232)                | July:(3218,3222)      |
+|  - In :(3308,3314)                | July 30-31:(3298,3308)      | 30-31:(3303,3308) | July 30-31 - In :(3298,3314)              | July:(3298,3302)      |
+|  - Curiosity, :(3428,3442)        | August 6:(3420,3428)        | 6:(3427,3428)     | August 6 - Curiosity, :(3420,3442)        | August:(3420,3426)    |
+|  - Researchers :(3524,3539)       | August 31:(3515,3524)       | 31:(3522,3524)    | August 31 - Researchers :(3515,3539)      | August:(3515,3521)    |
+|  - Canada :(3914,3924)            | September 7:(3903,3914)     | 7:(3913,3914)     | September 7 - Canada :(3903,3924)         | September:(3903,3912) |
+|  - A :(4137,4142)                 | September 11-27:(4122,4137) | 11-27:(4132,4137) | September 11-27 - A :(4122,4142)          | September:(4122,4131) |
+|  - Austrian :(4519,4531)          | October 14:(4509,4519)      | 14:(4517,4519)    | October 14 - Austrian :(4509,4531)        | October:(4509,4516)   |
+|  - Seven :(4805,4814)             | October 16:(4795,4805)      | 16:(4803,4805)    | October 16 - Seven :(4795,4814)           | October:(4795,4802)   |
+|  - Hurricane :(4915,4928)         | October 24-30:(4902,4915)   | 24-30:(4910,4915) | October 24-30 - Hurricane :(4902,4928)    | October:(4902,4909)   |
+|  - Israel :(5129,5139)            | November 14-21:(5115,5129)  | 14-21:(5124,5129) | November 14-21 - Israel :(5115,5139)      | November:(5115,5123)  |
+|  - Typhoon :(5600,5611)           | November 25:(5589,5600)     | 25:(5598,5600)    | November 25 - Typhoon :(5589,5611)        | November:(5589,5597)  |
+|  - The :(5791,5798)               | November 29:(5780,5791)     | 29:(5789,5791)    | November 29 - The :(5780,5798)            | November:(5780,5788)  |
+|  - In :(5899,5905)                | December 8:(5889,5899)      | 8:(5898,5899)     | December 8 - In :(5889,5905)              | December:(5889,5897)  |
++-----------------------------------+-----------------------------+-------------------+-------------------------------------------+-----------------------+
+32 rows in set
+
+View: DateOnly
++-----------------------------+
+| date                        |
++-----------------------------+
+| January 23:(0,10)           |
+| February 6:(158,168)        |
+| February 19:(398,409)       |
+| February 21:(550,561)       |
+| February 27:(681,692)       |
+| March 4:(839,846)           |
+| March 13:(994,1002)         |
+| March 22:(1110,1118)        |
+| April 6:(1244,1251)         |
+| April 12:(1365,1373)        |
+| April 13:(1629,1637)        |
+| April 26:(1966,1974)        |
+| May 2:(2144,2149)           |
+| May 12:(2333,2339)          |
+| May 22:(2397,2403)          |
+| June 5-6:(2513,2521)        |
+| June 18:(2640,2647)         |
+| June 24:(2903,2910)         |
+| July 4:(3066,3072)          |
+| July 27:(3218,3225)         |
+| July 30-31:(3298,3308)      |
+| August 6:(3420,3428)        |
+| August 31:(3515,3524)       |
+| September 7:(3903,3914)     |
+| September 11-27:(4122,4137) |
+| October 14:(4509,4519)      |
+| October 16:(4795,4805)      |
+| October 24-30:(4902,4915)   |
+| November 14-21:(5115,5129)  |
+| November 25:(5589,5600)     |
+| November 29:(5780,5791)     |
+| December 8:(5889,5899)      |
++-----------------------------+
+32 rows in set
+

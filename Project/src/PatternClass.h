@@ -1,3 +1,4 @@
+// PatternMatch to save pattern info used by pattern
 #ifndef PATTERNMATCH
 #define PATTERNMATCH
 

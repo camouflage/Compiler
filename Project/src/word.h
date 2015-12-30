@@ -1,3 +1,4 @@
+// Class Word to save each cell in the view
 #ifndef WORD
 #define WORD
 
@@ -7,7 +8,6 @@
 using namespace std;
 
 class Word {
-
 	public:
 		string content;
 		int start;

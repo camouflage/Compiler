@@ -1,3 +1,4 @@
+// Tag defines const for lexer
 #ifndef TAG
 #define TAG
 

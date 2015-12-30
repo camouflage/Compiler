@@ -1,3 +1,4 @@
+// Pretoken to save token used by tokenizer
 #ifndef PRETOKEN
 #define PRETOKEN
 

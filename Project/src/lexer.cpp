@@ -207,7 +207,7 @@ void lex(ifstream& ifs) {
     ifs.close();
 
     /*
-    // Output token info
+    // TEST: Output token info
     for ( int i = 0; i < tokenStream.size(); ++i ) {
         vector<Token>::iterator it = tokenStream[i].begin();
         for ( ; it != tokenStream[i].end(); ++it ) {

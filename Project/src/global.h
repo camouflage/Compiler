@@ -1,10 +1,11 @@
+// Global includes some headers and global variables.
 #ifndef GLOBAL
 #define GLOBAL
 
 #include"tag.h"
 #include"word.h"
 #include"pre_token.h"
-#include"token.cpp"
+#include"token.h"
 #include"PatternClass.h"
 using namespace std;
 

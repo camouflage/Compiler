@@ -1,3 +1,0 @@
-Georgia(20,27) 4 
-Washington(29,39) 6 
-Virginia(59,67) 10 

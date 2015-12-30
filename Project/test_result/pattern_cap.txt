@@ -1,6 +1,0 @@
-Carter(0,6) 0 
-Plains(12,18) 2 
-Georgia(20,27) 4 
-Washington(29,39) 6 
-Westmoreland(45,57) 8 
-Virginia(59,67) 10 

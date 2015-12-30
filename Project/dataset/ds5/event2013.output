@@ -1,0 +1,313 @@
+Processing event2013.input
+View: Month
++-----------------------+
+| month                 |
++-----------------------+
+| January:(0,7)         |
+| January:(150,157)     |
+| February:(299,307)    |
+| February:(472,480)    |
+| February:(838,846)    |
+| February:(1107,1115)  |
+| March:(1269,1274)     |
+| March:(1506,1511)     |
+| March:(1718,1723)     |
+| March:(2038,2043)     |
+| April:(2157,2162)     |
+| April:(2294,2299)     |
+| April:(2460,2465)     |
+| May:(2767,2770)       |
+| June:(2975,2979)      |
+| July:(3180,3184)      |
+| July:(3245,3249)      |
+| August:(3382,3388)    |
+| August:(3647,3653)    |
+| September:(3736,3745) |
+| October:(3880,3887)   |
+| October:(4099,4106)   |
+| December:(4275,4283)  |
+| November:(4288,4296)  |
+| November:(4396,4404)  |
+| November:(4568,4576)  |
+| November:(4802,4810)  |
+| November:(5017,5025)  |
+| December:(5121,5129)  |
+| December:(5280,5288)  |
+| December:(5460,5468)  |
++-----------------------+
+31 rows in set
+
+View: Number
++-----------------------+
+| number                |
++-----------------------+
+| 11:(8,10)             |
+| 16-20:(158,163)       |
+| 12:(308,310)          |
+| 15:(481,483)          |
+| 1:(551,552)           |
+| 491:(553,556)         |
+| 4:(582,583)           |
+| 300:(584,587)         |
+| 21:(847,849)          |
+| 3:(878,879)           |
+| 28:(1116,1118)        |
+| 1415:(1200,1204)      |
+| 1294:(1262,1266)      |
+| 13:(1275,1277)        |
+| 266:(1339,1342)       |
+| 24:(1512,1514)        |
+| 2012-2013:(1517,1526) |
+| 25:(1724,1726)        |
+| 10:(1761,1763)        |
+| 27:(2044,2046)        |
+| 2:(2163,2164)         |
+| 15:(2300,2302)        |
+| 3:(2432,2433)         |
+| 264:(2447,2450)       |
+| 24:(2466,2468)        |
+| 1:(2581,2582)         |
+| 129:(2583,2586)       |
+| 2:(2596,2597)         |
+| 500:(2598,2601)       |
+| 15:(2771,2773)        |
+| 6:(2980,2981)         |
+| 1:(3185,3186)         |
+| 28:(3209,3211)        |
+| 3:(3250,3251)         |
+| 14:(3389,3391)        |
+| 2:(3494,3495)         |
+| 600:(3496,3499)       |
+| 21:(3654,3656)        |
+| 1:(3659,3660)         |
+| 429:(3661,3664)       |
+| 21:(3746,3748)        |
+| 62:(3843,3845)        |
+| 170:(3874,3877)       |
+| 10:(3888,3890)        |
+| 140:(3913,3916)       |
+| 18:(4107,4109)        |
+| 6:(4284,4285)         |
+| 5:(4297,4298)         |
+| 8:(4405,4406)         |
+| 6:(4555,4556)         |
+| 241:(4557,4560)       |
+| 12:(4577,4579)        |
+| 142:(4702,4705)       |
+| 4:(4706,4707)         |
+| 21:(4811,4813)        |
+| 24:(5026,5028)        |
+| 7:(5130,5131)         |
+| 14:(5289,5291)        |
+| 3:(5321,5322)         |
+| 1976:(5411,5415)      |
+| 15:(5469,5471)        |
++-----------------------+
+61 rows in set
+
+View: Date
++--------------------------+
+| date                     |
++--------------------------+
+| January 11:(0,10)        |
+| January 16-20:(150,163)  |
+| February 12:(299,310)    |
+| February 15:(472,483)    |
+| February 21:(838,849)    |
+| February 28:(1107,1118)  |
+| March 13:(1269,1277)     |
+| March 24:(1506,1514)     |
+| March 25:(1718,1726)     |
+| March 27:(2038,2046)     |
+| April 2:(2157,2164)      |
+| April 15:(2294,2302)     |
+| April 24:(2460,2468)     |
+| May 15:(2767,2773)       |
+| June 6:(2975,2981)       |
+| July 1:(3180,3186)       |
+| July 3:(3245,3251)       |
+| August 14:(3382,3391)    |
+| August 21:(3647,3656)    |
+| September 21:(3736,3748) |
+| October 10:(3880,3890)   |
+| October 18:(4099,4109)   |
+| December 6:(4275,4285)   |
+| November 5:(4288,4298)   |
+| November 8:(4396,4406)   |
+| November 12:(4568,4579)  |
+| November 21:(4802,4813)  |
+| November 24:(5017,5028)  |
+| December 7:(5121,5131)   |
+| December 14:(5280,5291)  |
+| December 15:(5460,5471)  |
++--------------------------+
+31 rows in set
+
+View: Sentence
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| sentence                                                                                                                                                                                                                                                                                                                           | symbol          |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+|  - The French military begins a five-month intervention into the Northern Mali conflict, targeting the militant Islamist Ansar Dine group.:(10,148)                                                                                                                                                                                |  - :(10,13)     |
+|  - Thirty-nine international workers and one security guard die in a hostage crisis at a natural gas facility near In Amenas, Algeria.:(163,297)                                                                                                                                                                                   |  - :(163,166)   |
+|  - Thirty-nine international workers and one security guard die in a hostage crisis at a natural gas facility near In Amenas, Algeria.  February 12 - North Korea conducts its third underground nuclear test, prompting widespread condemnation and tightened economic sanctions from the international community.:(163,470)      |  - :(163,166)   |
+|  - North Korea conducts its third underground nuclear test, prompting widespread condemnation and tightened economic sanctions from the international community.:(310,470)                                                                                                                                                         |  - :(310,313)   |
+|  - North Korea conducts its third underground nuclear test, prompting widespread condemnation and tightened economic sanctions from the international community.  February 15 - A meteor explodes over the Russian city of Chelyabinsk, injuring 1,491 people and damaging over 4,300 buildings.:(310,598)                         |  - :(310,313)   |
+|  - A meteor explodes over the Russian city of Chelyabinsk, injuring 1,491 people and damaging over 4,300 buildings.:(483,598)                                                                                                                                                                                                      |  - :(483,486)   |
+|  - A meteor explodes over the Russian city of Chelyabinsk, injuring 1,491 people and damaging over 4,300 buildings. It is the most powerful meteor to strike Earth's atmosphere in over a century.:(483,677)                                                                                                                       |  - :(483,486)   |
+|  - American scientists use a 3D printer to create a living lab-grown ear from collagen and animal ear cell cultures.:(849,965)                                                                                                                                                                                                     |  - :(849,852)   |
+|  - American scientists use a 3D printer to create a living lab-grown ear from collagen and animal ear cell cultures. In the future, it is hoped, similar ears could be grown to order as transplants for human patients suffering from ear trauma or amputation.:(849,1105)                                                        |  - :(849,852)   |
+|  - Benedict XVI resigns as pope, becoming the first to do so since Gregory XII in 1415, and the first to do so voluntarily since Celestine V in 1294.:(1118,1267)                                                                                                                                                                  |  - :(1118,1121) |
+|  - Cardinal Jorge Mario Bergoglio of Argentina is elected the 266th pope, whereupon he takes the name Francis and becomes the first Jesuit pope, the first pope from the Americas, and the first pope from the Southern Hemisphere.:(1277,1504)                                                                                    |  - :(1277,1280) |
+|  - 2012-2013 Central African Republic conflict: Central African Republic President Francois Bozize flees to the Democratic Republic of the Congo, after rebel forces capture the nation's capital, Bangui.:(1514,1716)                                                                                                             |  - :(1514,1517) |
+|  - The European Union agrees to a $10 billion economic bailout for Cyprus.:(1726,1800)                                                                                                                                                                                                                                             |  - :(1726,1729) |
+|  - The European Union agrees to a $10 billion economic bailout for Cyprus. The bailout loan will be equally split between the European Financial Stabilisation Mechanism, the European Financial Stability Facility, and the International Monetary Fund.:(1726,1975)                                                              |  - :(1726,1729) |
+|  - The European Union agrees to a $10 billion economic bailout for Cyprus. The bailout loan will be equally split between the European Financial Stabilisation Mechanism, the European Financial Stability Facility, and the International Monetary Fund. The deal precipitates a banking crisis in the island nation.:(1726,2036) |  - :(1726,1729) |
+|  - Canada becomes the first country to withdraw from the United Nations Convention to Combat Desertification.:(2046,2155)                                                                                                                                                                                                          |  - :(2046,2049) |
+|  - Canada becomes the first country to withdraw from the United Nations Convention to Combat Desertification.  April 2 - The United Nations General Assembly adopts the Arms Trade Treaty to regulate the international trade of conventional weapons.:(2046,2292)                                                                 |  - :(2046,2049) |
+|  - The United Nations General Assembly adopts the Arms Trade Treaty to regulate the international trade of conventional weapons.:(2164,2292)                                                                                                                                                                                       |  - :(2164,2167) |
+|  - The United Nations General Assembly adopts the Arms Trade Treaty to regulate the international trade of conventional weapons.  April 15 - Two Chechen Islamist brothers explode two bombs at the Boston Marathon in Boston, Massachusetts, in the United States, killing 3 and injuring 264 others.:(2164,2458)                 |  - :(2164,2167) |
+|  - Two Chechen Islamist brothers explode two bombs at the Boston Marathon in Boston, Massachusetts, in the United States, killing 3 and injuring 264 others.:(2302,2458)                                                                                                                                                           |  - :(2302,2305) |
+|  - An eight-storey commercial building collapses in Savar Upazila near the Bangladeshi capital of Dhaka, leaving 1,129 dead and 2,500 injured.:(2468,2610)                                                                                                                                                                         |  - :(2468,2471) |
+|  - An eight-storey commercial building collapses in Savar Upazila near the Bangladeshi capital of Dhaka, leaving 1,129 dead and 2,500 injured. The accident is the deadliest non-terrorist structural collapse in modern times and the third-worst industrial disaster in history.:(2468,2742)                                     |  - :(2468,2471) |
+|  - In a study published in the scientific journal Nature, researchers from Oregon Health & Science University in the United States describe the first creation of human embryonic stem cells by cloning.:(2773,2973)                                                                                                               |  - :(2773,2776) |
+|  - In a study published in the scientific journal Nature, researchers from Oregon Health & Science University in the United States describe the first creation of human embryonic stem cells by cloning.  June 6 - American Edward Snowden discloses operations engaged in by a U.:(2773,3047)                                     |  - :(2773,2776) |
+|  - In a study published in the scientific journal Nature, researchers from Oregon Health & Science University in the United States describe the first creation of human embryonic stem cells by cloning.  June 6 - American Edward Snowden discloses operations engaged in by a U.S.:(2773,3049)                                   |  - :(2773,2776) |
+|  - American Edward Snowden discloses operations engaged in by a U.:(2981,3047)                                                                                                                                                                                                                                                     |  - :(2981,2984) |
+|  - American Edward Snowden discloses operations engaged in by a U.S.:(2981,3049)                                                                                                                                                                                                                                                   |  - :(2981,2984) |
+|  - American Edward Snowden discloses operations engaged in by a U.S. government mass surveillance program to news publications and flees the country, later being granted temporary asylum in Russia.:(2981,3178)                                                                                                                  |  - :(2981,2984) |
+|  - American Edward Snowden discloses operations engaged in by a U.S. government mass surveillance program to news publications and flees the country, later being granted temporary asylum in Russia.  July 1 - Croatia becomes the 28th member of the European Union.:(2981,3243)                                                 |  - :(2981,2984) |
+|  - Croatia becomes the 28th member of the European Union.  July 3 - Amid mass protests across Egypt, President Mohamed Morsi is deposed in a military coup d'etat, leading to widespread violence.:(3186,3380)                                                                                                                     |  - :(3186,3189) |
+|  - Amid mass protests across Egypt, President Mohamed Morsi is deposed in a military coup d'etat, leading to widespread violence.:(3251,3380)                                                                                                                                                                                      |  - :(3251,3254) |
+|  - Amid mass protests across Egypt, President Mohamed Morsi is deposed in a military coup d'etat, leading to widespread violence.  August 14 - Following the military coup in Egypt, two anti-coup camps are raided by the security forces leaving 2,600 dead.:(3251,3505)                                                         |  - :(3251,3254) |
+|  - Following the military coup in Egypt, two anti-coup camps are raided by the security forces leaving 2,600 dead.:(3391,3505)                                                                                                                                                                                                     |  - :(3391,3394) |
+|  - 1,429 are killed in the Ghouta chemical attack during the Syrian Civil War.:(3656,3734)                                                                                                                                                                                                                                         |  - :(3656,3659) |
+|  - 1,429 are killed in the Ghouta chemical attack during the Syrian Civil War.  September 21 - al-Shabaab Islamic militants attack the Westgate shopping mall in Nairobi, killing at least 62 civilians and wounding over 170.:(3656,3878)                                                                                         |  - :(3656,3659) |
+|  - al-Shabaab Islamic militants attack the Westgate shopping mall in Nairobi, killing at least 62 civilians and wounding over 170.:(3748,3878)                                                                                                                                                                                     |  - :(3748,3751) |
+|  - Delegates from some 140 countries and territories sign the Minamata Treaty, a UNEP treaty designed to protect human health and the environment from emissions and releases of mercury and mercury compounds.:(3890,4097)                                                                                                        |  - :(3890,3893) |
+|  - Saudi Arabia rejects a seat on the United Nations Security Council, making it the first country to reject a seat on the Security Council.:(4109,4249)                                                                                                                                                                           |  - :(4109,4112) |
+|  - Saudi Arabia rejects a seat on the United Nations Security Council, making it the first country to reject a seat on the Security Council. Jordan takes the seat on December 6.:(4109,4286)                                                                                                                                      |  - :(4109,4112) |
+|  - Mangalyaan (aka Mars Orbiter Mission) is launched by India from its launchpad in Sriharikota.:(4298,4394)                                                                                                                                                                                                                       |  - :(4298,4301) |
+|  - Typhoon Haiyan ("Yolanda"), one of the strongest tropical cyclones on record, hits the Philippines and Vietnam, causing devastation with at least 6,241 dead.:(4406,4566)                                                                                                                                                       |  - :(4406,4409) |
+|  - Three Studies of Lucian Freud, a series of portraits of Lucian Freud by the British painter Francis Bacon, sells for US$142.:(4579,4706)                                                                                                                                                                                        |  - :(4579,4582) |
+|  - Three Studies of Lucian Freud, a series of portraits of Lucian Freud by the British painter Francis Bacon, sells for US$142.4 million in a New York City auction, setting a new world record for an auctioned work of art.:(4579,4800)                                                                                          |  - :(4579,4582) |
+|  - Euromaidan pro-EU demonstrations begin in Ukraine after President Viktor Yanukovych rejects an economic association agreement between the European Union and Ukraine in favor of closer ties to Russia.:(4813,5015)                                                                                                             |  - :(4813,4816) |
+|  - Euromaidan pro-EU demonstrations begin in Ukraine after President Viktor Yanukovych rejects an economic association agreement between the European Union and Ukraine in favor of closer ties to Russia.  November 24 - Iran agrees to limit their nuclear development program in exchange for sanctions relief.:(4813,5119)     |  - :(4813,4816) |
+|  - Iran agrees to limit their nuclear development program in exchange for sanctions relief.:(5028,5119)                                                                                                                                                                                                                            |  - :(5028,5031) |
+|  - Iran agrees to limit their nuclear development program in exchange for sanctions relief.  December 7 - Ninth Ministerial Conference of the World Trade Organization delegates sign the Bali Package agreement aimed at loosening global trade barriers.:(5028,5278)                                                             |  - :(5028,5031) |
+|  - Ninth Ministerial Conference of the World Trade Organization delegates sign the Bali Package agreement aimed at loosening global trade barriers.:(5131,5278)                                                                                                                                                                    |  - :(5131,5134) |
+|  - Chinese spacecraft Chang'e 3, carrying the Yutu rover, becomes the first spacecraft to "soft"-land on the Moon since 1976 and the third ever robotic rover to do so.:(5291,5458)                                                                                                                                                |  - :(5291,5294) |
+|  - Fighting between ethnic Dinka and Nuer members of the presidential guard breaks out in the capital city of South Sudan and precipitates the South Sudanese political crisis.:(5471,5646)                                                                                                                                        |  - :(5471,5474) |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+50 rows in set
+
+View: ShortContent
++----------------------------+
+| content                    |
++----------------------------+
+|  - The :(10,17)            |
+|  - Thirty-nine :(163,178)  |
+|  - North :(310,319)        |
+|  - A :(483,488)            |
+|  - American :(849,861)     |
+|  - Benedict :(1118,1130)   |
+|  - Cardinal :(1277,1289)   |
+|  - 2012-2013 :(1514,1527)  |
+|  - The :(1726,1733)        |
+|  - Canada :(2046,2056)     |
+|  - The :(2164,2171)        |
+|  - Two :(2302,2309)        |
+|  - An :(2468,2474)         |
+|  - In :(2773,2779)         |
+|  - American :(2981,2993)   |
+|  - Croatia :(3186,3197)    |
+|  - Amid :(3251,3259)       |
+|  - Following :(3391,3404)  |
+|  - 1,429 :(3656,3665)      |
+|  - al-Shabaab :(3748,3762) |
+|  - Delegates :(3890,3903)  |
+|  - Saudi :(4109,4118)      |
+|  - Mangalyaan :(4298,4312) |
+|  - Typhoon :(4406,4417)    |
+|  - Three :(4579,4588)      |
+|  - Euromaidan :(4813,4827) |
+|  - Iran :(5028,5036)       |
+|  - Ninth :(5131,5140)      |
+|  - Chinese :(5291,5302)    |
+|  - Fighting :(5471,5483)   |
++----------------------------+
+30 rows in set
+
+View: Event
++----------------------------+--------------------------+-----------------+----------------------------------------+-----------------------+
+| content                    | date                     | day             | event                                  | month                 |
++----------------------------+--------------------------+-----------------+----------------------------------------+-----------------------+
+|  - The :(10,17)            | January 11:(0,10)        | 11:(8,10)       | January 11 - The :(0,17)               | January:(0,7)         |
+|  - Thirty-nine :(163,178)  | January 16-20:(150,163)  | 16-20:(158,163) | January 16-20 - Thirty-nine :(150,178) | January:(150,157)     |
+|  - North :(310,319)        | February 12:(299,310)    | 12:(308,310)    | February 12 - North :(299,319)         | February:(299,307)    |
+|  - A :(483,488)            | February 15:(472,483)    | 15:(481,483)    | February 15 - A :(472,488)             | February:(472,480)    |
+|  - American :(849,861)     | February 21:(838,849)    | 21:(847,849)    | February 21 - American :(838,861)      | February:(838,846)    |
+|  - Benedict :(1118,1130)   | February 28:(1107,1118)  | 28:(1116,1118)  | February 28 - Benedict :(1107,1130)    | February:(1107,1115)  |
+|  - Cardinal :(1277,1289)   | March 13:(1269,1277)     | 13:(1275,1277)  | March 13 - Cardinal :(1269,1289)       | March:(1269,1274)     |
+|  - 2012-2013 :(1514,1527)  | March 24:(1506,1514)     | 24:(1512,1514)  | March 24 - 2012-2013 :(1506,1527)      | March:(1506,1511)     |
+|  - The :(1726,1733)        | March 25:(1718,1726)     | 25:(1724,1726)  | March 25 - The :(1718,1733)            | March:(1718,1723)     |
+|  - Canada :(2046,2056)     | March 27:(2038,2046)     | 27:(2044,2046)  | March 27 - Canada :(2038,2056)         | March:(2038,2043)     |
+|  - The :(2164,2171)        | April 2:(2157,2164)      | 2:(2163,2164)   | April 2 - The :(2157,2171)             | April:(2157,2162)     |
+|  - Two :(2302,2309)        | April 15:(2294,2302)     | 15:(2300,2302)  | April 15 - Two :(2294,2309)            | April:(2294,2299)     |
+|  - An :(2468,2474)         | April 24:(2460,2468)     | 24:(2466,2468)  | April 24 - An :(2460,2474)             | April:(2460,2465)     |
+|  - In :(2773,2779)         | May 15:(2767,2773)       | 15:(2771,2773)  | May 15 - In :(2767,2779)               | May:(2767,2770)       |
+|  - American :(2981,2993)   | June 6:(2975,2981)       | 6:(2980,2981)   | June 6 - American :(2975,2993)         | June:(2975,2979)      |
+|  - Croatia :(3186,3197)    | July 1:(3180,3186)       | 1:(3185,3186)   | July 1 - Croatia :(3180,3197)          | July:(3180,3184)      |
+|  - Amid :(3251,3259)       | July 3:(3245,3251)       | 3:(3250,3251)   | July 3 - Amid :(3245,3259)             | July:(3245,3249)      |
+|  - Following :(3391,3404)  | August 14:(3382,3391)    | 14:(3389,3391)  | August 14 - Following :(3382,3404)     | August:(3382,3388)    |
+|  - 1,429 :(3656,3665)      | August 21:(3647,3656)    | 21:(3654,3656)  | August 21 - 1,429 :(3647,3665)         | August:(3647,3653)    |
+|  - al-Shabaab :(3748,3762) | September 21:(3736,3748) | 21:(3746,3748)  | September 21 - al-Shabaab :(3736,3762) | September:(3736,3745) |
+|  - Delegates :(3890,3903)  | October 10:(3880,3890)   | 10:(3888,3890)  | October 10 - Delegates :(3880,3903)    | October:(3880,3887)   |
+|  - Saudi :(4109,4118)      | October 18:(4099,4109)   | 18:(4107,4109)  | October 18 - Saudi :(4099,4118)        | October:(4099,4106)   |
+|  - Mangalyaan :(4298,4312) | November 5:(4288,4298)   | 5:(4297,4298)   | November 5 - Mangalyaan :(4288,4312)   | November:(4288,4296)  |
+|  - Typhoon :(4406,4417)    | November 8:(4396,4406)   | 8:(4405,4406)   | November 8 - Typhoon :(4396,4417)      | November:(4396,4404)  |
+|  - Three :(4579,4588)      | November 12:(4568,4579)  | 12:(4577,4579)  | November 12 - Three :(4568,4588)       | November:(4568,4576)  |
+|  - Euromaidan :(4813,4827) | November 21:(4802,4813)  | 21:(4811,4813)  | November 21 - Euromaidan :(4802,4827)  | November:(4802,4810)  |
+|  - Iran :(5028,5036)       | November 24:(5017,5028)  | 24:(5026,5028)  | November 24 - Iran :(5017,5036)        | November:(5017,5025)  |
+|  - Ninth :(5131,5140)      | December 7:(5121,5131)   | 7:(5130,5131)   | December 7 - Ninth :(5121,5140)        | December:(5121,5129)  |
+|  - Chinese :(5291,5302)    | December 14:(5280,5291)  | 14:(5289,5291)  | December 14 - Chinese :(5280,5302)     | December:(5280,5288)  |
+|  - Fighting :(5471,5483)   | December 15:(5460,5471)  | 15:(5469,5471)  | December 15 - Fighting :(5460,5483)    | December:(5460,5468)  |
++----------------------------+--------------------------+-----------------+----------------------------------------+-----------------------+
+30 rows in set
+
+View: DateOnly
++--------------------------+
+| date                     |
++--------------------------+
+| January 11:(0,10)        |
+| January 16-20:(150,163)  |
+| February 12:(299,310)    |
+| February 15:(472,483)    |
+| February 21:(838,849)    |
+| February 28:(1107,1118)  |
+| March 13:(1269,1277)     |
+| March 24:(1506,1514)     |
+| March 25:(1718,1726)     |
+| March 27:(2038,2046)     |
+| April 2:(2157,2164)      |
+| April 15:(2294,2302)     |
+| April 24:(2460,2468)     |
+| May 15:(2767,2773)       |
+| June 6:(2975,2981)       |
+| July 1:(3180,3186)       |
+| July 3:(3245,3251)       |
+| August 14:(3382,3391)    |
+| August 21:(3647,3656)    |
+| September 21:(3736,3748) |
+| October 10:(3880,3890)   |
+| October 18:(4099,4109)   |
+| November 5:(4288,4298)   |
+| November 8:(4396,4406)   |
+| November 12:(4568,4579)  |
+| November 21:(4802,4813)  |
+| November 24:(5017,5028)  |
+| December 7:(5121,5131)   |
+| December 14:(5280,5291)  |
+| December 15:(5460,5471)  |
++--------------------------+
+30 rows in set
+

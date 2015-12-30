@@ -1,3 +1,4 @@
+// Auxiliary functions used by statement.
 #include"pattern.cpp"
 #include<iostream>
 #include<vector>
@@ -34,7 +35,6 @@ map<string, struct selectInfo> selectMap;
 
 // documentAlias for regex_spec
 string documentAlias;
-
 
 vector<Token> oneStream;
 vector<Token>::iterator current;
@@ -94,6 +94,7 @@ void from() {
     }
 }
 
+// Initialize. Call before each statement.
 void init() {
     current = oneStream.begin();
     currentType = current->tag;
@@ -176,6 +177,8 @@ bool hasCol(string viewName, string colName) {
     }
 }
 
+
+// Output function
 void output() {
     int maxrow;
     vector<int> colsize;

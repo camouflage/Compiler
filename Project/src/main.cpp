@@ -78,7 +78,6 @@ int main(int argc, char* argv[]) {
                 // Choose those that are .input file
                 int fileNameLen = strlen(dirp->d_name) - NAMELEN;
                 if ( isInput(dirp->d_name, fileNameLen) ) {
-                    cout << dirp->d_name << endl;
                     snprintf(documentPath, FILELEN, "../dataset/%s/%s", argv[2], dirp->d_name);
 
                     // Get fileName

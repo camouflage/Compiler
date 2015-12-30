@@ -140,32 +140,3 @@ void pre_tokenizer() {
 	documentIfs.clear();
 	documentIfs.seekg(0, documentIfs.beg);
 }
-
-/*
-int main() {
-	vector<Word> v;
-	ifstream file("Revenue.input");
-	ifstream file4("Revenue.input");
-	ofstream file2("compiler_out.txt");
-	ofstream file3("compiler_out2.txt");
-	char regex[] = ".[0-9]+(\\.[0-9])+";
-	pre_tokenizer(file);
-	v = tokenizer(file4, regex);
-	vector<Word>::iterator it = v.begin();
-	for (; it != v.end(); it++) {
-		file2 << it->content << "(" << it->start << "," << it->end << ")" << " ";
-		
-		vector<int>::iterator itt = (it->include).begin();
-		for(; itt != (it->include).end(); itt++) {
-			file2 << *itt << " ";
-		}
-		file2 << endl;
-	}
-	
-	vector<Pre_token>::iterator it2;
-	for (it2 = all_token.begin(); it2 != all_token.end(); it2++) {
-		file3 << it2->content << "(" << it2->start << "," << it2->end << ")"<< " " << it2->position << endl;
-	}	
-	return 0;
-}
-*/
